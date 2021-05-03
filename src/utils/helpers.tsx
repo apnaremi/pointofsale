@@ -5,9 +5,11 @@ export function appLog(this: any, ...logArguments: any) {
     args.unshift(LOG_PREFIX + ' ');
     let log: any;
     if (Function.prototype.bind) {
+      // eslint-disable-next-line no-console
       log = Function.prototype.bind.call(console.log, console);
     } else {
       log = function () {
+        // eslint-disable-next-line no-console
         Function.prototype.apply.call(console.log, console, args);
       };
     }

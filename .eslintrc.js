@@ -1,4 +1,22 @@
 module.exports = {
   root: true,
-  extends: '@react-native-community',
+  extends: ['@react-native-community', 'plugin:react-hooks/recommended'],
+  parser: '@typescript-eslint/parser',
+  plugins: ['@typescript-eslint', 'react-hooks'],
+  rules: {
+    'no-var': 2,
+    'no-console': 2,
+    'no-debugger': 2,
+    'no-alert': 2,
+    'react-hooks/rules-of-hooks': 2,
+    'react-hooks/exhaustive-deps': 0,
+    'prefer-arrow-callback': 2,
+    'react/jsx-no-bind': 2,
+    'react-native/no-unused-styles': 2,
+    'react-native/split-platform-components': 2,
+    'react-native/no-inline-styles': 2,
+    'react-native/no-color-literals': 2,
+    'react-native/no-raw-text': 2,
+    'react-native/no-single-element-style-arrays': 2,
+  },
 };

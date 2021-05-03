@@ -1,7 +1,3 @@
-/**
- * Loading reducer made seperate for easy blacklisting
- * Avoid data persist
- */
 import createReducer from '../../../utils/createReducer';
 import * as types from '../actions/types';
 

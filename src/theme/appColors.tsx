@@ -1,6 +1,8 @@
 const AppColors = {
-  primary_normal: '#00E4A1',
-  primary_lighten_1: '#79d2f4',
+  primary: '#00E4A1',
+  secondary: '#34355B',
+  gray_normal: '#c6c6c6',
+  event_warning_normal: '#d9534f',
 };
 
 export default AppColors;
