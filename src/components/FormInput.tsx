@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     borderColor: AppColors.gray_normal,
     flexDirection: 'row',
   },
-  textInput: {flex: 1, marginLeft: 20},
+  textInput: {flex: 1, marginLeft: 20, fontSize: 18},
 });
 
 export default FormInput;

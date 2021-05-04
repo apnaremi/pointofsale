@@ -52,17 +52,17 @@ export default function LoginView(props: Props) {
   }, []);
 
   return (
-    <View>
+    <View style={{width: '30%'}}>
       <Formik
         validate={validateForm}
         validateOnChange={true}
         initialValues={{
-          userName: __DEV__ ? 'adam@testmail.com' : '',
-          password: __DEV__ ? 'Melbourne@3030' : '',
+          userName: __DEV__ ? 'email@example.com' : '',
+          password: __DEV__ ? 'test325522' : '',
         }}
         onSubmit={onSubmitForm}>
         {({handleChange, handleBlur, handleSubmit, values, errors}) => (
-          <View style={APPStyles.formContainer}>
+          <View>
             <FormInput
               onChangeText={handleChange('userName')}
               onBlur={handleBlur('userName')}
@@ -86,10 +86,7 @@ export default function LoginView(props: Props) {
               invalidLabel={errors.password}
               iconName={'lock'}
             />
-            <Button
-              mode={'contained'}
-              onPress={handleSubmit}
-              style={APPStyles.commonButton}>
+            <Button mode={'contained'} onPress={handleSubmit}>
               {t('login')}
             </Button>
           </View>

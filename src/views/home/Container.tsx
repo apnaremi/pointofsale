@@ -1,5 +1,5 @@
 import React from 'react';
-import LoginView from './View';
+import HomeView from './View';
 import {connect} from 'react-redux';
 import {View} from 'react-native';
 import {LogoContainer, MainContainer} from '../../components';
@@ -13,7 +13,7 @@ function Container(props: Props) {
   return (
     <MainContainer>
       <View style={APPStyles.contentContainer}>
-        <LoginView {...props} />
+        <HomeView {...props} />
       </View>
     </MainContainer>
   );

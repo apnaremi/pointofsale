@@ -5,7 +5,7 @@ import CompanyLogo from '../assets/images/companyLogo.svg';
 function LogoContainer() {
   return (
     <View style={styles.logoContainer}>
-      <CompanyLogo width={120} height={120} />
+      <CompanyLogo width={'50%'} height={'50%'} />
     </View>
   );
 }
@@ -14,8 +14,7 @@ const styles = StyleSheet.create({
   logoContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 26,
-    marginTop: 52,
+    flex: 2,
   },
 });
 

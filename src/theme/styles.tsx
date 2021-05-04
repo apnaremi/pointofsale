@@ -1,16 +1,20 @@
 import {StyleSheet} from 'react-native';
-import APPMetrics from '../utils/metrics';
 
 const APPStyles = StyleSheet.create({
   commonButton: {
     marginTop: 20,
   },
   formContainer: {
-    width: APPMetrics.formWidth,
+    width: '80%',
   },
   contentContainer: {
     alignItems: 'center',
+    justifyContent: 'center',
     paddingBottom: 10,
+    flexDirection: 'row',
+    height: '100%',
+    width: '100%',
+    flex: 1,
   },
 });
 
