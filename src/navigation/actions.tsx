@@ -11,3 +11,7 @@ export function navigateToLogin(params?: object) {
 export function navigateToHome(params?: object) {
   NavigationService.reset('HomeScreen', params);
 }
+
+export function navigateToCustomer(params?: object) {
+  NavigationService.navigate('CustomerScreen', params);
+}

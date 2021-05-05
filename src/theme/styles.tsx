@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import AppColors from './appColors';
 
 const APPStyles = StyleSheet.create({
   commonButton: {
@@ -12,9 +13,18 @@ const APPStyles = StyleSheet.create({
     justifyContent: 'center',
     paddingBottom: 10,
     flexDirection: 'row',
-    height: '100%',
     width: '100%',
     flex: 1,
+  },
+  modalContainer: {
+    width: '30%',
+    backgroundColor: AppColors.clear,
+    alignItems: 'center',
+    paddingVertical: 20,
+    borderRadius: 6,
+  },
+  viewContainer: {
+    width: '30%',
   },
 });
 

@@ -52,13 +52,13 @@ export default function LoginView(props: Props) {
   }, []);
 
   return (
-    <View style={{width: '30%'}}>
+    <View style={APPStyles.viewContainer}>
       <Formik
         validate={validateForm}
         validateOnChange={true}
         initialValues={{
-          userName: __DEV__ ? 'email@example.com' : '',
-          password: __DEV__ ? 'test325522' : '',
+          userName: '',
+          password: '',
         }}
         onSubmit={onSubmitForm}>
         {({handleChange, handleBlur, handleSubmit, values, errors}) => (

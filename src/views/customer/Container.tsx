@@ -1,5 +1,5 @@
 import React from 'react';
-import LoginView from './View';
+import LoginView from './CustomerView';
 import {connect} from 'react-redux';
 import {View} from 'react-native';
 import {MainContainer} from '../../components';

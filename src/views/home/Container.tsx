@@ -2,7 +2,7 @@ import React from 'react';
 import HomeView from './View';
 import {connect} from 'react-redux';
 import {View} from 'react-native';
-import {LogoContainer, MainContainer} from '../../components';
+import {MainContainer} from '../../components';
 import APPStyles from '../../theme/styles';
 
 type Props = {
