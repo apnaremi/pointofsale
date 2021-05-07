@@ -2,12 +2,16 @@
 import axios from 'axios';
 import ApiConstants from './ApiConstants';
 import {appLog} from '../../utils/helpers';
+import {getVersion, getBuildNumber} from 'react-native-device-info';
+import {IS_IOS} from '../../utils/constants';
 
 const API = axios.create({
   baseURL: ApiConstants.BASE_URL,
   headers: {
-    Accept: 'application/json',
-    'Content-Type': 'application/json',
+    'Content-Type': 'application/json; charset=UTF-8',
+    'Cache-Control': 'no-cache',
+    Platform: IS_IOS ? 'ios' : 'android',
+    VersionNo: `${getVersion()}.${getBuildNumber()}`,
   },
 });
 
@@ -32,7 +36,7 @@ API.interceptors.response.use(
     return response;
   },
   error => {
-    appLog('[Api - response]', error.toJSON());
+    appLog('[Api - response error]', error.toJSON());
     return Promise.reject(error);
   },
 );
@@ -61,5 +65,5 @@ export const onSuccessIsPassed = (response: any) => {
 };
 
 export const onSuccess = (response: any) => {
-  return {data: response.data, success: response.status === 200};
+  return {data: response.data.data, success: response.status === 200};
 };

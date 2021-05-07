@@ -10,7 +10,6 @@ export default function DefaultButton(props: IProps) {
       labelStyle={styles.label}
       {...props}
       dark={true}
-      theme={{roundness: 24}}
     />
   );
 }

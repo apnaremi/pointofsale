@@ -3,7 +3,7 @@ import {Provider} from 'react-redux';
 import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
 
 import {ApplicationNavigator} from './navigation';
-import configureStore from './config/reduxConfig/configureStore';
+import configureStore from './config/redux/configureStore';
 import AppColors from './theme/appColors';
 import './config/i18n';
 const {store} = configureStore();

@@ -3,19 +3,16 @@ import {Keyboard, View} from 'react-native';
 import {Button, PasswordInput, FormInput} from '../../components';
 import {Formik} from 'formik';
 import {useTranslation} from 'react-i18next';
-import * as navigationActions from '../../navigation/actions';
 import APPStyles from '../../theme/styles';
 import {EMAIL_PATTERN} from '../../utils/constants';
 import SplashScreen from 'react-native-splash-screen';
-import {appLog} from '../../utils/helpers';
+import * as loginActions from '../../config/redux/actions/loginActions';
+import {useDispatch} from 'react-redux';
 
-type Props = {
-  onLogin: Function;
-};
-
-export default function LoginView(props: Props) {
-  appLog('props', props);
+export default function LoginView() {
   const {t} = useTranslation();
+  const dispatch = useDispatch();
+
   const userNameRef = React.createRef<any>();
   const passwordRef = React.createRef<any>();
 
@@ -46,9 +43,16 @@ export default function LoginView(props: Props) {
     }
   }, [passwordRef]);
 
-  const onSubmitForm = useCallback(() => {
+  const onSubmitForm = useCallback(values => {
     Keyboard.dismiss();
-    navigationActions.navigateToHome();
+    if (values.userName && values.password) {
+      dispatch(
+        loginActions.requestLogin(
+          values.userName.trim(),
+          values.password.trim(),
+        ),
+      );
+    }
   }, []);
 
   return (
@@ -57,8 +61,8 @@ export default function LoginView(props: Props) {
         validate={validateForm}
         validateOnChange={true}
         initialValues={{
-          userName: '',
-          password: '',
+          userName: __DEV__ ? 'JaimeL2011@gmail.com' : '',
+          password: __DEV__ ? '123456' : '',
         }}
         onSubmit={onSubmitForm}>
         {({handleChange, handleBlur, handleSubmit, values, errors}) => (

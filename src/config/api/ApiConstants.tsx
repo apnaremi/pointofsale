@@ -1,8 +1,9 @@
-/* App config for apis
- */
+const isProd = false;
 const ApiConstants = {
-  BASE_URL: 'https://web.myaccountantapp.com.au/api/',
-  LOGIN: 'Auth/Login',
+  BASE_URL: isProd
+    ? 'https://au.myaccountant.io'
+    : 'https://dev.myaccountant.io',
+  LOGIN: '/api/token',
 };
 
 export default ApiConstants;
