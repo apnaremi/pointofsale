@@ -1,5 +1,11 @@
 {
   "translation": {
-    "ok": "OK"
+    "ok": "OK",
+    "enter_email": "Email is required.",
+    "email": "Email",
+    "invalid_email": "Email must be in example@example.com format.",
+    "password": "Password",
+    "forget_password": "Forgot password?",
+    "login": "Log in"
   }
 }

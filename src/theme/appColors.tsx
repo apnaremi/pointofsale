@@ -4,6 +4,7 @@ const AppColors = {
   gray_normal: '#c6c6c6',
   event_warning_normal: '#d9534f',
   clear: '#FFFFFF',
+  transparent: 'transparent',
 };
 
 export default AppColors;

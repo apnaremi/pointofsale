@@ -15,3 +15,7 @@ export function navigateToHome(params?: object) {
 export function navigateToCustomer(params?: object) {
   NavigationService.navigate('CustomerScreen', params);
 }
+
+export function navigateToPwsRecovery(params?: object) {
+  NavigationService.navigate('PwsRecoveryScreen', params);
+}

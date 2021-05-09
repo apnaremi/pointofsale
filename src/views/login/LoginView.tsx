@@ -8,6 +8,7 @@ import {EMAIL_PATTERN} from '../../utils/constants';
 import SplashScreen from 'react-native-splash-screen';
 import * as loginActions from '../../config/redux/actions/loginActions';
 import {useDispatch} from 'react-redux';
+import * as navigationActions from '../../navigation/actions';
 
 export default function LoginView() {
   const {t} = useTranslation();
@@ -55,6 +56,11 @@ export default function LoginView() {
     }
   }, []);
 
+  const onPressForgetPassword = useCallback(
+    () => navigationActions.navigateToPwsRecovery(),
+    [],
+  );
+
   return (
     <View style={APPStyles.viewContainer}>
       <Formik
@@ -96,6 +102,12 @@ export default function LoginView() {
           </View>
         )}
       </Formik>
+      <Button
+        uppercase={false}
+        onPress={onPressForgetPassword}
+        style={APPStyles.commonButton}>
+        {t('forget_password')}
+      </Button>
     </View>
   );
 }

@@ -6,6 +6,8 @@ import {ApplicationNavigator} from './navigation';
 import configureStore from './config/redux/configureStore';
 import AppColors from './theme/appColors';
 import './config/i18n';
+import {WorkingIndicator} from './components';
+import RootModal from './components/RootModal';
 const {store} = configureStore();
 
 const theme = {
@@ -23,6 +25,8 @@ export default function EntryPoint() {
     <Provider store={store}>
       <PaperProvider theme={theme}>
         <ApplicationNavigator />
+        <WorkingIndicator />
+        <RootModal />
       </PaperProvider>
     </Provider>
   );
