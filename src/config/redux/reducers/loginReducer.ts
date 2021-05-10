@@ -15,14 +15,6 @@ const initialState: ILoginState = {
 };
 
 export const loginReducer = createReducer(initialState, {
-  [types.LOGIN_REQUEST](state: ILoginState, action: ILoginRequestState) {
-    appLog(action);
-    return {
-      ...state,
-      username: action.username,
-      password: action.password,
-    };
-  },
   [types.LOGIN_LOADING_ENDED](state: ILoginState) {
     return {...state};
   },

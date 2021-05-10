@@ -34,6 +34,7 @@ const RootModal = (props: Props) => {
       onBackdropPress={onPressClose}>
       <View style={styles.modal}>
         <Text
+          numberOfLines={3}
           theme={{
             colors: {
               text: props.isError
@@ -44,29 +45,28 @@ const RootModal = (props: Props) => {
           style={styles.messageText}>
           {props.message}
         </Text>
-        <Button onPress={onPressClose}>{i18next.t('ok')}</Button>
+        <Button mode={'contained'} onPress={onPressClose}>
+          {i18next.t('ok')}
+        </Button>
       </View>
     </Modal>
   );
 };
 const styles = StyleSheet.create({
   messageText: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    lineHeight: 16,
+    fontSize: 18,
   },
   modal: {
     alignItems: 'center',
     backgroundColor: AppColors.clear,
     borderRadius: 6,
     justifyContent: 'center',
-    padding: 15,
+    padding: 30,
     width: APPMetrics.formWidth,
   },
   modalContainer: {
     alignItems: 'center',
-    justifyContent: 'flex-start',
-    top: 150,
+    justifyContent: 'center',
   },
 });
 

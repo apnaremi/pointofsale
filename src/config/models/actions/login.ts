@@ -1,7 +1,8 @@
 export interface ILoginRequestState {
   type: String;
-  username: string;
-  password: string;
+  data: {username: string; password: string};
+  onSuccess: Function;
+  onFailure: Function;
 }
 
 interface IResponse {

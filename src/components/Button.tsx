@@ -17,6 +17,7 @@ export default function DefaultButton(props: IProps) {
 const styles = StyleSheet.create({
   button: {
     height: 45,
+    margin: 15,
   },
   label: {
     fontSize: 20,

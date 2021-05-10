@@ -14,17 +14,16 @@ import {useDispatch} from 'react-redux';
 
 function PwsUpdateContainer() {
   const dispatch = useDispatch();
-  const {t} = useTranslation();
   const sendResetMail = useCallback(values => {
     Keyboard.dismiss();
     dispatch(enableLoader(true));
     pwsRecoveryApi(values.userName).then((result: any) => {
       dispatch(enableLoader(false));
       if (result.success) {
-        dispatch(enableModal(t('mail_was_sent')));
+        dispatch(enableModal(result.data.message));
         navigationActions.goBack();
       } else {
-        dispatch(enableModal(result.data, true));
+        dispatch(enableModal(result.message, true));
       }
     });
   }, []);

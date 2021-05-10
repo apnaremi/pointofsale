@@ -6,13 +6,14 @@ import {useTranslation} from 'react-i18next';
 import APPStyles from '../../theme/styles';
 import {EMAIL_PATTERN} from '../../utils/constants';
 import SplashScreen from 'react-native-splash-screen';
-import * as loginActions from '../../config/redux/actions/loginActions';
-import {useDispatch} from 'react-redux';
-import * as navigationActions from '../../navigation/actions';
+import {navigateToPwsRecovery} from '../../navigation/actions';
 
-export default function LoginView() {
+type Props = {
+  requestLogin: Function;
+};
+
+export default function LoginView(props: Props) {
   const {t} = useTranslation();
-  const dispatch = useDispatch();
 
   const userNameRef = React.createRef<any>();
   const passwordRef = React.createRef<any>();
@@ -47,19 +48,14 @@ export default function LoginView() {
   const onSubmitForm = useCallback(values => {
     Keyboard.dismiss();
     if (values.userName && values.password) {
-      dispatch(
-        loginActions.requestLogin(
-          values.userName.trim(),
-          values.password.trim(),
-        ),
-      );
+      props.requestLogin({
+        username: values.userName.trim(),
+        password: values.password.trim(),
+      });
     }
   }, []);
 
-  const onPressForgetPassword = useCallback(
-    () => navigationActions.navigateToPwsRecovery(),
-    [],
-  );
+  const onPressForgetPassword = useCallback(() => navigateToPwsRecovery(), []);
 
   return (
     <View style={APPStyles.viewContainer}>

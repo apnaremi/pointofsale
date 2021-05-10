@@ -1,40 +1,38 @@
 import React, {useCallback} from 'react';
-import LoginView from './LoginView';
+import CodeVerifyView from './CodeVerifyView';
 import {View} from 'react-native';
-import {MainContainer} from '../../components';
+import {Header, MainContainer} from '../../components';
 import APPStyles from '../../theme/styles';
 import {useDispatch} from 'react-redux';
 import * as loginActions from '../../config/redux/actions/loginActions';
-import * as rootActions from '../../config/redux/actions/rootActions';
+import {appLog} from '../../utils/helpers';
 import {ILoginResponse} from '../../config/models/api/login';
-import {navigateToCodeVerify, navigateToHome} from '../../navigation/actions';
+import {navigateToPwsRecovery, navigateToHome} from '../../navigation/actions';
 
 function Container() {
   const dispatch = useDispatch();
   const requestLogin = useCallback(values => {
     dispatch(loginActions.requestLogin(values, onSuccess, onFailure));
-    dispatch(rootActions.enableLoader(true));
   }, []);
 
   const onSuccess = (response: ILoginResponse) => {
-    dispatch(rootActions.enableLoader(false));
     if (response.tfaRequired) {
-      navigateToCodeVerify();
-      dispatch(rootActions.enableModal(response.message));
+      navigateToPwsRecovery();
     } else {
       navigateToHome();
     }
+    appLog('login view', response);
   };
 
   const onFailure = (error: any) => {
-    dispatch(rootActions.enableLoader(false));
-    dispatch(rootActions.enableModal(error, true));
+    appLog('login view error', error);
   };
 
   return (
     <MainContainer>
+      <Header />
       <View style={APPStyles.contentContainer}>
-        <LoginView requestLogin={requestLogin} />
+        <CodeVerifyView onSendResetMail={requestLogin} />
       </View>
     </MainContainer>
   );

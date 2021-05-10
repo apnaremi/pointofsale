@@ -19,3 +19,7 @@ export function navigateToCustomer(params?: object) {
 export function navigateToPwsRecovery(params?: object) {
   NavigationService.navigate('PwsRecoveryScreen', params);
 }
+
+export function navigateToCodeVerify(params?: object) {
+  NavigationService.navigate('CodeVerifyScreen', params);
+}

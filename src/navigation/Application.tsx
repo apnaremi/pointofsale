@@ -7,6 +7,7 @@ import LoginView from '../views/login';
 import HomeView from '../views/home';
 import CustomerView from '../views/customer';
 import PwsRecoveryView from '../views/pwsRecovery';
+import CodeVerifyView from '../views/codeVerify';
 
 const MainStack = createStackNavigator();
 const RootStack = createStackNavigator();
@@ -17,6 +18,7 @@ function MainStackScreen() {
       <MainStack.Screen name="LoginScreen" component={LoginView} />
       <MainStack.Screen name="HomeScreen" component={HomeView} />
       <MainStack.Screen name="PwsRecoveryScreen" component={PwsRecoveryView} />
+      <MainStack.Screen name="CodeVerifyScreen" component={CodeVerifyView} />
     </MainStack.Navigator>
   );
 }

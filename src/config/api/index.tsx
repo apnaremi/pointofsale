@@ -44,7 +44,7 @@ API.interceptors.response.use(
 export default API;
 
 export const onFailure = (error: any) => {
-  return {data: error.message, success: false};
+  return {message: error.message, success: false};
 };
 
 export const onSuccessIsPassed = (response: any) => {
@@ -65,5 +65,5 @@ export const onSuccessIsPassed = (response: any) => {
 };
 
 export const onSuccess = (response: any) => {
-  return {data: response.data.data, success: response.status === 200};
+  return {data: response.data, success: response.status === 200};
 };
