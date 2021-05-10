@@ -4,35 +4,45 @@ import {View} from 'react-native';
 import {Header, MainContainer} from '../../components';
 import APPStyles from '../../theme/styles';
 import {useDispatch} from 'react-redux';
+import {loginTFAApi} from '../../config/api/loginApi';
+import {
+  enableLoader,
+  enableModal,
+} from '../../config/redux/actions/rootActions';
+import {getUniqueId} from 'react-native-device-info';
+import {navigateToHome} from '../../navigation/actions';
 import * as loginActions from '../../config/redux/actions/loginActions';
-import {appLog} from '../../utils/helpers';
-import {ILoginResponse} from '../../config/models/api/login';
-import {navigateToPwsRecovery, navigateToHome} from '../../navigation/actions';
+import {UNIQUE_ID_DEV} from '../../utils/constants';
 
-function Container() {
+type Props = {
+  route?: any;
+};
+
+function Container(props: Props) {
   const dispatch = useDispatch();
   const requestLogin = useCallback(values => {
-    dispatch(loginActions.requestLogin(values, onSuccess, onFailure));
+    const {params} = props.route;
+    loginTFAApi(
+      values.verifyCode,
+      params.tfaToken,
+      __DEV__ ? UNIQUE_ID_DEV : getUniqueId(),
+      params.tfaUserId,
+    ).then((result: any) => {
+      dispatch(enableLoader(false));
+      if (result.success) {
+        dispatch(loginActions.onLoginResponse(result));
+        navigateToHome();
+      } else {
+        dispatch(enableModal(result.message, true));
+      }
+    });
   }, []);
-
-  const onSuccess = (response: ILoginResponse) => {
-    if (response.tfaRequired) {
-      navigateToPwsRecovery();
-    } else {
-      navigateToHome();
-    }
-    appLog('login view', response);
-  };
-
-  const onFailure = (error: any) => {
-    appLog('login view error', error);
-  };
 
   return (
     <MainContainer>
       <Header />
       <View style={APPStyles.contentContainer}>
-        <CodeVerifyView onSendResetMail={requestLogin} />
+        <CodeVerifyView onSubmitForm={requestLogin} />
       </View>
     </MainContainer>
   );

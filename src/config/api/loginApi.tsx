@@ -2,11 +2,11 @@ import API, {onFailure, onSuccess} from '../../config/api';
 import ApiConstants from '../../config/api/ApiConstants';
 import {getUniqueId} from 'react-native-device-info';
 import {ILoginResponse} from '../models/api/login';
+import {UNIQUE_ID_DEV} from '../../utils/constants';
 
 export function loginApi(userName: string, password: string) {
   const data = {
-    device_id: getUniqueId(),
-    // device_id: 'a22c428079a09fe7',
+    device_id: __DEV__ ? UNIQUE_ID_DEV : getUniqueId(),
     grant_type: 'password',
     password: password,
     username: userName,
@@ -36,6 +36,23 @@ export function pwsRecoveryApi(email: string) {
     email: email,
   };
   return API.post(ApiConstants.FORGET_PASSWORD, data)
+    .then(onSuccess)
+    .catch(onFailure);
+}
+
+export function loginTFAApi(
+  code: string,
+  token: string,
+  deviceId: string,
+  userId: string,
+) {
+  let data = {
+    code: code,
+    token: token,
+    deviceId: deviceId,
+    userId: userId,
+  };
+  return API.post(ApiConstants.CODE_VERIFY, data)
     .then(onSuccess)
     .catch(onFailure);
 }

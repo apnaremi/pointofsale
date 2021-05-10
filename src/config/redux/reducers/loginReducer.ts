@@ -2,11 +2,8 @@ import createReducer from '../createReducer';
 import * as types from '../actions/types';
 
 import {ILoginState} from '../../models/reducers/login';
-import {
-  ILoginRequestState,
-  ILoginResponseState,
-} from '../../models/actions/login';
-import {appLog} from '../../../utils/helpers';
+import {ILoginResponseState} from '../../models/actions/login';
+
 const initialState: ILoginState = {
   isLoggedIn: false,
   id: 0,

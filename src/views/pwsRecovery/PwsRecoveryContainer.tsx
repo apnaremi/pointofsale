@@ -3,7 +3,6 @@ import PwsRecoveryView from './PwsRecoveryView';
 import {MainContainer, Header} from '../../components';
 import {Keyboard, ScrollView} from 'react-native';
 import APPStyles from '../../theme/styles';
-import {useTranslation} from 'react-i18next';
 import {pwsRecoveryApi} from '../../config/api/loginApi';
 import * as navigationActions from '../../navigation/actions';
 import {

@@ -19,8 +19,10 @@ function Container() {
   const onSuccess = (response: ILoginResponse) => {
     dispatch(rootActions.enableLoader(false));
     if (response.tfaRequired) {
-      navigateToCodeVerify();
-      dispatch(rootActions.enableModal(response.message));
+      navigateToCodeVerify({
+        tfaToken: response.tfaToken,
+        tfaUserId: response.tfaUserId,
+      });
     } else {
       navigateToHome();
     }

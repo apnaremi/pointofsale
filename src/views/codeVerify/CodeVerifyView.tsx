@@ -1,13 +1,12 @@
 import React, {useCallback} from 'react';
 import {View} from 'react-native';
-import {Button, FormInput} from '../../components';
+import {Button, FormInput, Text} from '../../components';
 import {Formik} from 'formik';
 import {useTranslation} from 'react-i18next';
 import APPStyles from '../../theme/styles';
-import {EMAIL_PATTERN} from '../../utils/constants';
 
 type Props = {
-  onSendResetMail: Function;
+  onSubmitForm: Function;
 };
 
 export default function CodeVerifyView(props: Props) {
@@ -16,18 +15,14 @@ export default function CodeVerifyView(props: Props) {
   const {t} = useTranslation();
 
   const onSubmitForm = useCallback((values, {setFieldError}) => {
-    props.onSendResetMail(values, {setFieldError});
+    props.onSubmitForm(values, {setFieldError});
   }, []);
 
   const validateForm = useCallback(values => {
     const errors = {} as any;
 
-    if (!values.userName) {
-      errors.userName = t('enter_email');
-    }
-
-    if (values.userName && !EMAIL_PATTERN.test(values.userName)) {
-      errors.userName = t('invalid_email');
+    if (!values.verifyCode) {
+      errors.verifyCode = t('notEmptyVerifyCode');
     }
 
     return errors;
@@ -35,29 +30,30 @@ export default function CodeVerifyView(props: Props) {
 
   return (
     <View style={APPStyles.viewContainer}>
+      <Text>{t('requireVerificationCode')}</Text>
       <Formik
         validate={validateForm}
         validateOnChange={true}
         initialValues={{
-          userName: __DEV__ ? 'JaimeL2011@gmail.com' : '',
+          verifyCode: '',
         }}
         onSubmit={onSubmitForm}>
         {({errors, handleBlur, handleChange, handleSubmit, values}) => (
           <View>
             <FormInput
-              onChangeText={handleChange('userName')}
-              onBlur={handleBlur('userName')}
-              value={values.userName}
-              keyboardType={'email-address'}
-              placeholder={t('email').toUpperCase()}
+              onChangeText={handleChange('verifyCode')}
+              onBlur={handleBlur('verifyCode')}
+              value={values.verifyCode}
+              keyboardType={'numeric'}
+              placeholder={t('verifyCode').toUpperCase()}
               returnKeyType="done"
               ref={userNameRef}
               onSubmitEditing={handleSubmit}
-              invalidLabel={errors.userName}
-              iconName={'envelope'}
+              invalidLabel={errors.verifyCode}
+              iconName={'key'}
             />
             <Button mode={'contained'} onPress={handleSubmit}>
-              {t('forget_password')}
+              {t('verify')}
             </Button>
           </View>
         )}
