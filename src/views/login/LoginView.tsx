@@ -98,10 +98,7 @@ export default function LoginView(props: Props) {
           </View>
         )}
       </Formik>
-      <Button
-        uppercase={false}
-        onPress={onPressForgetPassword}
-        style={APPStyles.commonButton}>
+      <Button uppercase={false} onPress={onPressForgetPassword}>
         {t('forget_password')}
       </Button>
     </View>

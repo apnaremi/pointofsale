@@ -1,5 +1,5 @@
 import React, {useCallback} from 'react';
-import {Appbar, IconButton, Text} from 'react-native-paper';
+import {Appbar, IconButton} from 'react-native-paper';
 import * as navigationActions from '../navigation/actions';
 import {StyleProp, StyleSheet, ViewStyle} from 'react-native';
 import AppColors from '../theme/appColors';
@@ -8,7 +8,7 @@ type Props = {
   title?: string;
   onClose?: Function;
   style?: StyleProp<ViewStyle>;
-  showBackIcon?: boolean;
+  hideBackButton?: boolean;
 };
 
 function Header(props: Props) {
@@ -24,18 +24,27 @@ function Header(props: Props) {
     <Appbar.Header
       dark={false}
       style={props.style ? props.style : styles.headerContainer}>
-      <IconButton icon={'close'} size={35} onPress={onPressIcon} />
-      <Text style={styles.title}>{props.title}</Text>
+      {!props.hideBackButton ? (
+        <IconButton icon={'close'} size={35} onPress={onPressIcon} />
+      ) : null}
+      <Appbar.Content
+        style={styles.content}
+        titleStyle={styles.title}
+        title={props.title}
+      />
     </Appbar.Header>
   );
 }
 
 const styles = StyleSheet.create({
   headerContainer: {
+    alignItems: 'center',
     backgroundColor: AppColors.transparent,
   },
-
-  title: {fontSize: 30, letterSpacing: -0.7, marginLeft: 20},
+  content: {alignItems: 'center'},
+  title: {
+    fontSize: 30,
+  },
 });
 
 export default React.memo(Header);

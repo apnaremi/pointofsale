@@ -7,6 +7,7 @@ import APPStyles from '../../theme/styles';
 
 type Props = {
   onSubmitForm: Function;
+  onResendCode: Function;
 };
 
 export default function CodeVerifyView(props: Props) {
@@ -16,6 +17,10 @@ export default function CodeVerifyView(props: Props) {
 
   const onSubmitForm = useCallback((values, {setFieldError}) => {
     props.onSubmitForm(values, {setFieldError});
+  }, []);
+
+  const onResendCode = useCallback(() => {
+    props.onResendCode();
   }, []);
 
   const validateForm = useCallback(values => {
@@ -58,6 +63,9 @@ export default function CodeVerifyView(props: Props) {
           </View>
         )}
       </Formik>
+      <Button uppercase={false} onPress={onResendCode}>
+        {t('resendQuestion')}
+      </Button>
     </View>
   );
 }

@@ -12,9 +12,15 @@ const APPStyles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingBottom: 10,
-    flexDirection: 'row',
     width: '100%',
     flex: 1,
+  },
+  scrollContentContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingBottom: 10,
+    flexDirection: 'row',
+    width: '100%',
   },
   modalContainer: {
     width: '30%',
@@ -24,7 +30,7 @@ const APPStyles = StyleSheet.create({
     borderRadius: 6,
   },
   viewContainer: {
-    width: '30%',
+    width: '40%',
   },
 });
 

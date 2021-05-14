@@ -12,7 +12,13 @@
     "verify": "Verify",
     "verifyCode": "Verify code",
     "notEmptyVerifyCode": "Verify code is required.",
-    "resendQuestion": "Didn't receive the code? ",
-    "resend": "Resend"
+    "resendQuestion": "Didn't receive the code? Resend",
+    "settings": "Settings",
+    "profile": "Profile",
+    "seating_arrangement": "Seating Arrangement",
+    "orders": "Orders",
+    "change_password": "Change Password",
+    "add_category": "Add Category",
+    "qr_code": "QR Code"
   }
 }

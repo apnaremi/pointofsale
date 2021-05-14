@@ -56,3 +56,18 @@ export function loginTFAApi(
     .then(onSuccess)
     .catch(onFailure);
 }
+
+export function sendVerifyCode(
+  token: string,
+  deviceId: string,
+  userId: string,
+) {
+  let data = {
+    token: token,
+    deviceId: deviceId,
+    userId: userId,
+  };
+  return API.post(ApiConstants.RESEND_CODE_VERIFY, data)
+    .then(onSuccess)
+    .catch(onFailure);
+}

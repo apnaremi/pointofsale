@@ -23,15 +23,6 @@ export default function HomeView(props: Props) {
     <View style={{flex: 1.5, flexDirection: 'row', margin: 20, marginLeft: 0}}>
       <View
         style={{
-          flex: 0.2,
-          borderWidth: 1,
-          backgroundColor: AppColors.secondary,
-          marginTop: -20,
-          marginBottom: -40,
-        }}
-      />
-      <View
-        style={{
           flex: 0.15,
           borderWidth: 1,
           borderColor: AppColors.primary,

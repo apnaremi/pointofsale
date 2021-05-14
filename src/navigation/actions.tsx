@@ -23,3 +23,7 @@ export function navigateToPwsRecovery(params?: object) {
 export function navigateToCodeVerify(params?: object) {
   NavigationService.navigate('CodeVerifyScreen', params);
 }
+
+export function navigateToProfileScreen(params?: object) {
+  NavigationService.navigate('ProfileScreen', params);
+}

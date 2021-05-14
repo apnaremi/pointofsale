@@ -4,7 +4,7 @@ import {View} from 'react-native';
 import {Header, MainContainer} from '../../components';
 import APPStyles from '../../theme/styles';
 import {useDispatch} from 'react-redux';
-import {loginTFAApi} from '../../config/api/loginApi';
+import {loginTFAApi, sendVerifyCode} from '../../config/api/loginApi';
 import {
   enableLoader,
   enableModal,
@@ -20,6 +20,7 @@ type Props = {
 
 function Container(props: Props) {
   const dispatch = useDispatch();
+
   const requestLogin = useCallback(values => {
     const {params} = props.route;
     loginTFAApi(
@@ -38,11 +39,27 @@ function Container(props: Props) {
     });
   }, []);
 
+  const requestCode = useCallback(() => {
+    const {params} = props.route;
+    sendVerifyCode(
+      params.tfaToken,
+      __DEV__ ? UNIQUE_ID_DEV : getUniqueId(),
+      params.tfaUserId,
+    ).then((result: any) => {
+      dispatch(enableLoader(false));
+      if (!result.success) {
+        dispatch(enableModal(result.message, true));
+      }
+    });
+  }, []);
   return (
     <MainContainer>
       <Header />
       <View style={APPStyles.contentContainer}>
-        <CodeVerifyView onSubmitForm={requestLogin} />
+        <CodeVerifyView
+          onSubmitForm={requestLogin}
+          onResendCode={requestCode}
+        />
       </View>
     </MainContainer>
   );
