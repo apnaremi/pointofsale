@@ -5,6 +5,7 @@ import {HelperText} from 'react-native-paper';
 import {TextInput} from 'react-native';
 // @ts-ignore
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
+import APPMetrics from '../utils/metrics';
 
 const FormInput = React.memo(
   React.forwardRef(
@@ -32,7 +33,11 @@ const FormInput = React.memo(
               // @ts-ignore
               name={inputProps.iconName}
               size={24}
-              color={AppColors.gray_normal}
+              color={
+                inputProps.editable
+                  ? AppColors.secondary
+                  : AppColors.gray_normal
+              }
             />
             <TextInput
               ref={ref}
@@ -65,6 +70,7 @@ const styles = StyleSheet.create({
     marginRight: -10,
     marginTop: -2,
     textAlign: 'right',
+    fontSize: APPMetrics.smallFontSize,
   },
 
   inputContainerError: {
@@ -79,7 +85,7 @@ const styles = StyleSheet.create({
     borderColor: AppColors.gray_normal,
     flexDirection: 'row',
   },
-  textInput: {flex: 1, marginLeft: 20, fontSize: 18},
+  textInput: {flex: 1, marginLeft: 20, fontSize: APPMetrics.normalFontSize},
 });
 
 export default FormInput;

@@ -19,6 +19,9 @@ import SettingsView from '../views/settings';
 import ProfileView from '../views/settings/Profile';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {navigateToLogin} from './actions';
+import {Header} from '../components';
+import {useTranslation} from 'react-i18next';
+import APPMetrics from '../utils/metrics';
 const MainStack = createStackNavigator();
 const RootStack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -47,7 +50,7 @@ function CustomDrawerContent(props: any) {
 }
 
 function HomeDrawer() {
-  const IconComponent = useCallback(
+  const drawerContent = useCallback(
     props => <CustomDrawerContent {...props} />,
     [],
   );
@@ -58,7 +61,7 @@ function HomeDrawer() {
         inactiveTintColor: AppColors.clear,
         itemStyle: styles.itemStyle,
       }}
-      drawerContent={IconComponent}
+      drawerContent={drawerContent}
       initialRouteName="Home"
       drawerType={'permanent'}
       drawerStyle={styles.drawerStyle}>
@@ -78,7 +81,7 @@ function HomeDrawer() {
       />
       <Drawer.Screen
         name="Settings"
-        component={SettingsView}
+        component={SettingsDrawer}
         options={{
           drawerLabel: '',
           drawerIcon: ({color, size, focused}) => (
@@ -94,6 +97,38 @@ function HomeDrawer() {
   );
 }
 
+function SettingsDrawer() {
+  const {t} = useTranslation();
+  const drawerContent = useCallback(
+    props => (
+      <DrawerContentScrollView {...props}>
+        <Header hideBackButton={true} title={t('settings')} />
+        <DrawerItemList {...props} />
+      </DrawerContentScrollView>
+    ),
+    [],
+  );
+  return (
+    <Drawer.Navigator
+      drawerType={'permanent'}
+      initialRouteName="ProfileScreen"
+      drawerContentOptions={{
+        activeTintColor: AppColors.primary,
+        inactiveTintColor: AppColors.secondary,
+        labelStyle: {fontSize: APPMetrics.normalFontSize},
+      }}
+      drawerContent={drawerContent}>
+      <Drawer.Screen name="ProfileScreen" component={ProfileView} />
+      <Drawer.Screen name="SettingsScreen" component={SettingsView} />
+      <Drawer.Screen name="ProfileScreen1" component={ProfileView} />
+      <Drawer.Screen name="ProfileScreen2" component={ProfileView} />
+      <Drawer.Screen name="SettingsScreen3" component={SettingsView} />
+      <Drawer.Screen name="ProfileScreen4" component={ProfileView} />
+      <Drawer.Screen name="ProfileScreen5" component={ProfileView} />
+    </Drawer.Navigator>
+  );
+}
+
 function MainStackScreen() {
   return (
     <MainStack.Navigator headerMode={'none'}>
@@ -101,7 +136,6 @@ function MainStackScreen() {
       <MainStack.Screen name="HomeScreen" component={HomeDrawer} />
       <MainStack.Screen name="PwsRecoveryScreen" component={PwsRecoveryView} />
       <MainStack.Screen name="CodeVerifyScreen" component={CodeVerifyView} />
-      <MainStack.Screen name="ProfileScreen" component={ProfileView} />
     </MainStack.Navigator>
   );
 }

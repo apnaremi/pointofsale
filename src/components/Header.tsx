@@ -3,6 +3,7 @@ import {Appbar, IconButton} from 'react-native-paper';
 import * as navigationActions from '../navigation/actions';
 import {StyleProp, StyleSheet, ViewStyle} from 'react-native';
 import AppColors from '../theme/appColors';
+import APPMetrics from '../utils/metrics';
 
 type Props = {
   title?: string;
@@ -27,11 +28,7 @@ function Header(props: Props) {
       {!props.hideBackButton ? (
         <IconButton icon={'close'} size={35} onPress={onPressIcon} />
       ) : null}
-      <Appbar.Content
-        style={styles.content}
-        titleStyle={styles.title}
-        title={props.title}
-      />
+      <Appbar.Content titleStyle={styles.title} title={props.title} />
     </Appbar.Header>
   );
 }
@@ -41,9 +38,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: AppColors.transparent,
   },
-  content: {alignItems: 'center'},
   title: {
-    fontSize: 30,
+    fontSize: APPMetrics.titleFontSize,
   },
 });
 

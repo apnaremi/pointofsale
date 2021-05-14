@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {Button} from 'react-native-paper';
 import {StyleSheet} from 'react-native';
+import APPMetrics from "../utils/metrics";
 export type IProps = React.ComponentProps<typeof Button>;
 
 export default function DefaultButton(props: IProps) {
@@ -20,7 +21,7 @@ const styles = StyleSheet.create({
     margin: 15,
   },
   label: {
-    fontSize: 20,
+    fontSize: APPMetrics.normalFontSize,
     letterSpacing: -0.5,
     textAlign: 'center',
   },

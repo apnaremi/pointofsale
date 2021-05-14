@@ -28,7 +28,7 @@ function Settings() {
   };
 
   const navigateToProfile = useCallback(() => {
-    navigationActions.navigateToProfileScreen({showBusiness: false});
+    navigationActions.navigateToProfileScreen();
   }, []);
 
   return (

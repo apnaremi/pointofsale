@@ -3,11 +3,13 @@ import {Appbar, ToggleButton} from 'react-native-paper';
 import * as navigationActions from '../navigation/actions';
 import {StyleSheet, View} from 'react-native';
 import AppColors from '../theme/appColors';
+import APPMetrics from '../utils/metrics';
 
 type Props = {
   title: string;
   onToggleSwitch: Function;
   switchValue: boolean;
+  hideBackButton?: boolean;
 };
 
 function FormHeader(props: Props) {
@@ -21,12 +23,10 @@ function FormHeader(props: Props) {
 
   return (
     <Appbar.Header dark={false} style={styles.headerContainer}>
-      <Appbar.BackAction size={35} onPress={onPressIcon} />
-      <Appbar.Content
-        style={styles.content}
-        titleStyle={styles.title}
-        title={props.title}
-      />
+      {!props.hideBackButton ? (
+        <Appbar.BackAction size={35} onPress={onPressIcon} />
+      ) : null}
+      <Appbar.Content titleStyle={styles.title} title={props.title} />
       <View>
         <ToggleButton
           status={!props.switchValue ? 'unchecked' : 'checked'}
@@ -44,9 +44,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: AppColors.transparent,
   },
-  content: {alignItems: 'center'},
   title: {
-    fontSize: 30,
+    fontSize: APPMetrics.titleFontSize,
   },
 });
 

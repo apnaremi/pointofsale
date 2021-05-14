@@ -32,6 +32,9 @@ const APPStyles = StyleSheet.create({
   viewContainer: {
     width: '40%',
   },
+  viewContainerComplete: {
+    width: '90%',
+  },
 });
 
 export default APPStyles;

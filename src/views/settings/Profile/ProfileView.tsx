@@ -148,7 +148,7 @@ export default function UserRegisterView(props: Props) {
   }, []);
   return (
     <View
-      style={APPStyles.viewContainer}
+      style={APPStyles.viewContainerComplete}
       pointerEvents={props.allowEdit ? 'auto' : 'none'}>
       <View style={styles.avatarContainer}>
         <Avatar.Image
@@ -230,7 +230,7 @@ const styles = StyleSheet.create({
     backgroundColor: AppColors.clear,
     position: 'absolute',
     bottom: 25,
-    left: '60%',
+    left: '56%',
     borderWidth: 1,
   },
   avatarContainer: {

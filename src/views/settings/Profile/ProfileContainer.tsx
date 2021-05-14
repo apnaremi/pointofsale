@@ -68,13 +68,10 @@ function ProfileContainer(props: Props) {
   return (
     <MainContainer>
       <FormHeader
-        title={
-          props.route.params.showBusiness
-            ? t('Business Details')
-            : t('Profile Details')
-        }
+        title={t('profile')}
         switchValue={isEditMode}
         onToggleSwitch={onToggleSwitch}
+        hideBackButton={true}
       />
       <KeyboardAwareScrollView
         keyboardShouldPersistTaps="handled"

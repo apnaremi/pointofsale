@@ -1,6 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useCallback} from 'react';
 import {View} from 'react-native';
+import {Chip} from 'react-native-paper';
 import {appLog} from '../../utils/helpers';
 import {Button} from '../../components';
 import {useTranslation} from 'react-i18next';
@@ -270,9 +271,16 @@ export default function HomeView(props: Props) {
         </View>
       </View>
 
-      <View style={{flex: 0.8, marginLeft: 20}}>
+      <View style={{flex: 1, marginLeft: 20}}>
         <View style={{height: '100%', justifyContent: 'space-between'}}>
           <View>
+            <View style={{flexDirection: 'row'}}>
+              <Chip mode={'outlined'}>Delivery</Chip>
+              <Chip selected={true} mode={'outlined'}>
+                Take away
+              </Chip>
+              <Chip mode={'outlined'}>Dine in</Chip>
+            </View>
             <Button mode={'contained'} onPress={goToCustomer}>
               {t('customer')}
             </Button>

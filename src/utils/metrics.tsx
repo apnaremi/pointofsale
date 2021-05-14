@@ -4,7 +4,9 @@ const {width, height} = Dimensions.get('window');
 const APPMetrics = {
   screenWidth: width,
   screenHeight: height,
-  formWidth: 312,
+  titleFontSize: 26,
+  normalFontSize: 18,
+  smallFontSize: 14,
 };
 
 export default APPMetrics;
