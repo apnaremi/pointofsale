@@ -4,7 +4,7 @@ import {View} from 'react-native';
 import {MainContainer} from '../../components';
 import APPStyles from '../../theme/styles';
 import {useDispatch} from 'react-redux';
-import * as loginActions from '../../config/redux/actions/loginActions';
+import * as loginActions from '../../redux/user/actions';
 import * as rootActions from '../../config/redux/actions/rootActions';
 import {ILoginResponse} from '../../config/models/api/login';
 import {navigateToCodeVerify, navigateToHome} from '../../navigation/actions';

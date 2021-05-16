@@ -1,11 +1,11 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState, useRef} from 'react';
 import {Alert, StyleSheet, View} from 'react-native';
 import {FormInput} from '../../../components';
-import {Formik} from 'formik';
+import {Formik, FormikProps} from 'formik';
 import {Avatar, IconButton} from 'react-native-paper';
 import {useTranslation} from 'react-i18next';
 import APPStyles from '../../../theme/styles';
-import {userType} from '../../../utils/appTypes';
+import {IUser} from '../../../config/models/data/user';
 import AppColors from '../../../theme/appColors';
 import ImagePicker from 'react-native-image-crop-picker';
 import {appLog} from '../../../utils/helpers';
@@ -13,13 +13,12 @@ import {appLog} from '../../../utils/helpers';
 type Props = {
   onSubmitForm: Function;
   allowEdit: boolean;
-  dataFromDB: any;
-  userData: userType;
+  userData: IUser;
 };
 
-export default function UserRegisterView(props: Props) {
+export const ProfileView = React.forwardRef((props: Props, ref: any) => {
   const {t} = useTranslation();
-
+  const formRef = useRef<FormikProps<IUser>>(null);
   const firstNameRef = React.createRef<any>();
   const lastNameRef = React.createRef<any>();
   const phoneRef = React.createRef<any>();
@@ -28,50 +27,39 @@ export default function UserRegisterView(props: Props) {
   const [initialData, setInitialData] = useState({
     firstName: '',
     lastName: '',
-    phone: '',
+    mobile: '',
     email: '',
-    street: '',
-    suburb: '',
-    postcode: '',
-    state: '',
-  });
+  } as IUser);
 
   const [avatarURL, setAvatarURL] = useState('');
 
   useEffect(() => {
-    if (props.dataFromDB && props.dataFromDB.personalDetail) {
+    if (props.userData) {
       let data = {...initialData};
-      data.firstName = props.dataFromDB.personalDetail.firstName;
-      data.lastName = props.dataFromDB.personalDetail.lastName;
-      data.phone = props.dataFromDB.personalDetail.phone;
-      data.email = props.dataFromDB.personalDetail.email;
-
-      data.street = props.dataFromDB.address.street;
-      data.suburb = props.dataFromDB.address.suburb;
-      data.postcode = props.dataFromDB.address.postalCode;
-      data.state = props.dataFromDB.address.state;
-
+      data.firstName = props.userData.firstName;
+      data.lastName = props.userData.lastName;
+      data.mobile = props.userData.mobile;
+      data.email = props.userData.email;
       setInitialData(data);
-      setAvatarURL(props.dataFromDB.personalDetail.imagePath);
+      setAvatarURL(props.userData.photoUrl);
     }
-  }, [props.dataFromDB]);
+  }, [props.userData]);
 
-  const onSubmitForm = useCallback(
-    values => {
-      let dataToSave = {...props.dataFromDB};
-      dataToSave.personalDetail.firstName = values.firstName;
-      dataToSave.personalDetail.lastName = values.lastName;
-      dataToSave.personalDetail.phone = values.phone;
-
-      dataToSave.address.street = values.street;
-      dataToSave.address.suburb = values.suburb;
-      dataToSave.address.postalCode = values.postcode;
-      dataToSave.address.state = values.state;
-
-      props.onSubmitForm(dataToSave);
+  React.useImperativeHandle(ref, () => ({
+    onSubmitFormEx(values: IUser) {
+      if (formRef.current) {
+        formRef.current.handleSubmit();
+      }
     },
-    [props.dataFromDB],
-  );
+  }));
+
+  const onSubmitForm = (values: IUser) => {
+    props.onSubmitForm( {
+      firstName: values.firstName,
+      lastName: values.lastName,
+      mobile: values.mobile,
+    });
+  };
 
   const validateForm = useCallback(values => {
     const errors = {} as any;
@@ -84,8 +72,8 @@ export default function UserRegisterView(props: Props) {
       errors.firstName = t('first_name_required');
     }
 
-    if (!values.phone) {
-      errors.phone = t('phone_required');
+    if (!values.mobile) {
+      errors.mobile = t('phone_required');
     }
     return errors;
   }, []);
@@ -148,6 +136,7 @@ export default function UserRegisterView(props: Props) {
   }, []);
   return (
     <View
+      ref={ref}
       style={APPStyles.viewContainerComplete}
       pointerEvents={props.allowEdit ? 'auto' : 'none'}>
       <View style={styles.avatarContainer}>
@@ -168,6 +157,7 @@ export default function UserRegisterView(props: Props) {
         />
       </View>
       <Formik
+        innerRef={formRef}
         enableReinitialize={true}
         validate={validateForm}
         validateOnChange={true}
@@ -200,15 +190,15 @@ export default function UserRegisterView(props: Props) {
               editable={props.allowEdit}
             />
             <FormInput
-              onChangeText={handleChange('phone')}
-              onBlur={handleBlur('phone')}
-              value={values.phone}
+              onChangeText={handleChange('mobile')}
+              onBlur={handleBlur('mobile')}
+              value={values.mobile}
               keyboardType={'numeric'}
               placeholder={t('phone').toUpperCase()}
               returnKeyType="next"
               ref={phoneRef}
               onSubmitEditing={onSubmitPhone}
-              invalidLabel={errors.phone}
+              invalidLabel={errors.mobile}
               iconName={'phone'}
               editable={props.allowEdit}
             />
@@ -223,7 +213,7 @@ export default function UserRegisterView(props: Props) {
       </Formik>
     </View>
   );
-}
+});
 
 const styles = StyleSheet.create({
   cameraButton: {

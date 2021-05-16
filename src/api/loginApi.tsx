@@ -1,8 +1,8 @@
-import API, {onFailure, onSuccess} from '../../config/api';
-import ApiConstants from '../../config/api/ApiConstants';
+import API, {onFailure, onSuccess} from '../config/api';
+import ApiConstants from '../config/api/ApiConstants';
 import {getUniqueId} from 'react-native-device-info';
-import {ILoginResponse} from '../models/api/login';
-import {UNIQUE_ID_DEV} from '../../utils/constants';
+import {ILoginResponse} from '../config/models/api/login';
+import {UNIQUE_ID_DEV} from '../utils/constants';
 
 export function loginApi(userName: string, password: string) {
   const data = {

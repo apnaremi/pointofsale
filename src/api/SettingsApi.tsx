@@ -1,13 +1,8 @@
-import API, {onFailure, onSuccess} from '../../config/api';
-import ApiConstants from '../../config/api/ApiConstants';
-export function getProfile(userId: string) {
-  return API.get(ApiConstants.ACCOUNTANTS + '/' + userId)
-    .then(onSuccess)
-    .catch(onFailure);
-}
+import API, {onFailure, onSuccess} from '../config/api';
+import ApiConstants from '../config/api/ApiConstants';
 
 export function saveProfile(userId: string, dataToSave: any) {
-  return API.put(ApiConstants.ACCOUNTANTS + '/' + userId, dataToSave)
+  return API.put(ApiConstants.ACCOUNTS + '/' + userId, dataToSave)
     .then(onSuccess)
     .catch(onFailure);
 }

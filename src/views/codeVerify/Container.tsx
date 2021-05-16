@@ -4,14 +4,14 @@ import {View} from 'react-native';
 import {Header, MainContainer} from '../../components';
 import APPStyles from '../../theme/styles';
 import {useDispatch} from 'react-redux';
-import {loginTFAApi, sendVerifyCode} from '../../config/api/loginApi';
+import {loginTFAApi, sendVerifyCode} from '../../api/loginApi';
 import {
   enableLoader,
   enableModal,
 } from '../../config/redux/actions/rootActions';
 import {getUniqueId} from 'react-native-device-info';
 import {navigateToHome} from '../../navigation/actions';
-import * as loginActions from '../../config/redux/actions/loginActions';
+import * as loginActions from '../../redux/user/actions';
 import {UNIQUE_ID_DEV} from '../../utils/constants';
 
 type Props = {

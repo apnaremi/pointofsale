@@ -1,9 +1,6 @@
-/*
- * Reducer actions related with login
- */
-import * as types from './types';
-import {ILoginResponse} from '../../models/api/login';
-import API from '../../api';
+import * as types from '../../config/redux/actions/types';
+import {ILoginResponse} from '../../config/models/api/login';
+import API from '../../config/api';
 
 export function requestLogin(
   data: {username: string; password: string},
@@ -26,7 +23,7 @@ export function loginFailed() {
 
 export function onLoginResponse(response: ILoginResponse) {
   API.defaults.headers = {
-    Authorization: `Bearer ${response.token}`,
+    Authorization: `Bearer ${response.token.access_token}`,
   };
   return {
     type: types.LOGIN_RESPONSE,
@@ -37,5 +34,14 @@ export function onLoginResponse(response: ILoginResponse) {
 export function logOut() {
   return {
     type: types.LOG_OUT,
+  };
+}
+
+export function updateProfile(
+    data: {userId: string; data: any},
+) {
+  return {
+    type: types.UPDATE_PROFILE,
+    data,
   };
 }

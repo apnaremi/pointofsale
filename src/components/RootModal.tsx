@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     justifyContent: 'center',
     padding: 30,
-    width: APPMetrics.formWidth,
+    width: APPMetrics.modalWidth,
   },
   modalContainer: {
     alignItems: 'center',

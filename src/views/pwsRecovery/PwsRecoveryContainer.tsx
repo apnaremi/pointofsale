@@ -3,7 +3,7 @@ import PwsRecoveryView from './PwsRecoveryView';
 import {MainContainer, Header} from '../../components';
 import {Keyboard, ScrollView} from 'react-native';
 import APPStyles from '../../theme/styles';
-import {pwsRecoveryApi} from '../../config/api/loginApi';
+import {pwsRecoveryApi} from '../../api/loginApi';
 import * as navigationActions from '../../navigation/actions';
 import {
   enableLoader,

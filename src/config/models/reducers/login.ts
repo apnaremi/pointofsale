@@ -1,6 +1,8 @@
+import {IUser} from '../data/user';
+
 export interface ILoginState {
   isLoggedIn: boolean;
-  id: number;
+  user: IUser;
   username: string;
   password: string;
 }

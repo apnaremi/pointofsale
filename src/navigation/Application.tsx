@@ -118,13 +118,41 @@ function SettingsDrawer() {
         labelStyle: {fontSize: APPMetrics.normalFontSize},
       }}
       drawerContent={drawerContent}>
-      <Drawer.Screen name="ProfileScreen" component={ProfileView} />
-      <Drawer.Screen name="SettingsScreen" component={SettingsView} />
-      <Drawer.Screen name="ProfileScreen1" component={ProfileView} />
-      <Drawer.Screen name="ProfileScreen2" component={ProfileView} />
-      <Drawer.Screen name="SettingsScreen3" component={SettingsView} />
-      <Drawer.Screen name="ProfileScreen4" component={ProfileView} />
-      <Drawer.Screen name="ProfileScreen5" component={ProfileView} />
+      <Drawer.Screen
+        name="ProfileScreen"
+        options={{drawerLabel: t('profile')}}
+        component={ProfileView}
+      />
+      <Drawer.Screen
+        name="SettingsScreen"
+        options={{drawerLabel: t('seating_arrangement')}}
+        component={SettingsView}
+      />
+      <Drawer.Screen
+        name="ProfileScreen1"
+        options={{drawerLabel: t('orders')}}
+        component={ProfileView}
+      />
+      <Drawer.Screen
+        name="ProfileScreen2"
+        options={{drawerLabel: t('change_password')}}
+        component={ProfileView}
+      />
+      <Drawer.Screen
+        name="SettingsScreen3"
+        options={{drawerLabel: t('add_category')}}
+        component={SettingsView}
+      />
+      <Drawer.Screen
+        name="ProfileScreen4"
+        options={{drawerLabel: t('pin_code')}}
+        component={ProfileView}
+      />
+      <Drawer.Screen
+        name="ProfileScreen5"
+        options={{drawerLabel: t('qr_code')}}
+        component={ProfileView}
+      />
     </Drawer.Navigator>
   );
 }

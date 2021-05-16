@@ -1,3 +1,5 @@
+import {IUser} from '../data/user';
+
 export interface ILoginRequestState {
   type: String;
   data: {username: string; password: string};
@@ -6,7 +8,7 @@ export interface ILoginRequestState {
 }
 
 interface IResponse {
-  id: number;
+  user: IUser;
 }
 
 export interface ILoginResponseState {

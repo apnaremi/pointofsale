@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {Button} from 'react-native-paper';
 import {StyleSheet} from 'react-native';
-import APPMetrics from "../utils/metrics";
+import APPMetrics from '../utils/metrics';
 export type IProps = React.ComponentProps<typeof Button>;
 
 export default function DefaultButton(props: IProps) {

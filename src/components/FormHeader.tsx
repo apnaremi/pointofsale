@@ -1,5 +1,5 @@
 import React, {useCallback} from 'react';
-import {Appbar, ToggleButton} from 'react-native-paper';
+import {Appbar, IconButton} from 'react-native-paper';
 import * as navigationActions from '../navigation/actions';
 import {StyleSheet, View} from 'react-native';
 import AppColors from '../theme/appColors';
@@ -7,8 +7,8 @@ import APPMetrics from '../utils/metrics';
 
 type Props = {
   title: string;
-  onToggleSwitch: Function;
-  switchValue: boolean;
+  onEditPressed: Function;
+  isEditMode: boolean;
   hideBackButton?: boolean;
 };
 
@@ -17,8 +17,8 @@ function FormHeader(props: Props) {
     navigationActions.goBack();
   }, []);
 
-  const onToggleSwitch = useCallback(() => {
-    props.onToggleSwitch(!props.switchValue);
+  const onEditPressed = useCallback(() => {
+    props.onEditPressed(!props.isEditMode);
   }, []);
 
   return (
@@ -28,11 +28,10 @@ function FormHeader(props: Props) {
       ) : null}
       <Appbar.Content titleStyle={styles.title} title={props.title} />
       <View>
-        <ToggleButton
-          status={!props.switchValue ? 'unchecked' : 'checked'}
+        <IconButton
           size={35}
-          onPress={onToggleSwitch}
-          icon={props.switchValue ? 'pencil-box' : 'pencil-box-outline'}
+          onPress={onEditPressed}
+          icon={props.isEditMode ? 'check' : 'pencil-outline'}
         />
       </View>
     </Appbar.Header>

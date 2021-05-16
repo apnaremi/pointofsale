@@ -1,6 +1,6 @@
 export interface ILoginResponse {
   success: boolean;
-  token: string;
+  token: any;
   user: any;
   message: string;
   tfaRequired: boolean;

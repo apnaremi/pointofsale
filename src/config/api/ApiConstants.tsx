@@ -7,7 +7,7 @@ const ApiConstants = {
   FORGET_PASSWORD: '/api/accounts/password/forget',
   CODE_VERIFY: '/api/token/verify',
   RESEND_CODE_VERIFY: '/api/token/resendverification',
-  ACCOUNTANTS: 'Accountants',
+  ACCOUNTS: '/api/accounts',
   CHANGE_PASSWORD: 'Auth/ChangePassword',
 };
 
