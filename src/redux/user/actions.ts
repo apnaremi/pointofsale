@@ -37,11 +37,9 @@ export function logOut() {
   };
 }
 
-export function updateProfile(
-    data: {userId: string; data: any},
-) {
+export function updateProfile(response: ILoginResponse) {
   return {
     type: types.UPDATE_PROFILE,
-    data,
+    response,
   };
 }

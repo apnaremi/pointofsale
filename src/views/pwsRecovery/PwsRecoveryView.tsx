@@ -49,7 +49,7 @@ export default function PwsRecoveryView(props: Props) {
               onBlur={handleBlur('userName')}
               value={values.userName}
               keyboardType={'email-address'}
-              placeholder={t('email').toUpperCase()}
+              placeholder={t('email')}
               returnKeyType="done"
               ref={userNameRef}
               onSubmitEditing={handleSubmit}

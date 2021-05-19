@@ -21,7 +21,7 @@ export const loginReducer = createReducer(initialState, {
     appLog('ILoginResponseState', action);
     return {
       ...state,
-      user: action.response.user,
+      user: action.response.data,
       isLoggedIn: true,
     };
   },
@@ -35,6 +35,14 @@ export const loginReducer = createReducer(initialState, {
     return {
       ...state,
       isLoggedIn: false,
+    };
+  },
+  [types.UPDATE_PROFILE](state: ILoginState, action: ILoginResponseState) {
+    appLog('ILoginResponseState', action);
+    return {
+      ...state,
+      user: action.response.data,
+      isLoggedIn: true,
     };
   },
 });

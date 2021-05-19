@@ -274,7 +274,11 @@ export default function HomeView(props: Props) {
       <View style={{flex: 1, marginLeft: 20}}>
         <View style={{height: '100%', justifyContent: 'space-between'}}>
           <View>
-            <View style={{flexDirection: 'row'}}>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-around',
+              }}>
               <Chip mode={'outlined'}>Delivery</Chip>
               <Chip selected={true} mode={'outlined'}>
                 Take away

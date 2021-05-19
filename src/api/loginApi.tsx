@@ -25,7 +25,7 @@ export const onSuccessLogin = (response: any) => {
     tfaToken: responseData.tfaToken,
     tfaUserId: responseData.tfaUserId,
     token: responseData.token,
-    user: responseData.user,
+    data: responseData.user,
   };
 
   return returnData;
@@ -53,7 +53,7 @@ export function loginTFAApi(
     userId: userId,
   };
   return API.post(ApiConstants.CODE_VERIFY, data)
-    .then(onSuccess)
+    .then(onSuccessLogin)
     .catch(onFailure);
 }
 

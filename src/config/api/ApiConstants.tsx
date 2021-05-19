@@ -8,7 +8,6 @@ const ApiConstants = {
   CODE_VERIFY: '/api/token/verify',
   RESEND_CODE_VERIFY: '/api/token/resendverification',
   ACCOUNTS: '/api/accounts',
-  CHANGE_PASSWORD: 'Auth/ChangePassword',
 };
 
 export default ApiConstants;

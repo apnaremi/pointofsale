@@ -4,10 +4,11 @@ const {width, height} = Dimensions.get('window');
 const APPMetrics = {
   screenWidth: width,
   screenHeight: height,
-  titleFontSize: 24,
-  normalFontSize: 16,
-  smallFontSize: 14,
+  titleFontSize: 26,
+  normalFontSize: 18,
+  smallFontSize: 16,
   modalWidth: 312,
+  headerIconSize: 30,
 };
 
 export default APPMetrics;

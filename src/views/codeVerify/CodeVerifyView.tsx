@@ -50,12 +50,12 @@ export default function CodeVerifyView(props: Props) {
               onBlur={handleBlur('verifyCode')}
               value={values.verifyCode}
               keyboardType={'numeric'}
-              placeholder={t('verifyCode').toUpperCase()}
+              placeholder={t('verifyCode')}
               returnKeyType="done"
               ref={userNameRef}
               onSubmitEditing={handleSubmit}
               invalidLabel={errors.verifyCode}
-              iconName={'key'}
+              iconName={'lock'}
             />
             <Button mode={'contained'} onPress={handleSubmit}>
               {t('verify')}

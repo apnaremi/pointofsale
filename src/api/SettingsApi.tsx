@@ -8,14 +8,14 @@ export function saveProfile(userId: string, dataToSave: any) {
 }
 
 export function changePassword(
-  username: string,
-  currentPassword: string,
+  userId: string,
   newPassword: string,
+  confirmNewPassword: string,
 ) {
-  return API.post(ApiConstants.CHANGE_PASSWORD, {
-    username: username,
-    currentPassword: currentPassword,
-    newPassword: newPassword,
+  let URL = `${ApiConstants.ACCOUNTS}/${userId}/password/change`;
+  return API.put(URL, {
+    password: newPassword,
+    passwordConfirmed: confirmNewPassword,
   })
     .then(onSuccess)
     .catch(onFailure);

@@ -91,7 +91,7 @@ export default function CustomerView(props: Props) {
               onChangeText={handleChange('firstName')}
               onBlur={handleBlur('firstName')}
               value={values.firstName}
-              placeholder={t('first_name').toUpperCase()}
+              placeholder={t('first_name')}
               returnKeyType="next"
               ref={firstNameRef}
               onSubmitEditing={onSubmitFirstName}
@@ -101,7 +101,7 @@ export default function CustomerView(props: Props) {
               onChangeText={handleChange('lastName')}
               onBlur={handleBlur('lastName')}
               value={values.lastName}
-              placeholder={t('last_name').toUpperCase()}
+              placeholder={t('last_name')}
               returnKeyType="next"
               ref={lastNameRef}
               onSubmitEditing={onSubmitLlastName}
@@ -112,7 +112,7 @@ export default function CustomerView(props: Props) {
               onBlur={handleBlur('phone')}
               value={values.phone}
               keyboardType={'numeric'}
-              placeholder={t('phone').toUpperCase()}
+              placeholder={t('phone')}
               returnKeyType="next"
               ref={phoneRef}
               onSubmitEditing={onSubmitPhone}
@@ -123,7 +123,7 @@ export default function CustomerView(props: Props) {
               onBlur={handleBlur('email')}
               value={values.email}
               keyboardType={'email-address'}
-              placeholder={t('email').toUpperCase()}
+              placeholder={t('email')}
               returnKeyType="next"
               ref={emailRef}
               onSubmitEditing={onSubmitEmail}

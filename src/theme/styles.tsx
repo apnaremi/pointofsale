@@ -33,7 +33,8 @@ const APPStyles = StyleSheet.create({
     width: '40%',
   },
   viewContainerComplete: {
-    width: '90%',
+    width: '100%',
+    padding: 20,
   },
 });
 

@@ -26,7 +26,7 @@ function Header(props: Props) {
       dark={false}
       style={props.style ? props.style : styles.headerContainer}>
       {!props.hideBackButton ? (
-        <IconButton icon={'close'} size={35} onPress={onPressIcon} />
+        <IconButton icon={'close'} size={APPMetrics.headerIconSize} onPress={onPressIcon} />
       ) : null}
       <Appbar.Content titleStyle={styles.title} title={props.title} />
     </Appbar.Header>

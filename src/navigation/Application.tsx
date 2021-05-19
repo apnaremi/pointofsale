@@ -8,7 +8,7 @@ import {
   DrawerItemList,
   DrawerItem,
 } from '@react-navigation/drawer';
-import {StatusBar, StyleSheet} from 'react-native';
+import {StatusBar, StyleSheet, View, Text} from 'react-native';
 import LoginView from '../views/login';
 import HomeView from '../views/home';
 import CustomerView from '../views/customer';
@@ -22,9 +22,20 @@ import {navigateToLogin} from './actions';
 import {Header} from '../components';
 import {useTranslation} from 'react-i18next';
 import APPMetrics from '../utils/metrics';
+import PwsUpdateView from '../views/settings/pwsUpdate';
+import OrdersConfigView from '../views/settings/Orders/OrdersConfig';
+
 const MainStack = createStackNavigator();
 const RootStack = createStackNavigator();
 const Drawer = createDrawerNavigator();
+
+function DemoScreen() {
+  return (
+    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+      <Text>{'Under Construction'}</Text>
+    </View>
+  );
+}
 
 function CustomDrawerContent(props: any) {
   const onPressLogOut = useCallback(() => {
@@ -74,11 +85,42 @@ function HomeDrawer() {
             <Icon
               color={color}
               size={size}
-              name={focused ? 'home' : 'home-outline'}
+              name={focused ? 'view-list' : 'view-list-outline'}
             />
           ),
         }}
       />
+      <Drawer.Screen
+        name="Orders"
+        component={DemoScreen}
+        options={{
+          drawerLabel: '',
+          drawerIcon: ({color, size, focused}) => (
+            <Icon
+              color={color}
+              size={size}
+              name={focused ? 'clipboard-list' : 'clipboard-list-outline'}
+            />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="Reports"
+        component={DemoScreen}
+        options={{
+          drawerLabel: '',
+          drawerIcon: ({color, size, focused}) => (
+            <Icon
+              color={color}
+              size={size}
+              name={
+                focused ? 'clipboard-multiple' : 'clipboard-multiple-outline'
+              }
+            />
+          ),
+        }}
+      />
+
       <Drawer.Screen
         name="Settings"
         component={SettingsDrawer}
@@ -112,11 +154,13 @@ function SettingsDrawer() {
     <Drawer.Navigator
       drawerType={'permanent'}
       initialRouteName="ProfileScreen"
+      overlayColor="transparent"
       drawerContentOptions={{
         activeTintColor: AppColors.primary,
         inactiveTintColor: AppColors.secondary,
         labelStyle: {fontSize: APPMetrics.normalFontSize},
       }}
+      drawerStyle={styles.settingsDrawerStyle}
       drawerContent={drawerContent}>
       <Drawer.Screen
         name="ProfileScreen"
@@ -126,32 +170,32 @@ function SettingsDrawer() {
       <Drawer.Screen
         name="SettingsScreen"
         options={{drawerLabel: t('seating_arrangement')}}
-        component={SettingsView}
+        component={DemoScreen}
       />
       <Drawer.Screen
-        name="ProfileScreen1"
+        name="OrdersConfigScreen"
         options={{drawerLabel: t('orders')}}
-        component={ProfileView}
+        component={OrdersConfigView}
       />
       <Drawer.Screen
-        name="ProfileScreen2"
+        name="PwsUpdateScreen"
         options={{drawerLabel: t('change_password')}}
-        component={ProfileView}
+        component={PwsUpdateView}
       />
       <Drawer.Screen
         name="SettingsScreen3"
         options={{drawerLabel: t('add_category')}}
-        component={SettingsView}
+        component={DemoScreen}
       />
       <Drawer.Screen
         name="ProfileScreen4"
         options={{drawerLabel: t('pin_code')}}
-        component={ProfileView}
+        component={DemoScreen}
       />
       <Drawer.Screen
         name="ProfileScreen5"
         options={{drawerLabel: t('qr_code')}}
-        component={ProfileView}
+        component={DemoScreen}
       />
     </Drawer.Navigator>
   );
@@ -159,7 +203,11 @@ function SettingsDrawer() {
 
 function MainStackScreen() {
   return (
-    <MainStack.Navigator headerMode={'none'}>
+    <MainStack.Navigator
+      headerMode={'none'}
+      screenOptions={{
+        cardStyle: {backgroundColor: AppColors.clear},
+      }}>
       <MainStack.Screen name="LoginScreen" component={LoginView} />
       <MainStack.Screen name="HomeScreen" component={HomeDrawer} />
       <MainStack.Screen name="PwsRecoveryScreen" component={PwsRecoveryView} />
@@ -168,17 +216,24 @@ function MainStackScreen() {
   );
 }
 
+const MyTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: AppColors.primary,
+    background: AppColors.clear,
+  },
+};
+
 function ApplicationNavigator() {
   return (
-    <NavigationContainer theme={DefaultTheme} ref={navigationRef}>
+    <NavigationContainer theme={MyTheme} ref={navigationRef}>
       <StatusBar barStyle="light-content" />
       <RootStack.Navigator
         mode="modal"
         headerMode="none"
         screenOptions={{
-          headerShown: false,
-          cardStyle: {backgroundColor: 'transparent'},
-          cardOverlayEnabled: true,
+          cardStyle: {backgroundColor: AppColors.clear},
         }}>
         <RootStack.Screen name="Main" component={MainStackScreen} />
         <RootStack.Screen name="CustomerScreen" component={CustomerView} />
@@ -191,6 +246,9 @@ const styles = StyleSheet.create({
   drawerStyle: {
     backgroundColor: AppColors.secondary,
     width: 60,
+  },
+  settingsDrawerStyle: {
+    width: '40%',
   },
   itemStyle: {marginVertical: 20},
 });

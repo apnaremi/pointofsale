@@ -1,4 +1,3 @@
-import {IUser} from '../data/user';
 
 export interface ILoginRequestState {
   type: String;
@@ -8,7 +7,7 @@ export interface ILoginRequestState {
 }
 
 interface IResponse {
-  user: IUser;
+  data: any;
 }
 
 export interface ILoginResponseState {

@@ -2,7 +2,7 @@
 import axios from 'axios';
 import ApiConstants from './ApiConstants';
 import {appLog} from '../../utils/helpers';
-import {getVersion, getBuildNumber} from 'react-native-device-info';
+import {getBuildNumber, getVersion} from 'react-native-device-info';
 import {IS_IOS} from '../../utils/constants';
 
 const API = axios.create({
@@ -65,5 +65,10 @@ export const onSuccessIsPassed = (response: any) => {
 };
 
 export const onSuccess = (response: any) => {
-  return {data: response.data, success: response.status === 200};
+  const responseData = response.data.data ? response.data.data : response;
+  return {
+    success: response.status === 200,
+    message: response.data.message ? response.data.message : '',
+    data: responseData,
+  };
 };

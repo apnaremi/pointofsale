@@ -73,7 +73,7 @@ export default function LoginView(props: Props) {
               onChangeText={handleChange('userName')}
               onBlur={handleBlur('userName')}
               value={values.userName}
-              placeholder={t('email').toUpperCase()}
+              placeholder={t('email')}
               returnKeyType="next"
               ref={userNameRef}
               keyboardType={'email-address'}
@@ -85,7 +85,7 @@ export default function LoginView(props: Props) {
               onChangeText={handleChange('password')}
               onBlur={handleBlur('password')}
               value={values.password}
-              placeholder={t('password').toUpperCase()}
+              placeholder={t('password')}
               returnKeyType="done"
               ref={passwordRef}
               onSubmitEditing={handleSubmit}

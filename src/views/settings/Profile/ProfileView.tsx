@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useState, useRef} from 'react';
 import {Alert, StyleSheet, View} from 'react-native';
-import {FormInput} from '../../../components';
+import {Button, FormInput} from '../../../components';
 import {Formik, FormikProps} from 'formik';
 import {Avatar, IconButton} from 'react-native-paper';
 import {useTranslation} from 'react-i18next';
@@ -42,8 +42,11 @@ export const ProfileView = React.forwardRef((props: Props, ref: any) => {
       data.email = props.userData.email;
       setInitialData(data);
       setAvatarURL(props.userData.photoUrl);
+      if (formRef.current) {
+        formRef.current.resetForm();
+      }
     }
-  }, [props.userData]);
+  }, [props.userData, props.allowEdit]);
 
   React.useImperativeHandle(ref, () => ({
     onSubmitFormEx(values: IUser) {
@@ -54,7 +57,7 @@ export const ProfileView = React.forwardRef((props: Props, ref: any) => {
   }));
 
   const onSubmitForm = (values: IUser) => {
-    props.onSubmitForm( {
+    props.onSubmitForm({
       firstName: values.firstName,
       lastName: values.lastName,
       mobile: values.mobile,
@@ -98,8 +101,8 @@ export const ProfileView = React.forwardRef((props: Props, ref: any) => {
 
   const onPressIcon = useCallback(() => {
     Alert.alert(
-      '',
       'Select an image from:',
+      '',
       [
         {
           text: 'Camera',
@@ -109,6 +112,7 @@ export const ProfileView = React.forwardRef((props: Props, ref: any) => {
               height: 400,
               cropping: true,
             }).then(image => {
+              appLog('image.path', image);
               setAvatarURL(image.path);
             });
           },
@@ -121,6 +125,7 @@ export const ProfileView = React.forwardRef((props: Props, ref: any) => {
               height: 400,
               cropping: true,
             }).then(image => {
+              appLog('image.path', image);
               setAvatarURL(image.path);
             });
           },
@@ -134,42 +139,50 @@ export const ProfileView = React.forwardRef((props: Props, ref: any) => {
       {cancelable: true},
     );
   }, []);
+
+  const onAssetChange = (asset: string) => {
+    // if (!asset.fileName) {
+    //   asset.fileName = 'avatar.jpg';
+    // }
+    //
+    // this.setState({uploadingAvatar: true});
+    // this.props.updateAvatar(
+    //   asset,
+    //   this.onUploadAvatarSuccess,
+    //   this.onUploadAvatarFailure,
+    // );
+  };
+
   return (
-    <View
-      ref={ref}
-      style={APPStyles.viewContainerComplete}
-      pointerEvents={props.allowEdit ? 'auto' : 'none'}>
+    <View ref={ref} style={APPStyles.viewContainerComplete}>
       <View style={styles.avatarContainer}>
         <Avatar.Image
           style={{backgroundColor: AppColors.primary}}
           size={150}
           source={{
-            uri: avatarURL,
+            uri: avatarURL ? avatarURL : undefined,
           }}
         />
         <IconButton
           style={styles.cameraButton}
-          color={
-            !props.allowEdit ? AppColors.gray_normal : AppColors.gray_darken_4
-          }
           icon={'camera-plus-outline'}
           onPress={onPressIcon}
         />
       </View>
       <Formik
         innerRef={formRef}
-        enableReinitialize={true}
+        enableReinitialize
         validate={validateForm}
         validateOnChange={true}
         initialValues={initialData}
         onSubmit={onSubmitForm}>
-        {({errors, handleBlur, handleChange, values}) => (
+        {({handleSubmit, errors, handleBlur, handleChange, values}) => (
           <View>
             <FormInput
               onChangeText={handleChange('firstName')}
               onBlur={handleBlur('firstName')}
               value={values.firstName}
-              placeholder={t('first_name').toUpperCase()}
+              placeholder={t('first_name')}
               returnKeyType="next"
               ref={firstNameRef}
               onSubmitEditing={onSubmitFirstName}
@@ -181,7 +194,7 @@ export const ProfileView = React.forwardRef((props: Props, ref: any) => {
               onChangeText={handleChange('lastName')}
               onBlur={handleBlur('lastName')}
               value={values.lastName}
-              placeholder={t('last_name').toUpperCase()}
+              placeholder={t('last_name')}
               returnKeyType="next"
               ref={lastNameRef}
               onSubmitEditing={onSubmitLlastName}
@@ -194,7 +207,7 @@ export const ProfileView = React.forwardRef((props: Props, ref: any) => {
               onBlur={handleBlur('mobile')}
               value={values.mobile}
               keyboardType={'numeric'}
-              placeholder={t('phone').toUpperCase()}
+              placeholder={t('phone')}
               returnKeyType="next"
               ref={phoneRef}
               onSubmitEditing={onSubmitPhone}
@@ -204,10 +217,17 @@ export const ProfileView = React.forwardRef((props: Props, ref: any) => {
             />
             <FormInput
               value={initialData.email}
-              placeholder={t('email').toUpperCase()}
+              placeholder={t('email')}
               iconName={'envelope'}
               editable={false}
             />
+            <Button
+              disabled={!props.allowEdit}
+              mode={'contained'}
+              onPress={handleSubmit}
+              style={APPStyles.commonButton}>
+              {t('save')}
+            </Button>
           </View>
         )}
       </Formik>

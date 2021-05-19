@@ -13,10 +13,9 @@ export default function* loginAsync(action: ILoginRequestState) {
     action.data.password,
   );
   appLog('login saga', response);
-  appLog('ILoginResponse', response);
   if (response.success) {
     action.onSuccess && action.onSuccess(response);
-    if (response.token && response.user) {
+    if (response.token && response.data) {
       yield put(loginActions.onLoginResponse(response));
     }
   } else {

@@ -27,3 +27,7 @@ export function navigateToCodeVerify(params?: object) {
 export function navigateToProfileScreen(params?: object) {
   NavigationService.navigate('ProfileScreen', params);
 }
+
+export function navigateToPwsUpdateScreen(params?: object) {
+  NavigationService.navigate('PwsUpdateScreen', params);
+}

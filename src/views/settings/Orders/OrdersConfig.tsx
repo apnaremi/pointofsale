@@ -1,10 +1,9 @@
 import React, {useCallback, useState} from 'react';
-import {ProfileView} from './ProfileView';
-import {FormHeader, MainContainer} from '../../../components';
+import {FormHeader, MainContainer, Text} from '../../../components';
 import APPStyles from '../../../theme/styles';
 import {useTranslation} from 'react-i18next';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {Keyboard} from 'react-native';
+import {Keyboard, StyleSheet, View} from 'react-native';
 import {saveProfile} from '../../../api/SettingsApi';
 import * as navigationActions from '../../../navigation/actions';
 import {appLog} from '../../../utils/helpers';
@@ -17,13 +16,15 @@ import {IUser} from '../../../config/models/data/user';
 import {useSelector} from 'react-redux';
 import {ILoginState} from '../../../config/models/reducers/login';
 import * as loginReducer from '../../../redux/user/reducer';
-import {updateProfile} from "../../../redux/user/actions";
+import {updateProfile} from '../../../redux/user/actions';
+import {Chip} from 'react-native-paper';
+import AppColors from '../../../theme/appColors';
 
 export type Props = {
   route?: any;
 };
 
-function ProfileContainer(props: Props) {
+function OrdersConfig(props: Props) {
   const dispatch = useDispatch();
   const userData = useSelector((state: any) => state.loginReducer.user);
   const {t} = useTranslation();
@@ -64,24 +65,44 @@ function ProfileContainer(props: Props) {
   return (
     <MainContainer>
       <FormHeader
-        title={t('profile')}
+        title={t('orders')}
         isEditMode={isEditMode}
         onEditPressed={onEditPressed}
         hideBackButton={true}
+        hideEditButton={true}
       />
       <KeyboardAwareScrollView
         keyboardShouldPersistTaps="handled"
         contentContainerStyle={APPStyles.scrollContentContainer}>
-        <ProfileView
-          ref={childRef}
-          onSubmitForm={onSubmitForm}
-          allowEdit={isEditMode}
-          userData={userData}
-          {...props}
-        />
+        <View style={APPStyles.viewContainerComplete}>
+          <Text>{t('bill_numbering_cycle')}</Text>
+          <View style={styles.chipsContainer}>
+            <Chip style={styles.chipButton} mode={'outlined'}>
+              {t('daily')}
+            </Chip>
+            <Chip style={styles.chipButton} mode={'outlined'}>
+              {t('weekly')}
+            </Chip>
+            <Chip style={styles.chipButton} mode={'outlined'}>
+              {t('monthly')}
+            </Chip>
+            <Chip style={styles.chipButton} mode={'outlined'}>
+              {t('permanent')}
+            </Chip>
+          </View>
+        </View>
       </KeyboardAwareScrollView>
     </MainContainer>
   );
 }
 
-export default ProfileContainer;
+const styles = StyleSheet.create({
+  chipButton: {
+    margin: 10,
+  },
+  chipsContainer: {
+    flexDirection: 'row',
+  },
+});
+
+export default OrdersConfig;

@@ -19,7 +19,7 @@ function PwsUpdateContainer() {
     pwsRecoveryApi(values.userName).then((result: any) => {
       dispatch(enableLoader(false));
       if (result.success) {
-        dispatch(enableModal(result.data.message));
+        dispatch(enableModal(result.message));
         navigationActions.goBack();
       } else {
         dispatch(enableModal(result.message, true));

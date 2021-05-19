@@ -54,7 +54,7 @@ const RootModal = (props: Props) => {
 };
 const styles = StyleSheet.create({
   messageText: {
-    fontSize: 18,
+    fontSize: APPMetrics.normalFontSize,
   },
   modal: {
     alignItems: 'center',

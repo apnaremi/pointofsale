@@ -10,6 +10,7 @@ type Props = {
   onEditPressed: Function;
   isEditMode: boolean;
   hideBackButton?: boolean;
+  hideEditButton?: boolean;
 };
 
 function FormHeader(props: Props) {
@@ -24,16 +25,19 @@ function FormHeader(props: Props) {
   return (
     <Appbar.Header dark={false} style={styles.headerContainer}>
       {!props.hideBackButton ? (
-        <Appbar.BackAction size={35} onPress={onPressIcon} />
+        <Appbar.BackAction
+          size={APPMetrics.headerIconSize}
+          onPress={onPressIcon}
+        />
       ) : null}
       <Appbar.Content titleStyle={styles.title} title={props.title} />
-      <View>
+      {!props.hideEditButton ? (
         <IconButton
-          size={35}
+          size={APPMetrics.headerIconSize}
           onPress={onEditPressed}
-          icon={props.isEditMode ? 'check' : 'pencil-outline'}
+          icon={props.isEditMode ? 'pencil-off-outline' : 'pencil-outline'}
         />
-      </View>
+      ) : null}
     </Appbar.Header>
   );
 }
