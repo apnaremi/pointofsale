@@ -36,7 +36,8 @@ API.interceptors.response.use(
     return response;
   },
   error => {
-    appLog('[Api - response error]', error.toJSON());
+    //appLog('[Api - response error]', error.toJSON());
+    appLog('[Api - response error response]', error.response);
     return Promise.reject(error);
   },
 );
@@ -44,7 +45,7 @@ API.interceptors.response.use(
 export default API;
 
 export const onFailure = (error: any) => {
-  return {message: error.message, success: false};
+  return {message: error.response.data.message, success: false};
 };
 
 export const onSuccessIsPassed = (response: any) => {

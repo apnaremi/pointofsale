@@ -4,7 +4,7 @@ import {Button, FormInput} from '../../components';
 import {Formik} from 'formik';
 import {useTranslation} from 'react-i18next';
 import APPStyles from '../../theme/styles';
-import {EMAIL_PATTERN} from '../../utils/constants';
+import {EMAIL_PATTERN, USER_DEV} from '../../utils/constants';
 
 type Props = {
   onSendResetMail: Function;
@@ -39,7 +39,7 @@ export default function PwsRecoveryView(props: Props) {
         validate={validateForm}
         validateOnChange={true}
         initialValues={{
-          userName: __DEV__ ? 'JaimeL2011@gmail.com' : '',
+          userName: __DEV__ ? USER_DEV : '',
         }}
         onSubmit={onSubmitForm}>
         {({errors, handleBlur, handleChange, handleSubmit, values}) => (

@@ -4,7 +4,7 @@ import {Button, PasswordInput, FormInput} from '../../components';
 import {Formik} from 'formik';
 import {useTranslation} from 'react-i18next';
 import APPStyles from '../../theme/styles';
-import {EMAIL_PATTERN} from '../../utils/constants';
+import {EMAIL_PATTERN, USER_DEV} from '../../utils/constants';
 import SplashScreen from 'react-native-splash-screen';
 import {navigateToPwsRecovery} from '../../navigation/actions';
 
@@ -63,8 +63,8 @@ export default function LoginView(props: Props) {
         validate={validateForm}
         validateOnChange={true}
         initialValues={{
-          userName: __DEV__ ? 'JaimeL2011@gmail.com' : '',
-          password: __DEV__ ? '123456' : '',
+          userName: __DEV__ ? USER_DEV : '',
+          password: __DEV__ ? '12345' : '',
         }}
         onSubmit={onSubmitForm}>
         {({handleChange, handleBlur, handleSubmit, values, errors}) => (
