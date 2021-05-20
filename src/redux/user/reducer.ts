@@ -1,9 +1,9 @@
 import createReducer from '../../config/redux/createReducer';
 import * as types from '../../config/redux/actions/types';
 
-import {ILoginState} from '../../config/models/reducers/login';
-import {ILoginResponseState} from '../../config/models/actions/login';
-import {IUser} from '../../config/models/data/user';
+import {ILoginState} from '../../config/models/reducers';
+import {ILoginResponseState} from '../../config/models/actions';
+import {IUser} from '../../config/models/data';
 import {appLog} from '../../utils/helpers';
 
 const initialState: ILoginState = {
@@ -18,7 +18,7 @@ export const loginReducer = createReducer(initialState, {
     return {...state};
   },
   [types.LOGIN_RESPONSE](state: ILoginState, action: ILoginResponseState) {
-    appLog('ILoginResponseState', action);
+    appLog('login reducer', action);
     return {
       ...state,
       user: action.response.data,

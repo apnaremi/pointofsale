@@ -5,7 +5,7 @@ import {Formik, FormikProps} from 'formik';
 import {Avatar, IconButton} from 'react-native-paper';
 import {useTranslation} from 'react-i18next';
 import APPStyles from '../../../theme/styles';
-import {IUser} from '../../../config/models/data/user';
+import {IUser} from '../../../config/models/data';
 import AppColors from '../../../theme/appColors';
 import ImagePicker from 'react-native-image-crop-picker';
 import {appLog} from '../../../utils/helpers';

@@ -2,9 +2,9 @@ import {put, call} from 'redux-saga/effects';
 import {loginApi} from '../../api/loginApi';
 import * as loginActions from './actions';
 
-import {ILoginResponse} from '../../config/models/api/login';
+import {ILoginResponse} from '../../config/models/api';
 import {appLog} from '../../utils/helpers';
-import {ILoginRequestState} from '../../config/models/actions/login';
+import {ILoginRequestState} from '../../config/models/actions';
 
 export default function* loginAsync(action: ILoginRequestState) {
   const response: ILoginResponse = yield call(
@@ -16,6 +16,7 @@ export default function* loginAsync(action: ILoginRequestState) {
   if (response.success) {
     action.onSuccess && action.onSuccess(response);
     if (response.token && response.data) {
+      appLog('login saga', response);
       yield put(loginActions.onLoginResponse(response));
     }
   } else {

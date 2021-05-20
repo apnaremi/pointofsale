@@ -1,7 +1,7 @@
 import API, {onFailure, onSuccess} from '../config/api';
 import ApiConstants from '../config/api/ApiConstants';
 import {getUniqueId} from 'react-native-device-info';
-import {ILoginResponse} from '../config/models/api/login';
+import {ILoginResponse} from '../config/models/api';
 import {UNIQUE_ID_DEV} from '../utils/constants';
 import {appLog} from '../utils/helpers';
 
@@ -12,10 +12,7 @@ export function loginApi(userName: string, password: string) {
     password: password,
     username: userName,
   };
-  return API.post(
-    ApiConstants.LOGIN,
-    '{"device_id":"01333b85-d246-4cb7-bef2-1f860ca80540","grant_type":"password","username":"ppntax+tast@gmail.com","password":"1234567"}',
-  )
+  return API.post(ApiConstants.LOGIN, data)
     .then(onSuccessLogin)
     .catch(onFailure);
 }

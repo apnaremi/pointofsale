@@ -1,3 +1,5 @@
+import {IOrderingSettings} from './data';
+
 export interface ILoginResponse {
   success: boolean;
   token: any;
@@ -6,4 +8,10 @@ export interface ILoginResponse {
   tfaRequired: boolean;
   tfaToken: string;
   tfaUserId: string;
+}
+
+export interface IApiOrderingSettingsResponse {
+  success: boolean;
+  message: string;
+  data: IOrderingSettings;
 }

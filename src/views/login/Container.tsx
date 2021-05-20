@@ -6,8 +6,9 @@ import APPStyles from '../../theme/styles';
 import {useDispatch} from 'react-redux';
 import * as loginActions from '../../redux/user/actions';
 import * as rootActions from '../../config/redux/actions/rootActions';
-import {ILoginResponse} from '../../config/models/api/login';
+import {ILoginResponse} from '../../config/models/api';
 import {navigateToCodeVerify, navigateToHome} from '../../navigation/actions';
+import {appLog} from '../../utils/helpers';
 
 function Container() {
   const dispatch = useDispatch();
@@ -24,6 +25,7 @@ function Container() {
         tfaUserId: response.tfaUserId,
       });
     } else {
+      appLog('OrderingSettings userData', response);
       navigateToHome();
     }
   };

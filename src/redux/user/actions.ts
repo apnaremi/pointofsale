@@ -1,6 +1,7 @@
 import * as types from '../../config/redux/actions/types';
-import {ILoginResponse} from '../../config/models/api/login';
+import {ILoginResponse} from '../../config/models/api';
 import API from '../../config/api';
+import {appLog} from '../../utils/helpers';
 
 export function requestLogin(
   data: {username: string; password: string},
@@ -22,6 +23,7 @@ export function loginFailed() {
 }
 
 export function onLoginResponse(response: ILoginResponse) {
+  appLog('login action onLoginResponse', response);
   API.defaults.headers = {
     Authorization: `Bearer ${response.token.access_token}`,
   };

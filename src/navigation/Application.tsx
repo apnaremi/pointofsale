@@ -24,6 +24,7 @@ import {useTranslation} from 'react-i18next';
 import APPMetrics from '../utils/metrics';
 import PwsUpdateView from '../views/settings/pwsUpdate';
 import OrdersConfigView from '../views/settings/Orders/OrdersConfig';
+import QRCodeView from '../views/settings/QRCode/QRCode';
 
 const MainStack = createStackNavigator();
 const RootStack = createStackNavigator();
@@ -193,9 +194,9 @@ function SettingsDrawer() {
         component={DemoScreen}
       />
       <Drawer.Screen
-        name="ProfileScreen5"
+        name="QRCodeScreen"
         options={{drawerLabel: t('qr_code')}}
-        component={DemoScreen}
+        component={QRCodeView}
       />
     </Drawer.Navigator>
   );

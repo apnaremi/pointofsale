@@ -3,7 +3,7 @@ import {FormHeader, MainContainer, Text} from '../../../components';
 import APPStyles from '../../../theme/styles';
 import {useTranslation} from 'react-i18next';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {Keyboard, StyleSheet, View} from 'react-native';
+import {Image, Keyboard, StyleSheet, View} from 'react-native';
 import {saveProfile} from '../../../api/SettingsApi';
 import * as navigationActions from '../../../navigation/actions';
 import {appLog} from '../../../utils/helpers';
@@ -15,14 +15,17 @@ import {
 import {useSelector} from 'react-redux';
 import {updateProfile} from '../../../redux/user/actions';
 import {Chip} from 'react-native-paper';
+import * as orderSettingsReducer from '../../../redux/orderSettings/reducer';
 
 export type Props = {
   route?: any;
 };
 
-function OrdersConfig(props: Props) {
+function QRCode(props: Props) {
   const dispatch = useDispatch();
-  const userData = useSelector((state: any) => state.loginReducer.user);
+  const orderingSettings = useSelector(
+    (state: any) => state.orderSettingsReducer.OrderingSettings,
+  );
   const {t} = useTranslation();
   const [isEditMode, setEditMode] = useState(false);
 
@@ -43,25 +46,10 @@ function OrdersConfig(props: Props) {
     });
   }, []);
 
-  const onSubmitForm = useCallback(dataToSave => {
-    appLog('dataToSave', dataToSave);
-    Keyboard.dismiss();
-    dispatch(enableLoader(true));
-    saveProfile(userData.id, dataToSave).then((result: any) => {
-      dispatch(enableLoader(false));
-      if (result.success) {
-        dispatch(enableModal(result.message));
-        dispatch(updateProfile(result));
-      } else {
-        dispatch(enableModal(result.message, true));
-      }
-    });
-  }, []);
-
   return (
     <MainContainer>
       <FormHeader
-        title={t('orders')}
+        title={t('qr_code')}
         isEditMode={isEditMode}
         onEditPressed={onEditPressed}
         hideBackButton={true}
@@ -71,21 +59,10 @@ function OrdersConfig(props: Props) {
         keyboardShouldPersistTaps="handled"
         contentContainerStyle={APPStyles.scrollContentContainer}>
         <View style={APPStyles.viewContainerComplete}>
-          <Text>{t('bill_numbering_cycle')}</Text>
-          <View style={styles.chipsContainer}>
-            <Chip style={styles.chipButton} mode={'outlined'}>
-              {t('daily')}
-            </Chip>
-            <Chip style={styles.chipButton} mode={'outlined'}>
-              {t('weekly')}
-            </Chip>
-            <Chip style={styles.chipButton} mode={'outlined'}>
-              {t('monthly')}
-            </Chip>
-            <Chip style={styles.chipButton} mode={'outlined'}>
-              {t('permanent')}
-            </Chip>
-          </View>
+          <Image
+            source={{uri: orderingSettings.orderSettings.qrCodeUrl}}
+            style={{width: 400, height: 400}}
+          />
         </View>
       </KeyboardAwareScrollView>
     </MainContainer>
@@ -101,4 +78,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default OrdersConfig;
+export default QRCode;

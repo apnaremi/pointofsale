@@ -1,7 +1,7 @@
 import React, {useCallback} from 'react';
 import {Appbar, IconButton} from 'react-native-paper';
 import * as navigationActions from '../navigation/actions';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet} from 'react-native';
 import AppColors from '../theme/appColors';
 import APPMetrics from '../utils/metrics';
 

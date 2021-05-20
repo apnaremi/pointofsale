@@ -13,11 +13,8 @@ import {
   enableLoader,
   enableModal,
 } from '../../../config/redux/actions/rootActions';
-import {IUser} from '../../../config/models/data/user';
 import {useSelector} from 'react-redux';
-import {ILoginState} from '../../../config/models/reducers/login';
-import * as loginReducer from '../../../redux/user/reducer';
-import {updateProfile} from "../../../redux/user/actions";
+import {updateProfile} from '../../../redux/user/actions';
 
 export type Props = {
   route?: any;
