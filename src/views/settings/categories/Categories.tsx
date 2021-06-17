@@ -1,11 +1,12 @@
+Categories;
 import React, {useCallback, useState} from 'react';
-import {Button, FormHeader, MainContainer, Text} from '../../../components';
+import {FormHeader, MainContainer, Text} from '../../../components';
 import APPStyles from '../../../theme/styles';
 import {useTranslation} from 'react-i18next';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {Image, Keyboard, StyleSheet, View} from 'react-native';
+import {Keyboard, StyleSheet, View} from 'react-native';
 import {
-  getQRCodeFile,
+  changePassword,
   saveProfile,
   updateBillNumberingAPI,
 } from '../../../api/SettingsApi';
@@ -17,61 +18,50 @@ import {
   enableModal,
 } from '../../../config/redux/actions/rootActions';
 import {useSelector} from 'react-redux';
+import _ from 'lodash';
 import {updateProfile} from '../../../redux/user/actions';
 import {Chip} from 'react-native-paper';
-import * as orderSettingsReducer from '../../../redux/orderSettings/reducer';
+import {BILL_NUMBERING} from '../../../utils/enums';
 import {updateBillNumbering} from '../../../redux/orderSettings/actions';
+import {navigateToLogin} from '../../../navigation/actions';
 
 export type Props = {
   route?: any;
 };
 
-function QRCode(props: Props) {
+function Categories(props: Props) {
   const dispatch = useDispatch();
-  const orderingSettings = useSelector(
-    (state: any) => state.orderSettingsReducer.OrderingSettings,
+  const seatingArrangement = useSelector(
+    (state: any) =>
+      state.orderSettingsReducer.OrderingSettings.seatingArrangement,
   );
   const userData = useSelector((state: any) => state.loginReducer.user);
   const {t} = useTranslation();
-  const [isEditMode, setEditMode] = useState(false);
 
-  const childRef = React.useRef();
-
-  const onEditPressed = useCallback(() => {
-    setEditMode(previousState => {
-      if (previousState) {
-        appLog('setEditMode call summit');
-        // if (childRef && childRef.current) {
-        //   // @ts-ignore
-        //   childRef.current.onSubmitFormEx();
-        // }
-        return !previousState;
-      } else {
-        return !previousState;
-      }
-    });
-  }, []);
-
-  const onDownloadCodePress = useCallback(() => {
-    dispatch(enableLoader(true));
-    getQRCodeFile(userData.id, userData.id, userData.companies[0].id).then(
-      (result: any) => {
+  const onChipPressed = useCallback(
+    (billNumbering: number) => () => {
+      appLog('billNumbering', billNumbering);
+      dispatch(enableLoader(true));
+      updateBillNumberingAPI(
+        userData.id,
+        userData.companies[0].id,
+        billNumbering,
+      ).then((result: any) => {
         dispatch(enableLoader(false));
         if (result.success) {
-          dispatch(enableModal(result.message));
+          dispatch(updateBillNumbering(billNumbering));
         } else {
           dispatch(enableModal(result.message, true));
         }
-      },
-    );
-  }, []);
+      });
+    },
+    [],
+  );
 
   return (
     <MainContainer>
       <FormHeader
-        title={t('qr_code')}
-        isEditMode={isEditMode}
-        onEditPressed={onEditPressed}
+        title={t('seating_arrangement')}
         hideBackButton={true}
         hideEditButton={true}
       />
@@ -79,16 +69,15 @@ function QRCode(props: Props) {
         keyboardShouldPersistTaps="handled"
         contentContainerStyle={APPStyles.scrollContentContainer}>
         <View style={APPStyles.viewContainerComplete}>
-          <Image
-            source={{uri: orderingSettings.orderSettings.qrCodeUrl}}
-            style={{width: 400, height: 400}}
-          />
-{/*          <Button
-            mode={'contained'}
-            onPress={onDownloadCodePress}
-            style={APPStyles.commonButton}>
-            {t('save')}
-          </Button>*/}
+          <View style={styles.chipsContainer}>
+            {!_.isEmpty(seatingArrangement)
+              ? seatingArrangement.map((item: any) => (
+                  <Chip style={styles.chipButton} mode={'outlined'}>
+                    {item.name}
+                  </Chip>
+                ))
+              : null}
+          </View>
         </View>
       </KeyboardAwareScrollView>
     </MainContainer>
@@ -104,4 +93,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default QRCode;
+export default Categories;

@@ -20,3 +20,47 @@ export function changePassword(
     .then(onSuccess)
     .catch(onFailure);
 }
+
+export function updateBillNumberingAPI(
+  userId: string,
+  companyId: string,
+  billNumbering: number,
+) {
+  let URL = `${ApiConstants.ORDERING}`;
+  return API.patch(URL, {
+    userId: userId,
+    companyId: companyId,
+    billNumbering: billNumbering,
+  })
+    .then(onSuccess)
+    .catch(onFailure);
+}
+
+export function getQRCodeFile(id: string, userId: string, companyId: string) {
+  let URL = `${ApiConstants.DOWNLOAD_QR_CODE}`;
+  return API.get(URL, {
+    params: {
+      id,
+      userId,
+      companyId,
+    },
+  })
+    .then(onSuccess)
+    .catch(onFailure);
+}
+
+export function deleteSeatingArrangementAPI(
+  id: string,
+  userId: string,
+  companyId: string,
+) {
+  let URL = `${ApiConstants.SEATING_ARRANGEMENT}/${id}`;
+  return API.delete(URL, {
+    params: {
+      userId,
+      companyId,
+    },
+  })
+    .then(onSuccess)
+    .catch(onFailure);
+}

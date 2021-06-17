@@ -7,8 +7,8 @@ import APPMetrics from '../utils/metrics';
 
 type Props = {
   title: string;
-  onEditPressed: Function;
-  isEditMode: boolean;
+  onEditPressed?: Function;
+  isEditMode?: boolean;
   hideBackButton?: boolean;
   hideEditButton?: boolean;
 };
@@ -19,7 +19,9 @@ function FormHeader(props: Props) {
   }, []);
 
   const onEditPressed = useCallback(() => {
-    props.onEditPressed(!props.isEditMode);
+    if (props.onEditPressed) {
+      props.onEditPressed(!props.isEditMode);
+    }
   }, []);
 
   return (

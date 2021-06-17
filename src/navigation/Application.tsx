@@ -25,6 +25,8 @@ import APPMetrics from '../utils/metrics';
 import PwsUpdateView from '../views/settings/pwsUpdate';
 import OrdersConfigView from '../views/settings/Orders/OrdersConfig';
 import QRCodeView from '../views/settings/QRCode/QRCode';
+import SeatingArrangement from '../views/settings/seatingArrangement/SeatingArrangement';
+import Categories from '../views/settings/categories/Categories';
 
 const MainStack = createStackNavigator();
 const RootStack = createStackNavigator();
@@ -169,9 +171,9 @@ function SettingsDrawer() {
         component={ProfileView}
       />
       <Drawer.Screen
-        name="SettingsScreen"
+        name="SeatingArrangementScreen"
         options={{drawerLabel: t('seating_arrangement')}}
-        component={DemoScreen}
+        component={SeatingArrangement}
       />
       <Drawer.Screen
         name="OrdersConfigScreen"
@@ -184,9 +186,9 @@ function SettingsDrawer() {
         component={PwsUpdateView}
       />
       <Drawer.Screen
-        name="SettingsScreen3"
+        name="CategoriesScreen"
         options={{drawerLabel: t('add_category')}}
-        component={DemoScreen}
+        component={Categories}
       />
       <Drawer.Screen
         name="ProfileScreen4"

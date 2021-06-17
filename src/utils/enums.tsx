@@ -1,5 +1,6 @@
-export const USER_TYPE = {
-  TAX: {value: 2, name: 'tax_agent'},
-  BAS: {value: 3, name: 'bas_agent'},
-  BUSINESS: {value: 4, name: 'business_owner'},
+export const BILL_NUMBERING = {
+  DAILY: 1,
+  WEEKLY: 2,
+  MONTHLY: 3,
+  PERMANENT: 4,
 };

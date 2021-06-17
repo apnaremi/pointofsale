@@ -1,4 +1,4 @@
-import {IOrderingSettings, IUser} from './data';
+import {ICategory, IOrderingSettings, IUser} from './data';
 
 export interface ILoginState {
   isLoggedIn: boolean;
@@ -9,4 +9,8 @@ export interface ILoginState {
 
 export interface IOrderingSettingsState {
   OrderingSettings: IOrderingSettings;
+}
+
+export interface ICategoryState {
+  Categories: Array<ICategory>;
 }

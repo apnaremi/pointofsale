@@ -13,3 +13,10 @@ export interface IOrderingSettings {
   seatingArrangement: Array<any>;
   paymentMethods: Array<string>;
 }
+
+export interface ICategory {
+  name: string;
+  companyId: string;
+  id: string;
+  createdDateUtc: number;
+}

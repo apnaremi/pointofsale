@@ -64,7 +64,7 @@ export default function LoginView(props: Props) {
         validateOnChange={true}
         initialValues={{
           userName: __DEV__ ? USER_DEV : '',
-          password: __DEV__ ? '12345' : '',
+          password: __DEV__ ? '123456' : '',
         }}
         onSubmit={onSubmitForm}>
         {({handleChange, handleBlur, handleSubmit, values, errors}) => (

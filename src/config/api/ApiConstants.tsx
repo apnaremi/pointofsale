@@ -9,6 +9,10 @@ const ApiConstants = {
   RESEND_CODE_VERIFY: '/api/token/resendverification',
   ACCOUNTS: '/api/accounts',
   ORDERING_SETTINGS: '/api/ordering/settings',
+  ORDERING: '/api/ordering',
+  DOWNLOAD_QR_CODE: '/api/ordering/downladqrcode',
+  ORDERING_CATEGORY: '/api/ordering/category',
+  SEATING_ARRANGEMENT : '/api/ordering/seatingarrangement'
 };
 
 export default ApiConstants;
