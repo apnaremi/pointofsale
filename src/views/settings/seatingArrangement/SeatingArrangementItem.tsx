@@ -4,20 +4,22 @@ import {Button, FormInput} from '../../../components';
 import {Formik, FormikProps} from 'formik';
 import {useTranslation} from 'react-i18next';
 import APPStyles from '../../../theme/styles';
+import _ from 'lodash';
 
 type Props = {
   onSubmitForm: Function;
   allowEdit: boolean;
+  itemForEdit: any;
 };
 
 export interface IPwsUpdate {
-  password: string;
-  confirmPassword: string;
+  name: string;
+  values: string;
 }
 
 export default function SeatingArrangementItem(props: Props) {
-  const passwordRef = React.createRef<any>();
-  const confirmPasswordRef = React.createRef<any>();
+  const field1Ref = React.createRef<any>();
+  const field2Ref = React.createRef<any>();
   const {t} = useTranslation();
   const formRef = useRef<FormikProps<IPwsUpdate>>(null);
 
@@ -28,33 +30,31 @@ export default function SeatingArrangementItem(props: Props) {
   }, [props.allowEdit]);
 
   const onSubmitPassword = useCallback(() => {
-    if (confirmPasswordRef.current) {
-      confirmPasswordRef.current.focus();
+    if (field2Ref.current) {
+      field2Ref.current.focus();
     }
-  }, [confirmPasswordRef]);
+  }, [field2Ref]);
 
   const validateForm = useCallback(values => {
     const errors = {} as any;
 
-    if (!values.password) {
-      errors.password = t('newPasswordEmpty');
+    if (!values.name) {
+      errors.name = t('required_field');
     }
-    if (!values.confirmPassword) {
-      errors.confirmPassword = t('confirmNewPasswordEmpty');
-    }
-
-    if (values.confirmPassword !== values.password) {
-      errors.password = t('notMatchPassword');
-      errors.confirmPassword = t('notMatchPassword');
+    if (!values.values) {
+      errors.values = t('required_field');
     }
 
     return errors;
   }, []);
 
-  const onSubmitForm = useCallback(values => {
-    Keyboard.dismiss();
-    props.onSubmitForm(values);
-  }, []);
+  const onSubmitForm = useCallback(
+    values => {
+      Keyboard.dismiss();
+      props.onSubmitForm(values, props.itemForEdit);
+    },
+    [props.itemForEdit],
+  );
 
   return (
     <View style={APPStyles.viewContainerComplete}>
@@ -63,31 +63,34 @@ export default function SeatingArrangementItem(props: Props) {
         validate={validateForm}
         enableReinitialize={true}
         validateOnChange={true}
-        initialValues={{password: '', confirmPassword: ''}}
+        initialValues={{
+          name: (props.itemForEdit.name as string) || '',
+          values: (props.itemForEdit.values as string) || '',
+        }}
         onSubmit={onSubmitForm}>
         {({errors, handleChange, handleBlur, handleSubmit, values}) => (
           <View>
             <FormInput
-              onChangeText={handleChange('password')}
-              onBlur={handleBlur('confirmPassword')}
-              value={values.password}
-              placeholder={t('new_password')}
+              onChangeText={handleChange('name')}
+              onBlur={handleBlur('values')}
+              value={values.name}
+              placeholder={t('enter_name')}
               returnKeyType="next"
-              ref={passwordRef}
+              ref={field1Ref}
               onSubmitEditing={onSubmitPassword}
-              invalidLabel={errors.password}
+              invalidLabel={errors.name}
               iconName={'note'}
               editable={props.allowEdit}
             />
             <FormInput
-              onChangeText={handleChange('confirmPassword')}
-              onBlur={handleBlur('confirmPassword')}
-              value={values.confirmPassword}
-              placeholder={t('confirm_new_password')}
+              onChangeText={handleChange('values')}
+              onBlur={handleBlur('values')}
+              value={values.values}
+              placeholder={t('add_details')}
               returnKeyType="done"
-              ref={confirmPasswordRef}
+              ref={field2Ref}
               onSubmitEditing={handleSubmit}
-              invalidLabel={errors.confirmPassword}
+              invalidLabel={errors.values}
               iconName={'layers'}
               editable={props.allowEdit}
             />

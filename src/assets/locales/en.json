@@ -42,6 +42,12 @@
     "daily": "Daily",
     "weekly": "Weekly",
     "monthly": "Monthly",
-    "permanent": "Permanent"
+    "enter_name": "Enter name",
+    "add_details": "Add details(Separated by \",\")",
+    "add_more": "+ Add more",
+    "required_field": "required field",
+    "cancel": "Cancel",
+    "pin_code": "Pin Code",
+    "are_you_sure": "Are you sure?"
   }
 }

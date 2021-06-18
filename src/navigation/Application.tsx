@@ -190,11 +190,11 @@ function SettingsDrawer() {
         options={{drawerLabel: t('add_category')}}
         component={Categories}
       />
-      <Drawer.Screen
+      {/*      <Drawer.Screen
         name="ProfileScreen4"
         options={{drawerLabel: t('pin_code')}}
         component={DemoScreen}
-      />
+      />*/}
       <Drawer.Screen
         name="QRCodeScreen"
         options={{drawerLabel: t('qr_code')}}

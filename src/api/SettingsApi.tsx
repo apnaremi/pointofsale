@@ -64,3 +64,19 @@ export function deleteSeatingArrangementAPI(
     .then(onSuccess)
     .catch(onFailure);
 }
+
+export function putSeatingArrangementAPI(
+  userId: string,
+  companyId: string,
+  seatingArrangements: any,
+) {
+  let URL = `${ApiConstants.ORDERING}`;
+
+  return API.put(URL, {
+    userId: userId,
+    companyId: companyId,
+    seatingArrangements: seatingArrangements,
+  })
+    .then(onSuccess)
+    .catch(onFailure);
+}

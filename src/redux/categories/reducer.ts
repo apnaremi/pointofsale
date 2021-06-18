@@ -24,17 +24,4 @@ export const categoriesReducer = createReducer(initialState, {
       OrderingSettings: action.response,
     };
   },
-
-  [types.BILL_NUMBERING_UPDATE](state: IOrderingSettingsState, action: any) {
-    return {
-      ...state,
-      OrderingSettings: {
-        ...state.OrderingSettings,
-        orderSettings: {
-          ...state.OrderingSettings.orderSettings,
-          billNumbering: action.payload,
-        },
-      },
-    };
-  },
 });

@@ -15,7 +15,7 @@ export const orderSettingsReducer = createReducer(initialState, {
     state: IOrderingSettingsState,
     action: IOrderingSettingsResponse,
   ) {
-    appLog('onSuccessSettings reducer', action.response)
+    appLog('onSuccessSettings reducer', action.response);
     return {
       ...state,
       OrderingSettings: action.response,
@@ -31,6 +31,31 @@ export const orderSettingsReducer = createReducer(initialState, {
           ...state.OrderingSettings.orderSettings,
           billNumbering: action.payload,
         },
+      },
+    };
+  },
+  [types.DELETE_SEATING_ARRANGEMENT](
+    state: IOrderingSettingsState,
+    action: any,
+  ) {
+    appLog('deleteSeatingArrangement redux', action);
+    appLog(
+      'deleteSeatingArrangement before',
+      state.OrderingSettings.seatingArrangement,
+    );
+    appLog(
+      'deleteSeatingArrangement redux',
+      state.OrderingSettings.seatingArrangement.filter(
+        item => item.id !== action.payload,
+      ),
+    );
+    return {
+      ...state,
+      OrderingSettings: {
+        ...state.OrderingSettings,
+        seatingArrangement: state.OrderingSettings.seatingArrangement.filter(
+          item => item.id !== action.payload,
+        ),
       },
     };
   },

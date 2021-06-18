@@ -33,7 +33,7 @@ export function updateBillNumbering(billNumbering: number) {
 }
 
 export function deleteSeatingArrangementAction(SeatingArrangementId: number) {
-  appLog('deleteSeatingArrangement', SeatingArrangementId);
+  appLog('deleteSeatingArrangement action', SeatingArrangementId);
   return {
     type: types.DELETE_SEATING_ARRANGEMENT,
     payload: SeatingArrangementId,
