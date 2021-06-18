@@ -18,10 +18,10 @@ export interface IPwsUpdate {
 }
 
 export default function SeatingArrangementItem(props: Props) {
+  const formRef = useRef<FormikProps<IPwsUpdate>>(null);
   const field1Ref = React.createRef<any>();
   const field2Ref = React.createRef<any>();
   const {t} = useTranslation();
-  const formRef = useRef<FormikProps<IPwsUpdate>>(null);
 
   React.useEffect(() => {
     if (formRef.current) {

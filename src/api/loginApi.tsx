@@ -73,3 +73,13 @@ export function sendVerifyCode(
     .then(onSuccess)
     .catch(onFailure);
 }
+
+export function updateAvatarAPI(photoUrl: string, userId: string) {
+  const data = {
+    userId,
+    photoUrl,
+  };
+  return API.put(`/api/accounts/${userId}/updateavatar`, data)
+    .then(onSuccess)
+    .catch(onFailure);
+}

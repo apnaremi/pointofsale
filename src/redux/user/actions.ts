@@ -45,3 +45,16 @@ export function updateProfile(response: ILoginResponse) {
     response,
   };
 }
+
+export function requestUpdateAvatar(
+  data: {userId: string; image: any; isForDelete: boolean},
+  onSuccess: Function,
+  onFailure: Function,
+) {
+  return {
+    type: types.UPDATE_PROFILE_AVATAR_REQUEST,
+    data,
+    onSuccess,
+    onFailure,
+  };
+}

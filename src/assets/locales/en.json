@@ -48,6 +48,10 @@
     "required_field": "required field",
     "cancel": "Cancel",
     "pin_code": "Pin Code",
-    "are_you_sure": "Are you sure?"
+    "are_you_sure": "Are you sure?",
+    "categories": "Categories",
+    "first_name": "First Name",
+    "last_name": "Last Name",
+    "phone": "Phone"
   }
 }

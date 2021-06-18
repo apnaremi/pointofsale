@@ -30,16 +30,7 @@ function ProfileContainer(props: Props) {
 
   const onEditPressed = useCallback(() => {
     setEditMode(previousState => {
-      if (previousState) {
-        appLog('setEditMode call summit');
-        // if (childRef && childRef.current) {
-        //   // @ts-ignore
-        //   childRef.current.onSubmitFormEx();
-        // }
-        return !previousState;
-      } else {
-        return !previousState;
-      }
+      return !previousState;
     });
   }, []);
 
@@ -52,6 +43,7 @@ function ProfileContainer(props: Props) {
       if (result.success) {
         dispatch(enableModal(result.message));
         dispatch(updateProfile(result));
+        onEditPressed();
       } else {
         dispatch(enableModal(result.message, true));
       }

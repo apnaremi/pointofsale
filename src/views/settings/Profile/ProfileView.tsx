@@ -9,6 +9,12 @@ import {IUser} from '../../../config/models/data';
 import AppColors from '../../../theme/appColors';
 import ImagePicker from 'react-native-image-crop-picker';
 import {appLog} from '../../../utils/helpers';
+import * as orderSettingsActions from '../../../redux/orderSettings/actions';
+import {enableLoader} from '../../../config/redux/actions/rootActions';
+import {useDispatch} from 'react-redux';
+import {requestUpdateAvatar} from '../../../redux/user/actions';
+import {IApiOrderingSettingsResponse} from '../../../config/models/api';
+import * as rootActions from '../../../config/redux/actions/rootActions';
 
 type Props = {
   onSubmitForm: Function;
@@ -18,6 +24,7 @@ type Props = {
 
 export const ProfileView = React.forwardRef((props: Props, ref: any) => {
   const {t} = useTranslation();
+  const dispatch = useDispatch();
   const formRef = useRef<FormikProps<IUser>>(null);
   const firstNameRef = React.createRef<any>();
   const lastNameRef = React.createRef<any>();
@@ -113,7 +120,14 @@ export const ProfileView = React.forwardRef((props: Props, ref: any) => {
               cropping: true,
             }).then(image => {
               appLog('image.path', image);
-              setAvatarURL(image.path);
+              dispatch(rootActions.enableLoader(true));
+              dispatch(
+                requestUpdateAvatar(
+                  {userId: props.userData.id, image: image, isForDelete: false},
+                  onSuccess,
+                  onFailure,
+                ),
+              );
             });
           },
         },
@@ -126,7 +140,14 @@ export const ProfileView = React.forwardRef((props: Props, ref: any) => {
               cropping: true,
             }).then(image => {
               appLog('image.path', image);
-              setAvatarURL(image.path);
+              dispatch(rootActions.enableLoader(true));
+              dispatch(
+                requestUpdateAvatar(
+                  {userId: props.userData.id, image: image, isForDelete: false},
+                  onSuccess,
+                  onFailure,
+                ),
+              );
             });
           },
         },
@@ -139,6 +160,17 @@ export const ProfileView = React.forwardRef((props: Props, ref: any) => {
       {cancelable: true},
     );
   }, []);
+
+  const onSuccess = (response: any) => {
+    dispatch(rootActions.enableLoader(false));
+    setAvatarURL(response.data.photoUrl);
+    appLog('IApiOrderingSettingsResponse', response.data);
+  };
+
+  const onFailure = (error: any) => {
+    dispatch(rootActions.enableLoader(false));
+    dispatch(rootActions.enableModal(error, true));
+  };
 
   const onAssetChange = (asset: string) => {
     // if (!asset.fileName) {

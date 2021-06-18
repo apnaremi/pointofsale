@@ -27,3 +27,10 @@ export interface IOrderingSettingsRequestState {
   onSuccess: Function;
   onFailure: Function;
 }
+
+export interface IRequestAvatarState {
+  type: String;
+  data: {userId: string; image: any; isForDelete: boolean};
+  onSuccess: Function;
+  onFailure: Function;
+}
