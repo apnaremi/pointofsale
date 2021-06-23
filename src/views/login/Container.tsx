@@ -1,17 +1,36 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useState} from 'react';
 import LoginView from './LoginView';
-import {View} from 'react-native';
+import {Keyboard, View} from 'react-native';
 import {MainContainer} from '../../components';
 import APPStyles from '../../theme/styles';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import * as loginActions from '../../redux/user/actions';
 import * as rootActions from '../../config/redux/actions/rootActions';
 import {ILoginResponse} from '../../config/models/api';
 import {navigateToCodeVerify, navigateToHome} from '../../navigation/actions';
 import {appLog} from '../../utils/helpers';
+import PinView from '../settings/PIN/PinView';
+import {
+  createPINSuccess,
+  enableLoader,
+  enableModal,
+} from '../../config/redux/actions/rootActions';
+import {createPINAPI, deletePINAPI, loginPINApi} from '../../api/loginApi';
+import * as navigationActions from '../../navigation/actions';
 
 function Container() {
   const dispatch = useDispatch();
+
+  const [showPINForm, setShowPINForm] = useState(true);
+
+  const userIdLinkWithPIN = useSelector(
+    (state: any) => state.rootReducer.userIdLinkWithPIN,
+  );
+
+  const toggleShowPINForm = useCallback(() => {
+    setShowPINForm(previousState => !previousState);
+  }, []);
+
   const requestLogin = useCallback(values => {
     dispatch(loginActions.requestLogin(values, onSuccess, onFailure));
     dispatch(rootActions.enableLoader(true));
@@ -35,10 +54,30 @@ function Container() {
     dispatch(rootActions.enableModal(error, true));
   };
 
+  const loginPIN = useCallback(values => {
+    Keyboard.dismiss();
+    let pin = values.input1 + values.input2 + values.input3 + values.input4;
+    appLog('pin', pin);
+    dispatch(enableLoader(true));
+    loginPINApi(pin, userIdLinkWithPIN).then((result: any) => {
+      dispatch(enableLoader(false));
+      if (result.success) {
+        dispatch(loginActions.onLoginResponse(result));
+        navigateToHome();
+      } else {
+        dispatch(enableModal(result.message, true));
+      }
+    });
+  }, []);
+
   return (
     <MainContainer>
       <View style={APPStyles.contentContainer}>
-        <LoginView requestLogin={requestLogin} />
+        {userIdLinkWithPIN && showPINForm ? (
+          <PinView onSuccess={loginPIN} onCancel={toggleShowPINForm} />
+        ) : (
+          <LoginView requestLogin={requestLogin} />
+        )}
       </View>
     </MainContainer>
   );

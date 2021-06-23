@@ -83,3 +83,37 @@ export function updateAvatarAPI(photoUrl: string, userId: string) {
     .then(onSuccess)
     .catch(onFailure);
 }
+
+// export function loginPIN(data) {
+//   return post('/api/token/pin', data);
+// }
+
+export function createPINAPI(pin: string, userId: string) {
+  const data = {
+    pin: pin,
+    deviceId: __DEV__ ? UNIQUE_ID_DEV : getUniqueId(),
+    userId: userId,
+  };
+  return API.post('/api/accounts/pin', data).then(onSuccess).catch(onFailure);
+}
+
+// export async function changePIN(data) {
+//   return put('/api/accounts/pin', data);
+// }
+//
+// export async function deletePIN() {
+//   return del('/api/accounts/pin');
+// }
+
+export function deletePINAPI() {
+  return API.delete('/api/accounts/pin').then(onSuccess).catch(onFailure);
+}
+
+export function loginPINApi(pin: string, userId: string) {
+  const data = {
+    pin: pin,
+    deviceId: __DEV__ ? UNIQUE_ID_DEV : getUniqueId(),
+    userId: userId,
+  };
+  return API.post('/api/token/pin', data).then(onSuccessLogin).catch(onFailure);
+}

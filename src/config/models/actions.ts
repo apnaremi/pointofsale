@@ -34,3 +34,10 @@ export interface IRequestAvatarState {
   onSuccess: Function;
   onFailure: Function;
 }
+
+export interface ICreatePINRequestState {
+  type: String;
+  data: {userId: string; pin: string};
+  onSuccess: Function;
+  onFailure: Function;
+}

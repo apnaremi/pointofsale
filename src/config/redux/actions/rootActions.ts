@@ -19,3 +19,10 @@ export function disableModal() {
     type: types.DISABLE_MODAL,
   };
 }
+
+export function createPINSuccess(userId: string) {
+  return {
+    type: types.USER_CREATE_PIN_SUCCESS,
+    userId,
+  };
+}

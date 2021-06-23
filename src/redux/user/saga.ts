@@ -1,10 +1,11 @@
 import {put, call} from 'redux-saga/effects';
-import {loginApi, updateAvatarAPI} from '../../api/loginApi';
+import {createPINAPI, loginApi, updateAvatarAPI} from '../../api/loginApi';
 import * as loginActions from './actions';
 
 import {ILoginResponse} from '../../config/models/api';
 import {appLog} from '../../utils/helpers';
 import {
+  ICreatePINRequestState,
   ILoginRequestState,
   IRequestAvatarState,
 } from '../../config/models/actions';
@@ -30,7 +31,7 @@ export default function* loginAsync(action: ILoginRequestState) {
   }
 }
 
-export function* updateAvatarSaga(action: IRequestAvatarState) {
+export function* updateAvatarSaga(action: IRequestAvatarState): any {
   let userRes: any;
   if (action.data && action.data.isForDelete) {
     userRes = yield call(updateAvatarAPI, '', action.data.userId);

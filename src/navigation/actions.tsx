@@ -31,3 +31,11 @@ export function navigateToProfileScreen(params?: object) {
 export function navigateToPwsUpdateScreen(params?: object) {
   NavigationService.navigate('PwsUpdateScreen', params);
 }
+
+export function navigateToPin(params?: object) {
+  NavigationService.navigate('PinScreen', params);
+}
+
+export function pushToPin(params?: object) {
+  NavigationService.push('PinScreen', params);
+}

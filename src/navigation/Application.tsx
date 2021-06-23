@@ -27,6 +27,8 @@ import OrdersConfigView from '../views/settings/Orders/OrdersConfig';
 import QRCodeView from '../views/settings/QRCode/QRCode';
 import SeatingArrangement from '../views/settings/seatingArrangement/SeatingArrangement';
 import Categories from '../views/settings/categories/Categories';
+import PIN from '../views/settings/PIN/PIN';
+import PinScreen from '../views/settings/PIN/index';
 
 const MainStack = createStackNavigator();
 const RootStack = createStackNavigator();
@@ -190,11 +192,11 @@ function SettingsDrawer() {
         options={{drawerLabel: t('add_category')}}
         component={Categories}
       />
-      {/*      <Drawer.Screen
+      <Drawer.Screen
         name="ProfileScreen4"
         options={{drawerLabel: t('pin_code')}}
-        component={DemoScreen}
-      />*/}
+        component={PIN}
+      />
       <Drawer.Screen
         name="QRCodeScreen"
         options={{drawerLabel: t('qr_code')}}
@@ -240,6 +242,7 @@ function ApplicationNavigator() {
         }}>
         <RootStack.Screen name="Main" component={MainStackScreen} />
         <RootStack.Screen name="CustomerScreen" component={CustomerView} />
+        <RootStack.Screen name="PinScreen" component={PinScreen} />
       </RootStack.Navigator>
     </NavigationContainer>
   );

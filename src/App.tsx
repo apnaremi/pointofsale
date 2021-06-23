@@ -8,8 +8,10 @@ import AppColors from './theme/appColors';
 import './config/i18n';
 import {WorkingIndicator} from './components';
 import RootModal from './components/RootModal';
-const {store} = configureStore();
+import {PersistGate} from 'redux-persist/es/integration/react';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 
+const {persistor, store} = configureStore();
 const theme = {
   ...DefaultTheme,
   dark: false,
@@ -23,11 +25,15 @@ const theme = {
 export default function EntryPoint() {
   return (
     <Provider store={store}>
-      <PaperProvider theme={theme}>
-        <ApplicationNavigator />
-        <WorkingIndicator />
-        <RootModal />
-      </PaperProvider>
+      <PersistGate loading={<WorkingIndicator />} persistor={persistor}>
+        <SafeAreaProvider>
+          <PaperProvider theme={theme}>
+            <ApplicationNavigator />
+            <WorkingIndicator />
+            <RootModal />
+          </PaperProvider>
+        </SafeAreaProvider>
+      </PersistGate>
     </Provider>
   );
 }

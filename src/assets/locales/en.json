@@ -52,6 +52,17 @@
     "categories": "Categories",
     "first_name": "First Name",
     "last_name": "Last Name",
-    "phone": "Phone"
+    "phone": "Phone",
+    "setupPINRecommendation": "Setup a PIN code access on this device to enable quick and easy login",
+    "setPINUpper": "SET PIN CODE",
+    "changePINUpper": "CHANGE PIN CODE",
+    "disable": "Disable",
+    "disablePINQuestion": "Are you sure you want to disable PIN code login?",
+    "enablePINQuestion": "You have enabled a PIN code access to your account",
+    "disablePINUpper": "DISABLE PIN CODE",
+    "enterPIN": "Enter your PIN code",
+    "incorrectPIN": "You have entered an incorrect PIN",
+    "confirmPIN": "Confirm PIN code",
+    "continue": "Continue"
   }
 }

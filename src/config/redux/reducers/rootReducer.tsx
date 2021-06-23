@@ -6,6 +6,7 @@ const initialState = {
   isModalVisible: false,
   message: '',
   isError: false,
+  userIdLinkWithPIN: null,
 };
 
 export const rootReducer = createReducer(initialState, {
@@ -25,5 +26,8 @@ export const rootReducer = createReducer(initialState, {
   },
   [types.DISABLE_MODAL](state: any) {
     return {...state, isModalVisible: false};
+  },
+  [types.USER_CREATE_PIN_SUCCESS](state: any, action: any) {
+    return {...state, userIdLinkWithPIN: action.userId};
   },
 });
