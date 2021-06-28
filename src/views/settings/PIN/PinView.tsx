@@ -111,7 +111,9 @@ export default function PwsRecoveryView(props: Props) {
   }, []);
 
   const onCancel = useCallback(() => {
-    if (props.onCancel) props.onCancel();
+    if (props.onCancel) {
+      props.onCancel();
+    }
   }, []);
 
   return (

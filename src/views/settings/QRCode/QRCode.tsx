@@ -80,10 +80,17 @@ function QRCode(props: Props) {
         contentContainerStyle={APPStyles.scrollContentContainer}>
         <View style={APPStyles.viewContainerComplete}>
           <Image
-            source={{uri: orderingSettings.orderSettings.qrCodeUrl}}
+            source={{
+              uri:
+                orderingSettings &&
+                orderingSettings.orderSettings &&
+                orderingSettings.orderSettings.qrCodeUrl
+                  ? orderingSettings.orderSettings.qrCodeUrl
+                  : null,
+            }}
             style={{width: 400, height: 400}}
           />
-{/*          <Button
+          {/*          <Button
             mode={'contained'}
             onPress={onDownloadCodePress}
             style={APPStyles.commonButton}>

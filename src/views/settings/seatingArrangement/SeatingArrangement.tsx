@@ -43,7 +43,9 @@ function SeatingArrangement(props: Props) {
 
   const toggleEditMode = useCallback(() => {
     setEditMode(previousState => {
-      if (previousState) setItemForEdit({});
+      if (previousState) {
+        setItemForEdit({});
+      }
       return !previousState;
     });
   }, []);
@@ -55,7 +57,7 @@ function SeatingArrangement(props: Props) {
         id: item.id,
         name: item.name,
         values: Array.prototype.map
-          .call(item.values, function (itemValues) {
+          .call(item.values, itemValues => {
             return itemValues.value;
           })
           .join(', '),
@@ -106,7 +108,7 @@ function SeatingArrangement(props: Props) {
         id: item.id,
         name: item.name,
         values: Array.prototype.map
-          .call(item.values, function (itemValues) {
+          .call(item.values, itemValues => {
             return itemValues.value;
           })
           .join(', '),
@@ -116,7 +118,7 @@ function SeatingArrangement(props: Props) {
     if (!itemSent.id) {
       newSeatingArrangement.push(values);
     } else {
-      _.remove(newSeatingArrangement, function (currentObject: any) {
+      _.remove(newSeatingArrangement, (currentObject: any) => {
         return currentObject.id === itemSent.id;
       });
       newSeatingArrangement.push({
@@ -178,7 +180,7 @@ function SeatingArrangement(props: Props) {
                     key={item.id}
                     title={item.name}
                     description={Array.prototype.map
-                      .call(item.values, function (itemValues) {
+                      .call(item.values, itemValues => {
                         return itemValues.value;
                       })
                       .join(', ')}

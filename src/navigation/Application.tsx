@@ -15,7 +15,6 @@ import CustomerView from '../views/customer';
 import PwsRecoveryView from '../views/pwsRecovery';
 import CodeVerifyView from '../views/codeVerify';
 import AppColors from '../theme/appColors';
-import SettingsView from '../views/settings';
 import ProfileView from '../views/settings/Profile';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {navigateToLogin} from './actions';

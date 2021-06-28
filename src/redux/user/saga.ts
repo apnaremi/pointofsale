@@ -1,15 +1,13 @@
 import {put, call} from 'redux-saga/effects';
-import {createPINAPI, loginApi, updateAvatarAPI} from '../../api/loginApi';
+import {loginApi, updateAvatarAPI} from '../../api/loginApi';
 import * as loginActions from './actions';
 
 import {ILoginResponse} from '../../config/models/api';
 import {appLog} from '../../utils/helpers';
 import {
-  ICreatePINRequestState,
   ILoginRequestState,
   IRequestAvatarState,
 } from '../../config/models/actions';
-import {onOrderingSettingsResponse} from '../orderSettings/actions';
 import uploadImage from '../../utils/UploadImage';
 
 export default function* loginAsync(action: ILoginRequestState) {

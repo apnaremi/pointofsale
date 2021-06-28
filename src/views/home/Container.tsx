@@ -28,6 +28,7 @@ function Container(props: Props) {
           onFailure,
         ),
       );
+      // TODO Call Items API
     }
   }, [userData]);
 

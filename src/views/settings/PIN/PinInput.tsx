@@ -1,8 +1,7 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {FormInput} from '../../../components';
-import {PIN_PLACE_HOLDER} from "../../../utils/constants";
-
+import {PIN_PLACE_HOLDER} from '../../../utils/constants';
 
 export type Props = React.ComponentProps<typeof FormInput>;
 
