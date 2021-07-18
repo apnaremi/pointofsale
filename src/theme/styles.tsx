@@ -22,6 +22,14 @@ const APPStyles = StyleSheet.create({
     flexDirection: 'row',
     width: '100%',
   },
+
+  scrollContentContainerModal: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: 100,
+    width: '100%',
+  },
+
   modalContainer: {
     width: '30%',
     backgroundColor: AppColors.clear,

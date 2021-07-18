@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import LoginView from './LoginView';
 import {Keyboard, View} from 'react-native';
 import {MainContainer} from '../../components';
@@ -20,7 +20,9 @@ import * as navigationActions from '../../navigation/actions';
 
 function Container() {
   const dispatch = useDispatch();
-
+  useEffect(() => {
+    dispatch(enableLoader(false));
+  }, []);
   const [showPINForm, setShowPINForm] = useState(true);
 
   const userIdLinkWithPIN = useSelector(

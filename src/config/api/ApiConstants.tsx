@@ -13,6 +13,8 @@ const ApiConstants = {
   DOWNLOAD_QR_CODE: '/api/ordering/downladqrcode',
   ORDERING_CATEGORY: '/api/ordering/category',
   SEATING_ARRANGEMENT: '/api/ordering/seatingarrangement',
+  INVOICE_ITEMS: '/api/invoiceitems',
+  INVOICE_CUSTOMERS: '/api/invoicecustomers',
 };
 
 export default ApiConstants;

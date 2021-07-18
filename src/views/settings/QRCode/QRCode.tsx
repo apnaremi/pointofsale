@@ -9,7 +9,6 @@ import {
   saveProfile,
   updateBillNumberingAPI,
 } from '../../../api/SettingsApi';
-import * as navigationActions from '../../../navigation/actions';
 import {appLog} from '../../../utils/helpers';
 import {useDispatch} from 'react-redux';
 import {
@@ -17,10 +16,6 @@ import {
   enableModal,
 } from '../../../config/redux/actions/rootActions';
 import {useSelector} from 'react-redux';
-import {updateProfile} from '../../../redux/user/actions';
-import {Chip} from 'react-native-paper';
-import * as orderSettingsReducer from '../../../redux/orderSettings/reducer';
-import {updateBillNumbering} from '../../../redux/orderSettings/actions';
 
 export type Props = {
   route?: any;

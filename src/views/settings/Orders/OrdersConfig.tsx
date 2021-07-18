@@ -17,11 +17,9 @@ import {
   enableModal,
 } from '../../../config/redux/actions/rootActions';
 import {useSelector} from 'react-redux';
-import {updateProfile} from '../../../redux/user/actions';
 import {Chip} from 'react-native-paper';
 import {BILL_NUMBERING} from '../../../utils/enums';
 import {updateBillNumbering} from '../../../redux/orderSettings/actions';
-import {navigateToLogin} from '../../../navigation/actions';
 
 export type Props = {
   route?: any;

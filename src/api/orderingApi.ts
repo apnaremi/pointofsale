@@ -1,4 +1,4 @@
-import API, {onFailure} from '../config/api';
+import API, {onFailure, onSuccess} from '../config/api';
 import ApiConstants from '../config/api/ApiConstants';
 import {appLog} from '../utils/helpers';
 import {IApiOrderingSettingsResponse} from '../config/models/api';
@@ -27,3 +27,32 @@ export const onSuccessSettings = (response: any) => {
   appLog('onSuccessSettings', returnData);
   return returnData;
 };
+
+export function getMenuItems(userId: string, companyId: string) {
+  return API.get(ApiConstants.INVOICE_ITEMS, {
+    params: {
+      pageSize: 1000,
+      id: companyId,
+      userId,
+    },
+  })
+    .then(onSuccessSettings)
+    .catch(onFailure);
+}
+
+export function getCustomers(userId: string, companyId: string) {
+  return API.get(ApiConstants.INVOICE_CUSTOMERS, {
+    params: {
+      pageSize: 1000,
+      id: companyId,
+      userId,
+    },
+  })
+    .then(onSuccessSettings)
+    .catch(onFailure);
+}
+
+export function saveCustomer(userId: string, data: any) {
+  let URL = `${ApiConstants.INVOICE_CUSTOMERS}?userId=${userId}`;
+  return API.post(URL, data).then(onSuccessSettings).catch(onFailure);
+}

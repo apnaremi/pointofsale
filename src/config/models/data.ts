@@ -6,6 +6,11 @@ export interface IUser {
   photoUrl: string;
   mobile: string;
   companies: Array<any>;
+  streetAddress: string;
+  city: string;
+  state: string;
+  zipCode: string;
+  country: string;
 }
 
 export interface IOrderingSettings {

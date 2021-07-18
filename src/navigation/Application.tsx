@@ -1,7 +1,7 @@
 import React, {useCallback} from 'react';
 import {NavigationContainer, DefaultTheme} from '@react-navigation/native';
 import {navigationRef} from './Root';
-import {createStackNavigator} from '@react-navigation/stack';
+import {createStackNavigator, CardStyleInterpolators} from '@react-navigation/stack';
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
@@ -237,10 +237,16 @@ function ApplicationNavigator() {
         mode="modal"
         headerMode="none"
         screenOptions={{
-          cardStyle: {backgroundColor: AppColors.clear},
+            headerShown: false,
+            cardStyle: { backgroundColor: AppColors.clear },
+            cardOverlayEnabled: true,
+            cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS ,
         }}>
         <RootStack.Screen name="Main" component={MainStackScreen} />
-        <RootStack.Screen name="CustomerScreen" component={CustomerView} />
+        <RootStack.Screen name="CustomerScreen" component={CustomerView} options={{
+            cardStyle: { backgroundColor: AppColors.transparent },
+            cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS ,
+        }} />
         <RootStack.Screen name="PinScreen" component={PinScreen} />
       </RootStack.Navigator>
     </NavigationContainer>

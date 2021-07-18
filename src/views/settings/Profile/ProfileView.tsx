@@ -75,15 +75,15 @@ export const ProfileView = React.forwardRef((props: Props, ref: any) => {
     const errors = {} as any;
 
     if (!values.lastName) {
-      errors.lastName = t('last_name_required');
+      errors.lastName = t('required_field');
     }
 
     if (!values.firstName) {
-      errors.firstName = t('first_name_required');
+      errors.firstName = t('required_field');
     }
 
     if (!values.mobile) {
-      errors.mobile = t('phone_required');
+      errors.mobile = t('required_field');
     }
     return errors;
   }, []);

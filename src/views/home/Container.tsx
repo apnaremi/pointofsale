@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import HomeView from './View';
 import {connect, useDispatch, useSelector} from 'react-redux';
 import {View} from 'react-native';
@@ -7,18 +7,24 @@ import APPStyles from '../../theme/styles';
 import * as orderSettingsActions from '../../redux/orderSettings/actions';
 import {IApiOrderingSettingsResponse} from '../../config/models/api';
 import * as rootActions from '../../config/redux/actions/rootActions';
-import {appLog} from '../../utils/helpers';
+import {appLog, listToMatrix} from '../../utils/helpers';
+import {getCustomers, getMenuItems} from '../../api/orderingApi';
+import {
+  enableLoader,
+  enableModal,
+} from '../../config/redux/actions/rootActions';
+import _ from 'lodash';
 
-type Props = {
-  onLogin: Function;
-};
+type Props = {};
 
 function Container(props: Props) {
+  const [menuItems, setMenuItems] = useState<Array<any>>([]);
+  const [customersArray, setCustomersArray] = useState<Array<any>>([]);
   const dispatch = useDispatch();
   const userData = useSelector((state: any) => state.loginReducer.user);
   useEffect(() => {
     if (userData.id) {
-      appLog('OrderingSettings userData', userData);
+      appLog('OrderingSettings userData.id', userData.id);
       appLog('OrderingSettings userData.companies', userData.companies);
       dispatch(rootActions.enableLoader(true));
       dispatch(
@@ -28,9 +34,50 @@ function Container(props: Props) {
           onFailure,
         ),
       );
-      // TODO Call Items API
+      getItems();
+      getCustomersFromDB();
     }
   }, [userData]);
+
+  const getItems = () => {
+    getMenuItems(userData.id, userData.companies[0].id).then((result: any) => {
+      dispatch(enableLoader(true));
+      if (result.success) {
+        appLog('getMenuItems', result);
+        appLog('listToMatrix', listToMatrix(result.data.invoiceItems, 5));
+        setMenuItems(listToMatrix(result.data.invoiceItems, 5));
+        dispatch(rootActions.enableLoader(false));
+      } else {
+        dispatch(rootActions.enableLoader(false));
+        dispatch(enableModal(result.message, true));
+      }
+    });
+  };
+
+  const getCustomersFromDB = () => {
+    getCustomers(userData.id, userData.companies[0].id).then((result: any) => {
+      dispatch(enableLoader(true));
+      if (result.success) {
+        appLog('getCustomersFromDB', result);
+        setCustomersArray(
+          _.orderBy(
+            result.data.invoiceCustomers.map((element: any) => ({
+              ...element,
+              name:
+                element.firstName +
+                (element.lastName ? ' ' + element.lastName : ''),
+            })),
+            ['name'],
+            ['asc'],
+          ),
+        );
+        dispatch(rootActions.enableLoader(false));
+      } else {
+        dispatch(rootActions.enableLoader(false));
+        dispatch(enableModal(result.message, true));
+      }
+    });
+  };
 
   const onSuccess = (response: IApiOrderingSettingsResponse) => {
     dispatch(rootActions.enableLoader(false));
@@ -45,7 +92,12 @@ function Container(props: Props) {
   return (
     <MainContainer>
       <View style={APPStyles.contentContainer}>
-        <HomeView {...props} />
+        <HomeView
+          menuItems={menuItems}
+          customersArray={customersArray}
+          getCustomersFromDB={getCustomersFromDB}
+          {...props}
+        />
       </View>
     </MainContainer>
   );

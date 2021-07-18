@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useState} from 'react';
 import {View} from 'react-native';
 import {Button, FormInput} from '../../components';
 import {Formik} from 'formik';
@@ -8,52 +8,84 @@ import APPStyles from '../../theme/styles';
 import {EMAIL_PATTERN} from '../../utils/constants';
 import {appLog} from '../../utils/helpers';
 import {Title} from 'react-native-paper';
+import {IUser} from '../../config/models/data';
 
 type Props = {
-  onLogin: Function;
+  onSubmitForm: Function;
 };
 
 export default function CustomerView(props: Props) {
-  appLog('props', props);
+  const [initialData, setInitialData] = useState({
+    firstName: '',
+    mobile: '',
+    email: '',
+    streetAddress: '',
+    city: '',
+    state: '',
+    zipCode: '',
+    country: '',
+  } as IUser);
   const {t} = useTranslation();
   const emailRef = React.createRef<any>();
   const firstNameRef = React.createRef<any>();
-  const lastNameRef = React.createRef<any>();
+  const streetAddressRef = React.createRef<any>();
   const phoneRef = React.createRef<any>();
-  const passwordRef = React.createRef<any>();
+  const cityRef = React.createRef<any>();
+  const stateRef = React.createRef<any>();
+  const zipCodeRef = React.createRef<any>();
+  const countryRef = React.createRef<any>();
 
   const validateForm = useCallback(values => {
     const errors = {} as any;
 
-    if (!values.userName) {
-      errors.userName = t('enter_email');
-    }
-    if (!values.password) {
-      errors.password = t('enter_password');
+    if (!values.firstName) {
+      errors.firstName = t('required_field');
     }
 
-    if (values.userName && !EMAIL_PATTERN.test(values.userName)) {
-      errors.userName = t('invalid_email');
+    if (!values.mobile) {
+      errors.mobile = t('required_field');
+    }
+
+    if (!values.email) {
+      errors.email = t('required_field');
+    }
+
+    if (!EMAIL_PATTERN.test(values.email)) {
+      errors.email = t('invalid_email');
     }
 
     return errors;
   }, []);
 
-  const onSubmitForm = useCallback(() => {
-    navigationActions.goBack();
-  }, []);
+  const onSubmitForm = (values: IUser) => {
+    let data = {
+      invoiceCustomerAddresses: [
+        {
+          addressType: 0,
+          streetAddress: values.streetAddress,
+          city: values.city,
+          state: values.state,
+          postCode: values.zipCode,
+          country: values.country,
+        },
+      ],
+      isUseAsBilling: true,
+      saveForFuture: false,
+      phoneNumber: values.mobile,
+      email: values.email,
+      firstName: values.firstName,
+      customerBillingName: values.firstName,
+    };
+
+    props.onSubmitForm(data);
+  };
 
   const onSubmitFirstName = useCallback(() => {
-    if (lastNameRef.current) {
-      lastNameRef.current.focus();
-    }
-  }, [lastNameRef]);
-
-  const onSubmitLlastName = useCallback(() => {
     if (phoneRef.current) {
       phoneRef.current.focus();
     }
   }, [phoneRef]);
+
 
   const onSubmitPhone = useCallback(() => {
     if (emailRef.current) {
@@ -62,60 +94,75 @@ export default function CustomerView(props: Props) {
   }, [emailRef]);
 
   const onSubmitEmail = useCallback(() => {
-    if (passwordRef.current) {
-      passwordRef.current.focus();
+    if (streetAddressRef.current) {
+      streetAddressRef.current.focus();
     }
-  }, [passwordRef]);
+  }, [streetAddressRef]);
+
+  const onSubmitStreetAddress = useCallback(() => {
+    if (cityRef.current) {
+      cityRef.current.focus();
+    }
+  }, [cityRef]);
+
+  const onSubmitCity = useCallback(() => {
+    if (stateRef.current) {
+      stateRef.current.focus();
+    }
+  }, [stateRef]);
+
+  const onSubmitState = useCallback(() => {
+    if (zipCodeRef.current) {
+      zipCodeRef.current.focus();
+    }
+  }, [zipCodeRef]);
+
+  const onSubmitZipCode = useCallback(() => {
+    if (countryRef.current) {
+      countryRef.current.focus();
+    }
+  }, [countryRef]);
+
+  const onSubmitCountry = useCallback(() => {
+
+  }, []);
+
+  const goBack = useCallback(() => {
+    navigationActions.goBack();
+  }, []);
 
   return (
     <View style={APPStyles.modalContainer}>
       <Title>{t('Customer Information')}</Title>
       <Formik
+        enableReinitialize
         validate={validateForm}
         validateOnChange={true}
-        initialValues={
-          {
-            typeId: 2,
-            firstName: '',
-            lastName: '',
-            phone: '',
-            email: '',
-            password: '',
-            confirmPws: '',
-          } as any
-        }
+        initialValues={initialData}
         onSubmit={onSubmitForm}>
-        {({handleBlur, handleChange, handleSubmit, values}) => (
+        {({handleSubmit, errors, handleBlur, handleChange, values}) => (
           <View style={APPStyles.formContainer}>
             <FormInput
               onChangeText={handleChange('firstName')}
               onBlur={handleBlur('firstName')}
               value={values.firstName}
-              placeholder={t('first_name')}
+              placeholder={t('name')}
               returnKeyType="next"
               ref={firstNameRef}
               onSubmitEditing={onSubmitFirstName}
+              invalidLabel={errors.firstName}
               iconName={'user'}
             />
             <FormInput
-              onChangeText={handleChange('lastName')}
-              onBlur={handleBlur('lastName')}
-              value={values.lastName}
-              placeholder={t('last_name')}
-              returnKeyType="next"
-              ref={lastNameRef}
-              onSubmitEditing={onSubmitLlastName}
-              iconName={'user'}
-            />
-            <FormInput
-              onChangeText={handleChange('phone')}
-              onBlur={handleBlur('phone')}
-              value={values.phone}
+              onChangeText={handleChange('mobile')}
+              onBlur={handleBlur('mobile')}
+              value={values.mobile}
               keyboardType={'numeric'}
               placeholder={t('phone')}
               returnKeyType="next"
               ref={phoneRef}
               onSubmitEditing={onSubmitPhone}
+              invalidLabel={errors.mobile}
               iconName={'phone'}
             />
             <FormInput
@@ -127,11 +174,86 @@ export default function CustomerView(props: Props) {
               returnKeyType="next"
               ref={emailRef}
               onSubmitEditing={onSubmitEmail}
+              invalidLabel={errors.email}
               iconName={'envelope'}
             />
-            <Button mode={'contained'} onPress={handleSubmit}>
-              {t('add customer')}
-            </Button>
+
+            <FormInput
+              onChangeText={handleChange('streetAddress')}
+              onBlur={handleBlur('streetAddress')}
+              value={values.streetAddress}
+              placeholder={t('street_address')}
+              returnKeyType="next"
+              ref={streetAddressRef}
+              onSubmitEditing={onSubmitStreetAddress}
+              invalidLabel={errors.streetAddress}
+              iconName={'direction'}
+            />
+
+
+            <FormInput
+                onChangeText={handleChange('city')}
+                onBlur={handleBlur('city')}
+                value={values.city}
+                placeholder={t('city')}
+                returnKeyType="next"
+                ref={cityRef}
+                onSubmitEditing={onSubmitCity}
+                invalidLabel={errors.city}
+                iconName={'location-pin'}
+            />
+
+            <FormInput
+                onChangeText={handleChange('state')}
+                onBlur={handleBlur('state')}
+                value={values.state}
+                placeholder={t('state')}
+                returnKeyType="next"
+                ref={stateRef}
+                onSubmitEditing={onSubmitState}
+                invalidLabel={errors.state}
+                iconName={'location-pin'}
+            />
+
+            <FormInput
+                onChangeText={handleChange('zipCode')}
+                onBlur={handleBlur('zipCode')}
+                value={values.zipCode}
+                placeholder={t('zipCode')}
+                returnKeyType="next"
+                ref={zipCodeRef}
+                onSubmitEditing={onSubmitZipCode}
+                invalidLabel={errors.zipCode}
+                iconName={'location-pin'}
+            />
+
+            <FormInput
+                onChangeText={handleChange('country')}
+                onBlur={handleBlur('country')}
+                value={values.country}
+                placeholder={t('country')}
+                returnKeyType="done"
+                ref={countryRef}
+                onSubmitEditing={onSubmitCountry}
+                invalidLabel={errors.country}
+                iconName={'location-pin'}
+            />
+
+            <View
+              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              <Button
+                mode={'contained'}
+                onPress={handleSubmit}
+                style={APPStyles.commonButton}>
+                {t('save')}
+              </Button>
+              <Button
+                mode={'contained'}
+                onPress={goBack}
+                style={APPStyles.commonButton}>
+                {t('cancel')}
+              </Button>
+            </View>
           </View>
         )}
       </Formik>
