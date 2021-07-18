@@ -1,5 +1,4 @@
-/* eslint-disable react-native/no-inline-styles */
-import React, {useCallback, useState} from 'react';
+import React, {useState} from 'react';
 import {View, FlatList, Text, StyleSheet} from 'react-native';
 import {Chip} from 'react-native-paper';
 import {appLog} from '../../utils/helpers';
@@ -20,7 +19,7 @@ type Props = {
 export default function HomeView(props: Props) {
   appLog('props', props);
   const {t} = useTranslation();
-  const [selectedCustomer, setSelectedCustomer] = useState<any >({});
+  const [selectedCustomer, setSelectedCustomer] = useState<any>({});
 
   const goToCustomer = () => {
     navigationActions.navigateToCustomer({onCustomerChosen});

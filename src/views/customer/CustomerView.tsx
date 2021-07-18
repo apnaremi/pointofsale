@@ -86,7 +86,6 @@ export default function CustomerView(props: Props) {
     }
   }, [phoneRef]);
 
-
   const onSubmitPhone = useCallback(() => {
     if (emailRef.current) {
       emailRef.current.focus();
@@ -123,9 +122,7 @@ export default function CustomerView(props: Props) {
     }
   }, [countryRef]);
 
-  const onSubmitCountry = useCallback(() => {
-
-  }, []);
+  const onSubmitCountry = useCallback(() => {}, []);
 
   const goBack = useCallback(() => {
     navigationActions.goBack();
@@ -190,53 +187,52 @@ export default function CustomerView(props: Props) {
               iconName={'direction'}
             />
 
-
             <FormInput
-                onChangeText={handleChange('city')}
-                onBlur={handleBlur('city')}
-                value={values.city}
-                placeholder={t('city')}
-                returnKeyType="next"
-                ref={cityRef}
-                onSubmitEditing={onSubmitCity}
-                invalidLabel={errors.city}
-                iconName={'location-pin'}
+              onChangeText={handleChange('city')}
+              onBlur={handleBlur('city')}
+              value={values.city}
+              placeholder={t('city')}
+              returnKeyType="next"
+              ref={cityRef}
+              onSubmitEditing={onSubmitCity}
+              invalidLabel={errors.city}
+              iconName={'location-pin'}
             />
 
             <FormInput
-                onChangeText={handleChange('state')}
-                onBlur={handleBlur('state')}
-                value={values.state}
-                placeholder={t('state')}
-                returnKeyType="next"
-                ref={stateRef}
-                onSubmitEditing={onSubmitState}
-                invalidLabel={errors.state}
-                iconName={'location-pin'}
+              onChangeText={handleChange('state')}
+              onBlur={handleBlur('state')}
+              value={values.state}
+              placeholder={t('state')}
+              returnKeyType="next"
+              ref={stateRef}
+              onSubmitEditing={onSubmitState}
+              invalidLabel={errors.state}
+              iconName={'location-pin'}
             />
 
             <FormInput
-                onChangeText={handleChange('zipCode')}
-                onBlur={handleBlur('zipCode')}
-                value={values.zipCode}
-                placeholder={t('zipCode')}
-                returnKeyType="next"
-                ref={zipCodeRef}
-                onSubmitEditing={onSubmitZipCode}
-                invalidLabel={errors.zipCode}
-                iconName={'location-pin'}
+              onChangeText={handleChange('zipCode')}
+              onBlur={handleBlur('zipCode')}
+              value={values.zipCode}
+              placeholder={t('zipCode')}
+              returnKeyType="next"
+              ref={zipCodeRef}
+              onSubmitEditing={onSubmitZipCode}
+              invalidLabel={errors.zipCode}
+              iconName={'location-pin'}
             />
 
             <FormInput
-                onChangeText={handleChange('country')}
-                onBlur={handleBlur('country')}
-                value={values.country}
-                placeholder={t('country')}
-                returnKeyType="done"
-                ref={countryRef}
-                onSubmitEditing={onSubmitCountry}
-                invalidLabel={errors.country}
-                iconName={'location-pin'}
+              onChangeText={handleChange('country')}
+              onBlur={handleBlur('country')}
+              value={values.country}
+              placeholder={t('country')}
+              returnKeyType="done"
+              ref={countryRef}
+              onSubmitEditing={onSubmitCountry}
+              invalidLabel={errors.country}
+              iconName={'location-pin'}
             />
 
             <View

@@ -1,4 +1,4 @@
-import API, {onFailure, onSuccess} from '../config/api';
+import API, {onFailure} from '../config/api';
 import ApiConstants from '../config/api/ApiConstants';
 import {appLog} from '../utils/helpers';
 import {IApiOrderingSettingsResponse} from '../config/models/api';

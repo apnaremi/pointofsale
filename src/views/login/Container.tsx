@@ -11,12 +11,10 @@ import {navigateToCodeVerify, navigateToHome} from '../../navigation/actions';
 import {appLog} from '../../utils/helpers';
 import PinView from '../settings/PIN/PinView';
 import {
-  createPINSuccess,
   enableLoader,
   enableModal,
 } from '../../config/redux/actions/rootActions';
-import {createPINAPI, deletePINAPI, loginPINApi} from '../../api/loginApi';
-import * as navigationActions from '../../navigation/actions';
+import {loginPINApi} from '../../api/loginApi';
 
 function Container() {
   const dispatch = useDispatch();

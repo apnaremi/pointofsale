@@ -3,13 +3,8 @@ import {FormHeader, MainContainer, Text} from '../../../components';
 import APPStyles from '../../../theme/styles';
 import {useTranslation} from 'react-i18next';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {Keyboard, StyleSheet, View} from 'react-native';
-import {
-  changePassword,
-  saveProfile,
-  updateBillNumberingAPI,
-} from '../../../api/SettingsApi';
-import * as navigationActions from '../../../navigation/actions';
+import {StyleSheet, View} from 'react-native';
+import {updateBillNumberingAPI} from '../../../api/SettingsApi';
 import {appLog} from '../../../utils/helpers';
 import {useDispatch} from 'react-redux';
 import {
@@ -25,7 +20,7 @@ export type Props = {
   route?: any;
 };
 
-function OrdersConfig(props: Props) {
+function OrdersConfig() {
   const dispatch = useDispatch();
   const orderingSettings = useSelector(
     (state: any) => state.orderSettingsReducer.OrderingSettings,

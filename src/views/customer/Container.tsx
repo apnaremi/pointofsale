@@ -10,7 +10,7 @@ import {
   enableLoader,
   enableModal,
 } from '../../config/redux/actions/rootActions';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import {saveCustomer} from '../../api/orderingApi';
 import * as navigationActions from '../../navigation/actions';
 
@@ -20,21 +20,24 @@ function Container(props: Props) {
   const dispatch = useDispatch();
   const userData = useSelector((state: any) => state.loginReducer.user);
 
-  const onSubmitForm = useCallback(dataToSave => {
-    appLog('dataToSave', dataToSave);
-    Keyboard.dismiss();
-    dispatch(enableLoader(true));
-    saveCustomer(userData.id, dataToSave).then((result: any) => {
-      dispatch(enableLoader(false));
-      if (result.success) {
-        dispatch(enableModal(result.message));
-        props.route.params.onCustomerChosen(result.data);
-        navigationActions.goBack();
-      } else {
-        dispatch(enableModal(result.message, true));
-      }
-    });
-  }, [userData, props.route.params]);
+  const onSubmitForm = useCallback(
+    dataToSave => {
+      appLog('dataToSave', dataToSave);
+      Keyboard.dismiss();
+      dispatch(enableLoader(true));
+      saveCustomer(userData.id, dataToSave).then((result: any) => {
+        dispatch(enableLoader(false));
+        if (result.success) {
+          dispatch(enableModal(result.message));
+          props.route.params.onCustomerChosen(result.data);
+          navigationActions.goBack();
+        } else {
+          dispatch(enableModal(result.message, true));
+        }
+      });
+    },
+    [userData, props.route.params],
+  );
 
   return (
     <MainContainer>
