@@ -15,6 +15,7 @@ import {
   enableLoader,
   enableModal,
 } from '../../../config/redux/actions/rootActions';
+import {onCategoriesResponse} from '../../../redux/categories/actions';
 import {useSelector} from 'react-redux';
 import _ from 'lodash';
 import {IconButton, List} from 'react-native-paper';
@@ -38,18 +39,10 @@ export interface ICategory {
 function Categories(props: Props) {
   const dispatch = useDispatch();
   const formRef = useRef<FormikProps<ICategory>>(null);
-  const [categoriesData, setCategoriesData] = useState([]);
-  const seatingArrangement = useSelector(
-    (state: any) =>
-      state.orderSettingsReducer.OrderingSettings.seatingArrangement,
-  );
+  const categoriesData = useSelector((state: any) => state.categoriesReducer.categories);
   const userData = useSelector((state: any) => state.loginReducer.user);
   const [isEditMode, setEditMode] = useState(false);
   const {t} = useTranslation();
-
-  useEffect(() => {
-    getCategories();
-  }, [userData]);
 
   const onDeletePressed = useCallback(
     (item: any) => () => {
@@ -107,7 +100,7 @@ function Categories(props: Props) {
         (result: any) => {
           dispatch(enableLoader(false));
           if (result.success) {
-            setCategoriesData(result.data);
+            dispatch(onCategoriesResponse(result.data));
           } else {
             dispatch(enableModal(result.message, true));
           }

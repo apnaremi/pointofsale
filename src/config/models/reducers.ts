@@ -12,5 +12,5 @@ export interface IOrderingSettingsState {
 }
 
 export interface ICategoryState {
-  Categories: Array<ICategory>;
+  categories: Array<ICategory>;
 }

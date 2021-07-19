@@ -10,18 +10,18 @@ import {ICategory, IOrderingSettings} from '../../config/models/data';
 import {appLog} from '../../utils/helpers';
 
 const initialState: ICategoryState = {
-  Categories: [] as Array<ICategory>,
+  categories: [] as Array<ICategory>,
 };
 
 export const categoriesReducer = createReducer(initialState, {
   [types.CATEGORIES_RESPONSE](
-    state: IOrderingSettingsState,
-    action: IOrderingSettingsResponse,
+    state: ICategoryState,
+    action: any,
   ) {
-    appLog('onSuccessSettings reducer', action.response);
+    appLog('categoriesReducer CATEGORIES_RESPONSE', action.response);
     return {
       ...state,
-      OrderingSettings: action.response,
+      categories: action.response,
     };
   },
 });

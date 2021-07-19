@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import HomeView from './View';
 import {connect, useDispatch, useSelector} from 'react-redux';
 import {View} from 'react-native';
@@ -14,6 +14,8 @@ import {
   enableModal,
 } from '../../config/redux/actions/rootActions';
 import _ from 'lodash';
+import {getCategoriesAPI} from "../../api/categoryApi";
+import {onCategoriesResponse} from "../../redux/categories/actions";
 
 type Props = {};
 
@@ -36,6 +38,7 @@ function Container(props: Props) {
       );
       getItems();
       getCustomersFromDB();
+      getCategories();
     }
   }, [userData]);
 
@@ -43,9 +46,7 @@ function Container(props: Props) {
     getMenuItems(userData.id, userData.companies[0].id).then((result: any) => {
       dispatch(enableLoader(true));
       if (result.success) {
-        appLog('getMenuItems', result);
-        appLog('listToMatrix', listToMatrix(result.data.invoiceItems, 5));
-        setMenuItems(listToMatrix(result.data.invoiceItems, 5));
+        setMenuItems(result.data.invoiceItems);
         dispatch(rootActions.enableLoader(false));
       } else {
         dispatch(rootActions.enableLoader(false));
@@ -78,6 +79,22 @@ function Container(props: Props) {
       }
     });
   };
+
+  const getCategories = useCallback(() => {
+    if (userData) {
+      dispatch(enableLoader(true));
+      getCategoriesAPI(userData.id, userData.companies[0].id).then(
+          (result: any) => {
+            dispatch(enableLoader(false));
+            if (result.success) {
+              dispatch(onCategoriesResponse(result.data));
+            } else {
+              dispatch(enableModal(result.message, true));
+            }
+          },
+      );
+    }
+  }, [userData]);
 
   const onSuccess = (response: IApiOrderingSettingsResponse) => {
     dispatch(rootActions.enableLoader(false));
