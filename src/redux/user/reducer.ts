@@ -29,12 +29,18 @@ export const loginReducer = createReducer(initialState, {
     return {
       ...state,
       isLoggedIn: false,
+      user: {} as IUser,
+      username: '',
+      password: '',
     };
   },
   [types.LOG_OUT](state: ILoginState) {
     return {
       ...state,
       isLoggedIn: false,
+      user: {} as IUser,
+      username: '',
+      password: '',
     };
   },
   [types.UPDATE_PROFILE](state: ILoginState, action: ILoginResponseState) {

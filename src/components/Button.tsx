@@ -7,7 +7,6 @@ export type IProps = React.ComponentProps<typeof Button>;
 export default function DefaultButton(props: IProps) {
   return (
     <Button
-      style={styles.button}
       labelStyle={styles.label}
       {...props}
       dark={true}
@@ -17,12 +16,9 @@ export default function DefaultButton(props: IProps) {
 
 const styles = StyleSheet.create({
   button: {
-    height: 45,
-    margin: 15,
   },
   label: {
     fontSize: APPMetrics.normalFontSize,
-    letterSpacing: -0.5,
     textAlign: 'center',
   },
 });

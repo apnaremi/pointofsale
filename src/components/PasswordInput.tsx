@@ -2,6 +2,7 @@ import React, {useCallback, useState} from 'react';
 import {IconButton} from 'react-native-paper';
 import {StyleSheet, View} from 'react-native';
 import {FormInput} from './index';
+import {scale} from 'react-native-size-matters';
 
 export type Props = React.ComponentProps<typeof FormInput>;
 
@@ -22,6 +23,7 @@ const Input = React.forwardRef((props: Props, ref?: React.Ref<any>) => {
       />
       {props.value ? (
         <IconButton
+          size={scale(12)}
           icon={showPassword ? 'eye-outline' : 'eye-off-outline'}
           style={styles.showIcon}
           onPress={onPressIcon}

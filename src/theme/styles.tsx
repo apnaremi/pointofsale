@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 import AppColors from './appColors';
-
+import {moderateScale} from 'react-native-size-matters';
 const APPStyles = StyleSheet.create({
   commonButton: {
     marginTop: 20,
@@ -26,7 +26,7 @@ const APPStyles = StyleSheet.create({
   scrollContentContainerModal: {
     alignItems: 'center',
     justifyContent: 'center',
-    paddingTop: 100,
+    paddingTop: moderateScale(50),
     width: '100%',
   },
 

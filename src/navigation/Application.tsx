@@ -11,6 +11,7 @@ import {
   DrawerItemList,
   DrawerItem,
 } from '@react-navigation/drawer';
+import {scale, verticalScale, moderateScale} from 'react-native-size-matters';
 import {StatusBar, StyleSheet, View, Text} from 'react-native';
 import LoginView from '../views/login';
 import HomeView from '../views/home';
@@ -31,6 +32,8 @@ import SeatingArrangement from '../views/settings/seatingArrangement/SeatingArra
 import Categories from '../views/settings/categories/Categories';
 import PIN from '../views/settings/PIN/PIN';
 import PinScreen from '../views/settings/PIN/index';
+import {useDispatch} from 'react-redux';
+import {logOut} from '../redux/user/actions';
 
 const MainStack = createStackNavigator();
 const RootStack = createStackNavigator();
@@ -45,7 +48,9 @@ function DemoScreen() {
 }
 
 function CustomDrawerContent(props: any) {
+  const dispatch = useDispatch();
   const onPressLogOut = useCallback(() => {
+    dispatch(logOut());
     navigateToLogin();
   }, []);
   const IconComponent = useCallback(
@@ -267,9 +272,9 @@ const styles = StyleSheet.create({
     width: 60,
   },
   settingsDrawerStyle: {
-    width: '40%',
+    width: '31%',
   },
-  itemStyle: {marginVertical: 20},
+  itemStyle: {marginVertical: moderateScale(5)},
 });
 
 export default ApplicationNavigator;

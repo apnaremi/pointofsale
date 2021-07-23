@@ -69,6 +69,7 @@
     "city": "City",
     "state": "State",
     "zip_code": "Zip Code",
-    "country": "Country"
+    "country": "Country",
+    "send_order": "Send Order"
   }
 }

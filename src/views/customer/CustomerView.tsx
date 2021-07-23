@@ -129,7 +129,7 @@ export default function CustomerView(props: Props) {
   }, []);
 
   return (
-    <View style={APPStyles.modalContainer}>
+    <View style={[APPStyles.modalContainer, {width: '60%'}]}>
       <Title>{t('Customer Information')}</Title>
       <Formik
         enableReinitialize
@@ -139,104 +139,113 @@ export default function CustomerView(props: Props) {
         onSubmit={onSubmitForm}>
         {({handleSubmit, errors, handleBlur, handleChange, values}) => (
           <View style={APPStyles.formContainer}>
-            <FormInput
-              onChangeText={handleChange('firstName')}
-              onBlur={handleBlur('firstName')}
-              value={values.firstName}
-              placeholder={t('name')}
-              returnKeyType="next"
-              ref={firstNameRef}
-              onSubmitEditing={onSubmitFirstName}
-              invalidLabel={errors.firstName}
-              iconName={'user'}
-            />
-            <FormInput
-              onChangeText={handleChange('mobile')}
-              onBlur={handleBlur('mobile')}
-              value={values.mobile}
-              keyboardType={'numeric'}
-              placeholder={t('phone')}
-              returnKeyType="next"
-              ref={phoneRef}
-              onSubmitEditing={onSubmitPhone}
-              invalidLabel={errors.mobile}
-              iconName={'phone'}
-            />
-            <FormInput
-              onChangeText={handleChange('email')}
-              onBlur={handleBlur('email')}
-              value={values.email}
-              keyboardType={'email-address'}
-              placeholder={t('email')}
-              returnKeyType="next"
-              ref={emailRef}
-              onSubmitEditing={onSubmitEmail}
-              invalidLabel={errors.email}
-              iconName={'envelope'}
-            />
-
-            <FormInput
-              onChangeText={handleChange('streetAddress')}
-              onBlur={handleBlur('streetAddress')}
-              value={values.streetAddress}
-              placeholder={t('street_address')}
-              returnKeyType="next"
-              ref={streetAddressRef}
-              onSubmitEditing={onSubmitStreetAddress}
-              invalidLabel={errors.streetAddress}
-              iconName={'direction'}
-            />
-
-            <FormInput
-              onChangeText={handleChange('city')}
-              onBlur={handleBlur('city')}
-              value={values.city}
-              placeholder={t('city')}
-              returnKeyType="next"
-              ref={cityRef}
-              onSubmitEditing={onSubmitCity}
-              invalidLabel={errors.city}
-              iconName={'location-pin'}
-            />
-
-            <FormInput
-              onChangeText={handleChange('state')}
-              onBlur={handleBlur('state')}
-              value={values.state}
-              placeholder={t('state')}
-              returnKeyType="next"
-              ref={stateRef}
-              onSubmitEditing={onSubmitState}
-              invalidLabel={errors.state}
-              iconName={'location-pin'}
-            />
-
-            <FormInput
-              onChangeText={handleChange('zipCode')}
-              onBlur={handleBlur('zipCode')}
-              value={values.zipCode}
-              placeholder={t('zipCode')}
-              returnKeyType="next"
-              ref={zipCodeRef}
-              onSubmitEditing={onSubmitZipCode}
-              invalidLabel={errors.zipCode}
-              iconName={'location-pin'}
-            />
-
-            <FormInput
-              onChangeText={handleChange('country')}
-              onBlur={handleBlur('country')}
-              value={values.country}
-              placeholder={t('country')}
-              returnKeyType="done"
-              ref={countryRef}
-              onSubmitEditing={onSubmitCountry}
-              invalidLabel={errors.country}
-              iconName={'location-pin'}
-            />
-
             <View
-              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                width: '100%',
+              }}>
+              <View style={{width: '48%'}}>
+                <FormInput
+                  onChangeText={handleChange('firstName')}
+                  onBlur={handleBlur('firstName')}
+                  value={values.firstName}
+                  placeholder={t('name')}
+                  returnKeyType="next"
+                  ref={firstNameRef}
+                  onSubmitEditing={onSubmitFirstName}
+                  invalidLabel={errors.firstName}
+                  iconName={'user'}
+                />
+                <FormInput
+                  onChangeText={handleChange('mobile')}
+                  onBlur={handleBlur('mobile')}
+                  value={values.mobile}
+                  keyboardType={'numeric'}
+                  placeholder={t('phone')}
+                  returnKeyType="next"
+                  ref={phoneRef}
+                  onSubmitEditing={onSubmitPhone}
+                  invalidLabel={errors.mobile}
+                  iconName={'phone'}
+                />
+                <FormInput
+                  onChangeText={handleChange('email')}
+                  onBlur={handleBlur('email')}
+                  value={values.email}
+                  keyboardType={'email-address'}
+                  placeholder={t('email')}
+                  returnKeyType="next"
+                  ref={emailRef}
+                  onSubmitEditing={onSubmitEmail}
+                  invalidLabel={errors.email}
+                  iconName={'envelope'}
+                />
+
+                <FormInput
+                  onChangeText={handleChange('streetAddress')}
+                  onBlur={handleBlur('streetAddress')}
+                  value={values.streetAddress}
+                  placeholder={t('street_address')}
+                  returnKeyType="next"
+                  ref={streetAddressRef}
+                  onSubmitEditing={onSubmitStreetAddress}
+                  invalidLabel={errors.streetAddress}
+                  iconName={'direction'}
+                />
+              </View>
+              <View style={{width: '48%'}}>
+                <FormInput
+                  onChangeText={handleChange('city')}
+                  onBlur={handleBlur('city')}
+                  value={values.city}
+                  placeholder={t('city')}
+                  returnKeyType="next"
+                  ref={cityRef}
+                  onSubmitEditing={onSubmitCity}
+                  invalidLabel={errors.city}
+                  iconName={'location-pin'}
+                />
+
+                <FormInput
+                  onChangeText={handleChange('state')}
+                  onBlur={handleBlur('state')}
+                  value={values.state}
+                  placeholder={t('state')}
+                  returnKeyType="next"
+                  ref={stateRef}
+                  onSubmitEditing={onSubmitState}
+                  invalidLabel={errors.state}
+                  iconName={'location-pin'}
+                />
+
+                <FormInput
+                  onChangeText={handleChange('zipCode')}
+                  onBlur={handleBlur('zipCode')}
+                  value={values.zipCode}
+                  placeholder={t('zipCode')}
+                  returnKeyType="next"
+                  ref={zipCodeRef}
+                  onSubmitEditing={onSubmitZipCode}
+                  invalidLabel={errors.zipCode}
+                  iconName={'location-pin'}
+                />
+
+                <FormInput
+                  onChangeText={handleChange('country')}
+                  onBlur={handleBlur('country')}
+                  value={values.country}
+                  placeholder={t('country')}
+                  returnKeyType="done"
+                  ref={countryRef}
+                  onSubmitEditing={onSubmitCountry}
+                  invalidLabel={errors.country}
+                  iconName={'location-pin'}
+                />
+              </View>
+            </View>
+            <View
+              style={{flexDirection: 'row', justifyContent: 'space-around'}}>
               <Button
                 mode={'contained'}
                 onPress={handleSubmit}

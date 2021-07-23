@@ -15,6 +15,8 @@ import {useSelector} from 'react-redux';
 import {ICategory} from '../../config/models/data';
 import * as rootActions from '../../config/redux/actions/rootActions';
 import * as orderSettingsActions from '../../redux/orderSettings/actions';
+import {scale, verticalScale, moderateScale} from 'react-native-size-matters';
+import APPMetrics from '../../utils/metrics';
 
 type Props = {
   getCustomersFromDB: Function;
@@ -57,15 +59,38 @@ export default function HomeView(props: Props) {
 
   const renderItem = (event: any) => {
     return (
-      <View style={styles.item} key={event.item.id}>
+      <View
+        style={[styles.itemStyle, {borderWidth: event.item.imageUrl ? 0 : 1}]}
+        key={event.item.id}>
         <View
           style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'baseline',
+            flexDirection: event.item.imageUrl ? 'row' : 'column',
+            justifyContent: event.item.imageUrl ? 'space-between' : 'center',
+            alignItems: 'center',
+            width: '100%',
+            height: event.item.imageUrl ? '20%' : '100%',
           }}>
-          <Caption numberOfLines={1}>{event.item.name}</Caption>
-          <Text numberOfLines={1}>${event.item.price}</Text>
+          <Caption
+            numberOfLines={event.item.imageUrl ? 1 : 3}
+            style={{
+              fontSize: event.item.imageUrl
+                ? APPMetrics.smallFontSize
+                : APPMetrics.normalFontSize,
+              textAlign: event.item.imageUrl ? 'left' : 'center',
+              width: event.item.imageUrl ? '68%' : '100%',
+            }}>
+            {event.item.name}
+          </Caption>
+          <Text
+            style={{
+              fontSize: event.item.imageUrl
+                ? APPMetrics.smallFontSize
+                : APPMetrics.titleFontSize,
+              fontWeight: event.item.imageUrl ? 'normal' : 'bold',
+            }}
+            numberOfLines={1}>
+            ${event.item.price}
+          </Text>
         </View>
         {event.item.imageUrl ? (
           <Image
@@ -74,9 +99,7 @@ export default function HomeView(props: Props) {
               uri: event.item.imageUrl,
             }}
           />
-        ) : (
-          <NoImage width={'100%'} height={'80%'} />
-        )}
+        ) : null}
       </View>
     );
   };
@@ -92,124 +115,159 @@ export default function HomeView(props: Props) {
   );
 
   return (
-    <View style={{flex: 1.5, flexDirection: 'row', margin: 20, marginLeft: 0}}>
-      <View
-        style={{
-          margin: 5,
-        }}>
-        <ToggleButton.Group
-          onValueChange={value => setSelectedCategory(value)}
-          value={selectedCategory}>
-          <ToggleButton
-            icon={() => (
-              <View>
-                <Text
-                  numberOfLines={1}
-                  style={{color: AppColors.primary, fontWeight: 'bold'}}>
-                  {noCategory}
-                </Text>
-              </View>
-            )}
-            value={noCategory}
-            style={{width: 100}}
-          />
-          {categoriesData.map((category: ICategory) => (
+    <View
+      style={{
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginTop: 10,
+        marginRight: 10,
+      }}>
+      <View style={{flexDirection: 'row'}}>
+        <View>
+          <ToggleButton.Group
+            onValueChange={value => setSelectedCategory(value)}
+            value={selectedCategory}>
             <ToggleButton
-              key={category.id}
               icon={() => (
                 <View>
-                  <Text style={{color: AppColors.primary, fontWeight: 'bold'}}>
-                    {category.name}
+                  <Text
+                    numberOfLines={1}
+                    style={{
+                      color: AppColors.secondary,
+                      fontSize: APPMetrics.normalFontSize,
+                      fontWeight: 'bold',
+                    }}>
+                    {noCategory}
                   </Text>
                 </View>
               )}
-              value={category.id}
-              style={{width: 100}}
+              value={noCategory}
+              style={{width: scale(60)}}
             />
-          ))}
-        </ToggleButton.Group>
-      </View>
-      <View
-        style={{
-          flex: 2.5,
-        }}>
-        <FlatList
-          data={listToMatrix(menuItemsToShow, 5)}
-          renderItem={renderRow}
-          keyExtractor={item => item.id}
-        />
+            {categoriesData.map((category: ICategory) => (
+              <ToggleButton
+                key={category.id}
+                icon={() => (
+                  <View>
+                    <Text
+                      numberOfLines={1}
+                      style={{
+                        color: AppColors.secondary,
+                        fontSize: APPMetrics.normalFontSize,
+                        fontWeight: 'bold',
+                      }}>
+                      {category.name}
+                    </Text>
+                  </View>
+                )}
+                value={category.id}
+                style={{width: scale(60)}}
+              />
+            ))}
+          </ToggleButton.Group>
+        </View>
+        <View
+          style={{
+            alignSelf: 'center',
+          }}>
+          <FlatList
+            data={listToMatrix(menuItemsToShow, 4)}
+            renderItem={renderRow}
+            keyExtractor={item => item.id}
+          />
+        </View>
       </View>
 
-      <View style={{flex: 1, marginLeft: 20}}>
-        <View style={{height: '100%', justifyContent: 'space-between'}}>
-          <View>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-around',
-              }}>
-              <Chip mode={'outlined'}>Delivery</Chip>
-              <Chip selected={true} mode={'outlined'}>
-                Take away
-              </Chip>
-              <Chip mode={'outlined'}>Dine in</Chip>
-            </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'flex-start',
-              }}>
-              <SearchableDropdown
-                onItemSelect={(item: any) => {
-                  appLog('onItemSelect', item);
-                  setSelectedCustomer(item);
-                }}
-                containerStyle={{marginTop: 15, width: '70%'}}
-                itemStyle={{
-                  padding: 10,
-                  marginTop: 2,
-                  borderColor: '#bbb',
-                  borderWidth: 1,
-                }}
-                itemTextStyle={{color: '#222'}}
-                itemsContainerStyle={{maxHeight: 300}}
-                items={props.customersArray}
-                defaultIndex={2}
-                resetValue={false}
-                textInputProps={{
-                  placeholder: !_.isEmpty(selectedCustomer)
-                    ? selectedCustomer.name
-                    : t('select_customer'),
-                  style: {
-                    padding: 10,
-                    borderWidth: 1,
-                    borderColor: '#ccc',
-                    borderRadius: 5,
-                  },
-                }}
-                listProps={{
-                  nestedScrollEnabled: true,
-                }}
-              />
-              <Button mode={'contained'} onPress={goToCustomer}>
-                {'+'}
-              </Button>
-            </View>
+      <View
+        style={{
+          alignItems: 'center',
+          height: '77%',
+          justifyContent: 'space-between',
+        }}>
+        <View>
+          <View
+            style={{
+              flexDirection: 'row',
+              margin: moderateScale(5),
+              justifyContent: 'space-between',
+            }}>
+            <Chip
+              mode={'outlined'}
+              textStyle={{fontSize: APPMetrics.smallFontSize}}>
+              Delivery
+            </Chip>
+            <Chip
+              selected={true}
+              mode={'outlined'}
+              textStyle={{fontSize: APPMetrics.smallFontSize}}>
+              Take away
+            </Chip>
+            <Chip
+              mode={'outlined'}
+              textStyle={{fontSize: APPMetrics.smallFontSize}}>
+              Dine in
+            </Chip>
           </View>
-          <Button mode={'contained'}>{t('send')}</Button>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              margin: moderateScale(5),
+            }}>
+            <SearchableDropdown
+              onItemSelect={(item: any) => {
+                appLog('onItemSelect', item);
+                setSelectedCustomer(item);
+              }}
+              containerStyle={{width: scale(130), marginRight: 5}}
+              itemStyle={{
+                padding: 10,
+                marginTop: 2,
+                borderColor: '#bbb',
+                borderWidth: 1,
+              }}
+              itemTextStyle={{color: '#222'}}
+              itemsContainerStyle={{maxHeight: 300}}
+              items={props.customersArray}
+              defaultIndex={2}
+              resetValue={false}
+              textInputProps={{
+                placeholder: !_.isEmpty(selectedCustomer)
+                  ? selectedCustomer.name
+                  : t('select_customer'),
+                style: {
+                  padding: moderateScale(3),
+                  borderWidth: 1,
+                  borderColor: '#bbb',
+                  borderRadius: 5,
+                  fontSize: APPMetrics.normalFontSize,
+                },
+              }}
+              listProps={{
+                nestedScrollEnabled: true,
+              }}
+            />
+            <Button mode={'contained'} onPress={goToCustomer}>
+              {'+'}
+            </Button>
+          </View>
         </View>
+        <Button style={{width: '100%'}} mode={'contained'}>
+          {t('send_order')}
+        </Button>
       </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  item: {
+  itemStyle: {
     flex: 1,
     margin: 5,
-    height: 140,
-    width: 140,
+    height: verticalScale(80),
+    width: scale(75),
+    alignItems: 'center',
+    borderColor: AppColors.gray_normal,
   },
   title: {
     fontSize: 10,

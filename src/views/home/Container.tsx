@@ -108,14 +108,12 @@ function Container(props: Props) {
 
   return (
     <MainContainer>
-      <View style={APPStyles.contentContainer}>
         <HomeView
           menuItems={menuItems}
           customersArray={customersArray}
           getCustomersFromDB={getCustomersFromDB}
           {...props}
         />
-      </View>
     </MainContainer>
   );
 }

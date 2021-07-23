@@ -6,6 +6,7 @@ import {TextInput} from 'react-native';
 // @ts-ignore
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import APPMetrics from '../utils/metrics';
+import {scale, verticalScale, moderateScale} from 'react-native-size-matters';
 
 const FormInput = React.memo(
   React.forwardRef(
@@ -32,7 +33,7 @@ const FormInput = React.memo(
             <SimpleLineIcons
               // @ts-ignore
               name={inputProps.iconName}
-              size={24}
+              size={scale(12)}
               color={
                 inputProps.editable
                   ? AppColors.secondary
@@ -40,6 +41,7 @@ const FormInput = React.memo(
               }
             />
             <TextInput
+              disableFullscreenUI={true}
               ref={ref}
               // underlineColor={AppColors.gray_normal}
               // theme={{colors: {background: AppColors.transparent}}}
@@ -85,7 +87,7 @@ const styles = StyleSheet.create({
     borderColor: AppColors.gray_normal,
     flexDirection: 'row',
   },
-  textInput: {flex: 1, marginLeft: 20, fontSize: APPMetrics.normalFontSize},
+  textInput: {flex: 1, marginLeft: scale(10), fontSize: APPMetrics.normalFontSize, padding: scale(2)},
 });
 
 export default FormInput;
