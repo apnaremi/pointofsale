@@ -4,6 +4,9 @@ import ApiConstants from './ApiConstants';
 import {appLog} from '../../utils/helpers';
 import {getBuildNumber, getVersion} from 'react-native-device-info';
 import {IS_IOS} from '../../utils/constants';
+import returnStoreAndPersistor from '../redux/configureStore';
+import {logOut} from '../../redux/user/actions';
+import {navigateToLogin} from '../../navigation/actions';
 
 const API = axios.create({
   baseURL: ApiConstants.BASE_URL,
@@ -38,6 +41,17 @@ API.interceptors.response.use(
   error => {
     //appLog('[Api - response error]', error.toJSON());
     appLog('[Api - response error response]', error.response);
+    if (
+      (error.response.status =
+        401 &&
+        error.response.data === '' &&
+        error.response.statusText === undefined)
+    ) {
+      const {store} = returnStoreAndPersistor();
+      store.dispatch(logOut());
+      navigateToLogin();
+      appLog('[Api - response logout]');
+    }
     return Promise.reject(error);
   },
 );

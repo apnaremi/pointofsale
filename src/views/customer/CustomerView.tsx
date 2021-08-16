@@ -248,14 +248,12 @@ export default function CustomerView(props: Props) {
               style={{flexDirection: 'row', justifyContent: 'space-around'}}>
               <Button
                 mode={'contained'}
-                onPress={handleSubmit}
-                style={APPStyles.commonButton}>
+                onPress={handleSubmit}>
                 {t('save')}
               </Button>
               <Button
                 mode={'contained'}
-                onPress={goBack}
-                style={APPStyles.commonButton}>
+                onPress={goBack}>
                 {t('cancel')}
               </Button>
             </View>

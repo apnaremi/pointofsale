@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import HomeView from './View';
+import HomeView, {IOrderItem} from './View';
 import {connect, useDispatch, useSelector} from 'react-redux';
 import {View} from 'react-native';
 import {MainContainer} from '../../components';
@@ -8,14 +8,16 @@ import * as orderSettingsActions from '../../redux/orderSettings/actions';
 import {IApiOrderingSettingsResponse} from '../../config/models/api';
 import * as rootActions from '../../config/redux/actions/rootActions';
 import {appLog, listToMatrix} from '../../utils/helpers';
-import {getCustomers, getMenuItems} from '../../api/orderingApi';
+import {getCustomers, getMenuItems, saveOrderApi} from '../../api/orderingApi';
 import {
   enableLoader,
   enableModal,
 } from '../../config/redux/actions/rootActions';
 import _ from 'lodash';
-import {getCategoriesAPI} from "../../api/categoryApi";
-import {onCategoriesResponse} from "../../redux/categories/actions";
+import {getCategoriesAPI} from '../../api/categoryApi';
+import {onCategoriesResponse} from '../../redux/categories/actions';
+import {navigateToOrders} from '../../navigation/actions';
+import {PAYMENT_TYPE} from '../../utils/enums';
 
 type Props = {};
 
@@ -80,18 +82,57 @@ function Container(props: Props) {
     });
   };
 
+  const saveOrder = (
+    orderType: number,
+    customerId: string,
+    selectedItems: Array<IOrderItem>,
+    selectedTable: any,
+    paymentType: number,
+    callBack: Function,
+  ) => {
+    let data: any = {
+      orderTransactions: selectedItems,
+      type: orderType,
+      customerId: customerId,
+      userId: userData.id,
+      companyId: userData.companies[0].id,
+    };
+    if (selectedTable && selectedTable.seatingArrangementNameId) {
+      data.tableName = selectedTable.value;
+      data.tableNameId = selectedTable.seatingArrangementNameId;
+      data.tableNumber = selectedTable.id;
+    }
+
+    if (paymentType !== PAYMENT_TYPE.NONE) {
+      data.paymentType = paymentType;
+    }
+
+    saveOrderApi(userData.id, data).then((result: any) => {
+      dispatch(enableLoader(true));
+      if (result.success) {
+        callBack();
+        dispatch(rootActions.enableLoader(false));
+        dispatch(enableModal(result.message));
+        navigateToOrders();
+      } else {
+        dispatch(rootActions.enableLoader(false));
+        dispatch(enableModal(result.message, true));
+      }
+    });
+  };
+
   const getCategories = useCallback(() => {
     if (userData) {
       dispatch(enableLoader(true));
       getCategoriesAPI(userData.id, userData.companies[0].id).then(
-          (result: any) => {
-            dispatch(enableLoader(false));
-            if (result.success) {
-              dispatch(onCategoriesResponse(result.data));
-            } else {
-              dispatch(enableModal(result.message, true));
-            }
-          },
+        (result: any) => {
+          dispatch(enableLoader(false));
+          if (result.success) {
+            dispatch(onCategoriesResponse(result.data));
+          } else {
+            dispatch(enableModal(result.message, true));
+          }
+        },
       );
     }
   }, [userData]);
@@ -108,12 +149,13 @@ function Container(props: Props) {
 
   return (
     <MainContainer>
-        <HomeView
-          menuItems={menuItems}
-          customersArray={customersArray}
-          getCustomersFromDB={getCustomersFromDB}
-          {...props}
-        />
+      <HomeView
+        menuItems={menuItems}
+        customersArray={customersArray}
+        getCustomersFromDB={getCustomersFromDB}
+        saveOrder={saveOrder}
+        {...props}
+      />
     </MainContainer>
   );
 }

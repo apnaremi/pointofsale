@@ -256,8 +256,7 @@ export const ProfileView = React.forwardRef((props: Props, ref: any) => {
             <Button
               disabled={!props.allowEdit}
               mode={'contained'}
-              onPress={handleSubmit}
-              style={APPStyles.commonButton}>
+              onPress={handleSubmit}>
               {t('save')}
             </Button>
           </View>

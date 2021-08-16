@@ -197,15 +197,13 @@ export default function PwsRecoveryView(props: Props) {
                   : AppColors.primary
               }
               mode={'contained'}
-              onPress={handleSubmit}
-              style={APPStyles.commonButton}>
+              onPress={handleSubmit}>
               {props.pinToConfirm ? t('confirmPIN') : t('continue')}
             </Button>
             {props.onCancel ? (
               <Button
                 mode={'contained'}
-                onPress={onCancel}
-                style={APPStyles.commonButton}>
+                onPress={onCancel}>
                 {t('cancel')}
               </Button>
             ) : null}

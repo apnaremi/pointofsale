@@ -2,9 +2,6 @@ import {StyleSheet} from 'react-native';
 import AppColors from './appColors';
 import {moderateScale} from 'react-native-size-matters';
 const APPStyles = StyleSheet.create({
-  commonButton: {
-    marginTop: 20,
-  },
   formContainer: {
     width: '80%',
   },

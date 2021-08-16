@@ -144,8 +144,7 @@ function Categories(props: Props) {
         <View style={APPStyles.viewContainerComplete}>
           <Button
             mode={'contained'}
-            onPress={toggleEditMode}
-            style={APPStyles.commonButton}>
+            onPress={toggleEditMode}>
             {!isEditMode ? t('add_more') : t('cancel')}
           </Button>
           <Collapsible collapsed={!isEditMode}>
@@ -175,8 +174,7 @@ function Categories(props: Props) {
                   <Button
                     disabled={!isEditMode}
                     mode={'contained'}
-                    onPress={handleSubmit}
-                    style={APPStyles.commonButton}>
+                    onPress={handleSubmit}>
                     {t('save')}
                   </Button>
                 </View>

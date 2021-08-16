@@ -15,6 +15,7 @@ import {scale, verticalScale, moderateScale} from 'react-native-size-matters';
 import {StatusBar, StyleSheet, View, Text} from 'react-native';
 import LoginView from '../views/login';
 import HomeView from '../views/home';
+import OrdersView from '../views/order/Orders';
 import CustomerView from '../views/customer';
 import PwsRecoveryView from '../views/pwsRecovery';
 import CodeVerifyView from '../views/codeVerify';
@@ -34,6 +35,7 @@ import PIN from '../views/settings/PIN/PIN';
 import PinScreen from '../views/settings/PIN/index';
 import {useDispatch} from 'react-redux';
 import {logOut} from '../redux/user/actions';
+import SelectedItemView from '../views/home/components/selectedItemForm';
 
 const MainStack = createStackNavigator();
 const RootStack = createStackNavigator();
@@ -103,8 +105,8 @@ function HomeDrawer() {
         }}
       />
       <Drawer.Screen
-        name="Orders"
-        component={DemoScreen}
+        name="OrdersScreen"
+        component={OrdersView}
         options={{
           drawerLabel: '',
           drawerIcon: ({color, size, focused}) => (
@@ -260,6 +262,15 @@ function ApplicationNavigator() {
               CardStyleInterpolators.forModalPresentationIOS,
           }}
         />
+          <RootStack.Screen
+              name="SelectedItemScreen"
+              component={SelectedItemView}
+              options={{
+                  cardStyle: {backgroundColor: AppColors.transparent},
+                  cardStyleInterpolator:
+                  CardStyleInterpolators.forModalPresentationIOS,
+              }}
+          />
         <RootStack.Screen name="PinScreen" component={PinScreen} />
       </RootStack.Navigator>
     </NavigationContainer>

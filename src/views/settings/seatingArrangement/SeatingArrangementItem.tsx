@@ -98,8 +98,7 @@ export default function SeatingArrangementItem(props: Props) {
             <Button
               disabled={!props.allowEdit}
               mode={'contained'}
-              onPress={handleSubmit}
-              style={APPStyles.commonButton}>
+              onPress={handleSubmit}>
               {t('save')}
             </Button>
           </View>

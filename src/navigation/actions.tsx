@@ -39,3 +39,11 @@ export function navigateToPin(params?: object) {
 export function pushToPin(params?: object) {
   NavigationService.push('PinScreen', params);
 }
+
+export function navigateToOrders(params?: object) {
+  NavigationService.navigate('OrdersScreen', params);
+}
+
+export function navigateToSelectedItem(params?: object) {
+  NavigationService.navigate('SelectedItemScreen', params);
+}

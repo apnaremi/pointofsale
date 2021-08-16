@@ -23,7 +23,7 @@ const RootModal = (props: Props) => {
   return (
     <Modal
       style={styles.modalContainer}
-      isVisible={props.isModalVisible}
+      isVisible={props.isModalVisible && !!props.message}
       coverScreen={false}
       backdropOpacity={0.1}
       useNativeDriver={true}
@@ -55,6 +55,7 @@ const RootModal = (props: Props) => {
 const styles = StyleSheet.create({
   messageText: {
     fontSize: APPMetrics.normalFontSize,
+    marginBottom: 10,
   },
   modal: {
     alignItems: 'center',

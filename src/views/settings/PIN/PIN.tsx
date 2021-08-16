@@ -62,8 +62,7 @@ const PIN = memo(() => {
         <Text>{t('setupPINRecommendation')}</Text>
         <Button
           mode={'contained'}
-          onPress={onEnablePIN}
-          style={APPStyles.commonButton}>
+          onPress={onEnablePIN}>
           {t('setPINUpper')}
         </Button>
       </View>
@@ -76,8 +75,7 @@ const PIN = memo(() => {
         <Text>{t('enablePINQuestion')}</Text>
         <Button
           mode={'contained'}
-          onPress={onDisablePIN}
-          style={APPStyles.commonButton}>
+          onPress={onDisablePIN}>
           {t('disablePINUpper')}
         </Button>
       </View>

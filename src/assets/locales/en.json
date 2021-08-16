@@ -70,6 +70,6 @@
     "state": "State",
     "zip_code": "Zip Code",
     "country": "Country",
-    "send_order": "Send Order"
+    "new_order": "New Order"
   }
 }

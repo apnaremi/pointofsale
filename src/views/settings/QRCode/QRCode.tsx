@@ -85,12 +85,6 @@ function QRCode(props: Props) {
             }}
             style={{width: 400, height: 400}}
           />
-          {/*          <Button
-            mode={'contained'}
-            onPress={onDownloadCodePress}
-            style={APPStyles.commonButton}>
-            {t('save')}
-          </Button>*/}
         </View>
       </KeyboardAwareScrollView>
     </MainContainer>
