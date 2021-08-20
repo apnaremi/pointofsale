@@ -39,8 +39,9 @@ API.interceptors.response.use(
     return response;
   },
   error => {
-    //appLog('[Api - response error]', error.toJSON());
+    appLog('[Api - response error]', error.toJSON());
     appLog('[Api - response error response]', error.response);
+    appLog('[Api - response error data]', error.response.data);
     if (
       (error.response.status =
         401 &&

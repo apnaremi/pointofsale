@@ -80,15 +80,20 @@ export function getOrdersApi(
     .catch(onFailure);
 }
 
-
-export function saveOrderStatus(
-    orderId: string,
-    userId: string,
-) {
+export function saveOrderStatus(orderId: string, userId: string) {
   let URL = `${ApiConstants.ORDERING}${'/'}${orderId}`;
   return API.patch(URL, {
     userId: userId,
   })
-      .then(onSuccess)
-      .catch(onFailure);
+    .then(onSuccess)
+    .catch(onFailure);
+}
+
+export function getOrdersReportApi(params: any) {
+  let URL = `${ApiConstants.ORDERING}${'/summary'}`;
+  return API.get(URL, {
+    params,
+  })
+    .then(onSuccessSettings)
+    .catch(onFailure);
 }

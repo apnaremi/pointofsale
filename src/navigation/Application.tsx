@@ -16,6 +16,7 @@ import {StatusBar, StyleSheet, View, Text} from 'react-native';
 import LoginView from '../views/login';
 import HomeView from '../views/home';
 import OrdersView from '../views/order/Orders';
+import ReportsView from '../views/report/Reports';
 import CustomerView from '../views/customer';
 import PwsRecoveryView from '../views/pwsRecovery';
 import CodeVerifyView from '../views/codeVerify';
@@ -40,14 +41,6 @@ import SelectedItemView from '../views/home/components/selectedItemForm';
 const MainStack = createStackNavigator();
 const RootStack = createStackNavigator();
 const Drawer = createDrawerNavigator();
-
-function DemoScreen() {
-  return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text>{'Under Construction'}</Text>
-    </View>
-  );
-}
 
 function CustomDrawerContent(props: any) {
   const dispatch = useDispatch();
@@ -120,7 +113,7 @@ function HomeDrawer() {
       />
       <Drawer.Screen
         name="Reports"
-        component={DemoScreen}
+        component={ReportsView}
         options={{
           drawerLabel: '',
           drawerIcon: ({color, size, focused}) => (
