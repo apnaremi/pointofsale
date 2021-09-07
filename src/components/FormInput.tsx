@@ -23,7 +23,7 @@ const FormInput = React.memo(
       ref?: React.Ref<any>,
     ) => {
       return (
-        <View>
+        <View style={{margin: scale(5)}}>
           <View
             style={
               inputProps.invalidLabel
@@ -51,16 +51,18 @@ const FormInput = React.memo(
               {...inputProps}
             />
           </View>
-          <HelperText
-            style={styles.errorText}
-            type="error"
-            visible={!!inputProps.invalidLabel}>
-            {inputProps.invalidLabel
-              ? !inputProps.hideWarning
-                ? inputProps.invalidLabel
-                : ''
-              : inputProps.helpLabel}
-          </HelperText>
+          {inputProps.invalidLabel ? (
+            <HelperText
+              style={styles.errorText}
+              type="error"
+              visible={!!inputProps.invalidLabel}>
+              {inputProps.invalidLabel
+                ? !inputProps.hideWarning
+                  ? inputProps.invalidLabel
+                  : ''
+                : inputProps.helpLabel}
+            </HelperText>
+          ) : null}
         </View>
       );
     },
@@ -77,17 +79,26 @@ const styles = StyleSheet.create({
 
   inputContainerError: {
     alignItems: 'center',
-    borderBottomWidth: 1,
+    borderWidth: 1,
+    borderRadius: 5,
     borderColor: AppColors.event_warning_normal,
     flexDirection: 'row',
+    paddingHorizontal: 10,
   },
   inputContainerNormal: {
     alignItems: 'center',
-    borderBottomWidth: 1,
+    borderWidth: 1,
+    borderRadius: 5,
     borderColor: AppColors.gray_normal,
     flexDirection: 'row',
+    paddingHorizontal: 10,
   },
-  textInput: {flex: 1, marginLeft: scale(10), fontSize: APPMetrics.normalFontSize, padding: scale(2)},
+  textInput: {
+    flex: 1,
+    marginLeft: scale(10),
+    fontSize: APPMetrics.normalFontSize,
+    padding: scale(2),
+  },
 });
 
 export default FormInput;

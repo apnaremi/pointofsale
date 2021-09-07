@@ -10,6 +10,7 @@ const APPMetrics = {
   smallFontSize: moderateScale(8),
   modalWidth: 312,
   headerIconSize: moderateScale(18),
+  newTitleFontSize: moderateScale(15),
 };
 
 export default APPMetrics;

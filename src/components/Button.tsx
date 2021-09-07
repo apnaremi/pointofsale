@@ -11,7 +11,7 @@ export default function DefaultButton(props: IProps) {
       style={styles.button}
       labelStyle={styles.label}
       contentStyle={{
-        flexDirection: 'row-reverse', paddingHorizontal: -10}}
+        flexDirection: 'row-reverse'}}
       {...props}
       dark={true}
     />

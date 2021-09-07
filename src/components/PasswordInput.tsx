@@ -36,7 +36,7 @@ const Input = React.forwardRef((props: Props, ref?: React.Ref<any>) => {
 const styles = StyleSheet.create({
   showIcon: {
     position: 'absolute',
-    right: -5,
+    right: 5,
     top: 5,
   },
 });

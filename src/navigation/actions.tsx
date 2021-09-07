@@ -47,3 +47,7 @@ export function navigateToOrders(params?: object) {
 export function navigateToSelectedItem(params?: object) {
   NavigationService.navigate('SelectedItemScreen', params);
 }
+
+export function navigateToArrangement(params?: object) {
+  NavigationService.navigate('ArrangementScreen', params);
+}

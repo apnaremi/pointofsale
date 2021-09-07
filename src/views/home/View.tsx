@@ -4,15 +4,17 @@ import {appLog, listToMatrix} from '../../utils/helpers';
 import {Button} from '../../components';
 import {useTranslation} from 'react-i18next';
 import AppColors from '../../theme/appColors';
+import Modal from 'react-native-modal';
 import {
   ToggleButton,
   Caption,
   Chip,
   TouchableRipple,
-  List,
+  Searchbar,
   IconButton,
   Menu,
   Avatar,
+  List,
 } from 'react-native-paper';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import * as navigationActions from '../../navigation/actions';
@@ -28,8 +30,7 @@ import {
   enableLoader,
   enableModal,
 } from '../../config/redux/actions/rootActions';
-// @ts-ignore
-import SearchableDropdown from 'react-native-searchable-dropdown';
+import APPStyles from '../../theme/styles';
 
 export interface IOrderItem {
   itemId: string;
@@ -65,10 +66,6 @@ export default function HomeView(props: Props) {
     (state: any) => state.categoriesReducer.categories,
   );
 
-  const [openSeatingMenu, setOpenSeatingMenu] = useState(false);
-  const [selectedSeating, setSelectedSeating] = useState<any>({});
-
-  const [openTableMenu, setOpenTableMenu] = useState(false);
   const [selectedTable, setSelectedTable] = useState<any>({});
 
   const [showPaymentMenu, setShowPaymentMenu] = useState(false);
@@ -79,14 +76,28 @@ export default function HomeView(props: Props) {
   const [selectedCustomer, setSelectedCustomer] = useState<any>({});
   const [orderType, setOrderType] = useState<number>(ORDER_TYPE.NONE);
   const [selectedItems, setSelectedItems] = useState<Array<IOrderItem>>([]);
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [searchQuery, setSearchQuery] = React.useState('');
 
-  const seatingArrangement = useSelector(
-    (state: any) =>
-      state.orderSettingsReducer.OrderingSettings.seatingArrangement,
-  );
-
+  const onChangeSearch = (query: string) => {
+    setSearchQuery(query);
+    if (query) {
+      setMenuItemsToShow(
+        props.menuItems.filter(item =>
+          item.name.toUpperCase().includes(query.toUpperCase()),
+        ),
+      );
+    } else {
+      setMenuItemsToShow(props.menuItems);
+    }
+    console.log(props.menuItems);
+    setSelectedCategory(noCategory);
+  };
   const goToCustomer = () => {
-    navigationActions.navigateToCustomer({onCustomerChosen});
+    navigationActions.navigateToCustomer({
+      onCustomerChosen,
+      customersArray: props.customersArray,
+    });
   };
 
   const goToSelectedItem = (item: IOrderItem) => {
@@ -104,7 +115,12 @@ export default function HomeView(props: Props) {
     setSelectedItems(newList);
   };
 
+  const setArrangement = (arrangement: any, table: any) => {
+    setSelectedTable(table);
+  };
+
   useEffect(() => {
+    setSearchQuery('');
     if (selectedCategory !== noCategory) {
       setMenuItemsToShow(
         _.filter(props.menuItems, {categoryId: selectedCategory}),
@@ -279,9 +295,16 @@ export default function HomeView(props: Props) {
   const onChipPressed = useCallback(
     (type: number) => () => {
       setOrderType(type);
+      if (type === ORDER_TYPE.DINE_IN) {
+        navigationActions.navigateToArrangement({setArrangement});
+      }
     },
     [],
   );
+
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
 
   return (
     <React.Fragment>
@@ -293,7 +316,7 @@ export default function HomeView(props: Props) {
           marginRight: 10,
         }}>
         <View style={{flexDirection: 'row'}}>
-          <View>
+          <View style={{paddingHorizontal: scale(30)}}>
             <ToggleButton.Group
               onValueChange={value => setSelectedCategory(value)}
               value={selectedCategory}>
@@ -336,14 +359,21 @@ export default function HomeView(props: Props) {
               ))}
             </ToggleButton.Group>
           </View>
-          <View
-            style={{
-              alignSelf: 'center',
-              borderWidth: 1,
-              borderColor: AppColors.gray_normal,
-            }}>
+          <View>
+            <Searchbar
+              style={{
+                margin: 10,
+                borderRadius: scale(50),
+                width: scale(200),
+                height: scale(20),
+              }}
+              inputStyle={{fontSize: APPMetrics.normalFontSize, padding: 0}}
+              placeholder="Search"
+              onChangeText={onChangeSearch}
+              value={searchQuery}
+            />
             <FlatList
-              data={listToMatrix(menuItemsToShow, 2)}
+              data={listToMatrix(menuItemsToShow, 1)}
               renderItem={renderRow}
               keyExtractor={item => item.id}
             />
@@ -354,15 +384,24 @@ export default function HomeView(props: Props) {
           style={{
             alignItems: 'center',
             paddingHorizontal: scale(5),
-            width: scale(180),
+            width: scale(200),
             justifyContent: 'center',
           }}>
           <View
             style={{
-              alignItems: 'center',
               justifyContent: 'center',
               width: '100%',
             }}>
+            <View style={styles.rightHeader}>
+              <Text style={APPStyles.newTitleBlack}>{'New Order'}</Text>
+              <Button
+                disabled={_.isEmpty(selectedItems)}
+                onPress={onCancelOrder}
+                uppercase={false}
+                mode={'contained'}>
+                {t('Clear')}
+              </Button>
+            </View>
             <View
               style={{
                 flexDirection: 'row',
@@ -400,135 +439,15 @@ export default function HomeView(props: Props) {
                 }}>
                 {'Delivery'}
               </Chip>
-            </View>
-            {orderType === ORDER_TYPE.DINE_IN ? (
-              <View
-                style={{
-                  flexDirection: 'row',
-                  width: '100%',
-                  justifyContent: 'space-between',
-                }}>
-                <Menu
-                  visible={openSeatingMenu}
-                  onDismiss={() => setOpenSeatingMenu(false)}
-                  anchor={
-                    <Button
-                      mode={'contained'}
-                      labelStyle={{
-                        fontSize: APPMetrics.smallFontSize,
-                        textAlign: 'center',
-                        marginHorizontal: scale(2),
-                        width: scale(100),
-                      }}
-                      style={{
-                        justifyContent: 'center',
-                      }}
-                      onPress={() => setOpenSeatingMenu(true)}>
-                      {selectedSeating.name
-                        ? selectedSeating.name
-                        : 'Select S. Arrangement'}
-                    </Button>
-                  }>
-                  {seatingArrangement.map((element: any) => (
-                    <Menu.Item
-                      onPress={() => {
-                        setOpenSeatingMenu(false);
-                        setSelectedSeating(element);
-                        setSelectedTable({});
-                      }}
-                      title={element.name}
-                    />
-                  ))}
-                </Menu>
-                <Menu
-                  visible={openTableMenu}
-                  onDismiss={() => setOpenTableMenu(false)}
-                  anchor={
-                    <Button
-                      mode={'contained'}
-                      disabled={
-                        !(
-                          selectedSeating.values &&
-                          selectedSeating.values.length > 0
-                        )
-                      }
-                      labelStyle={{
-                        fontSize: APPMetrics.smallFontSize,
-                        textAlign: 'center',
-                        marginHorizontal: scale(2),
-                        width: scale(55),
-                      }}
-                      style={{
-                        justifyContent: 'center',
-                      }}
-                      onPress={() => setOpenTableMenu(true)}>
-                      {selectedTable.value
-                        ? selectedTable.value
-                        : 'Select Table'}
-                    </Button>
-                  }>
-                  {selectedSeating &&
-                  selectedSeating.values &&
-                  selectedSeating.values.length > 0
-                    ? selectedSeating.values.map((element: any) => (
-                        <Menu.Item
-                          onPress={() => {
-                            setOpenTableMenu(false);
-                            setSelectedTable(element);
-                          }}
-                          title={element.value}
-                        />
-                      ))
-                    : null}
-                </Menu>
-              </View>
-            ) : null}
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                marginVertical: moderateScale(4),
-                width: '100%',
-              }}>
-              <SearchableDropdown
-                onItemSelect={(item: any) => {
-                  appLog('onItemSelect', item);
-                  setSelectedCustomer(item);
-                }}
-                containerStyle={{width: scale(120)}}
-                itemStyle={{
-                  padding: 10,
-                  marginTop: 2,
-                  borderColor: '#bbb',
-                  borderWidth: 1,
-                }}
-                itemTextStyle={{color: '#222'}}
-                itemsContainerStyle={{maxHeight: 300}}
-                items={props.customersArray}
-                defaultIndex={2}
-                resetValue={false}
-                textInputProps={{
-                  disableFullscreenUI: true,
-                  placeholder: !_.isEmpty(selectedCustomer)
-                    ? selectedCustomer.name
-                    : t('select_customer'),
-                  style: {
-                    paddingVertical: moderateScale(0),
-                    paddingHorizontal: moderateScale(5),
-                    borderWidth: 1,
-                    borderColor: '#bbb',
-                    borderRadius: 5,
-                    fontSize: APPMetrics.normalFontSize,
-                  },
-                }}
-                listProps={{
-                  nestedScrollEnabled: true,
-                }}
-              />
-              <Button mode={'contained'} onPress={goToCustomer}>
-                {'+'}
+              <Button
+                uppercase={false}
+                mode={'contained'}
+                onPress={goToCustomer}>
+                {'Customer'}
               </Button>
             </View>
+            <Text style={styles.subTitle}>{selectedTable.value}</Text>
+            <Text style={styles.subTitle}>{selectedCustomer.name}</Text>
           </View>
           <FlatList
             data={selectedItems}
@@ -605,12 +524,6 @@ export default function HomeView(props: Props) {
         }}>
         <Button
           disabled={_.isEmpty(selectedItems)}
-          onPress={onCancelOrder}
-          mode={'contained'}>
-          {t('cancel')}
-        </Button>
-        <Button
-          disabled={_.isEmpty(selectedItems)}
           onPress={() => onSaveOrder(PAYMENT_TYPE.NONE)}
           mode={'contained'}>
           {'order'}
@@ -657,5 +570,20 @@ const styles = StyleSheet.create({
   tinyLogo: {
     width: scale(35),
     height: scale(35),
+  },
+  modalContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  rightHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingBottom: scale(3),
+    paddingTop: scale(4),
+  },
+  subTitle: {
+    color: AppColors.dark,
+    fontSize: APPMetrics.normalFontSize,
+    fontWeight: 'bold',
   },
 });

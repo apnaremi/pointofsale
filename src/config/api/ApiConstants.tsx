@@ -1,4 +1,4 @@
-const isProd = false;
+const isProd = true;
 const ApiConstants = {
   BASE_URL: isProd
     ? 'https://au.myaccountant.io'

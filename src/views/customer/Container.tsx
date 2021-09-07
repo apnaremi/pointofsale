@@ -21,20 +21,25 @@ function Container(props: Props) {
   const userData = useSelector((state: any) => state.loginReducer.user);
 
   const onSubmitForm = useCallback(
-    dataToSave => {
+    (dataToSave, isNew) => {
       appLog('dataToSave', dataToSave);
       Keyboard.dismiss();
-      dispatch(enableLoader(true));
-      saveCustomer(userData.id, dataToSave).then((result: any) => {
-        dispatch(enableLoader(false));
-        if (result.success) {
-          dispatch(enableModal(result.message));
-          props.route.params.onCustomerChosen(result.data);
-          navigationActions.goBack();
-        } else {
-          dispatch(enableModal(result.message, true));
-        }
-      });
+      if (isNew) {
+        dispatch(enableLoader(true));
+        saveCustomer(userData.id, dataToSave).then((result: any) => {
+          dispatch(enableLoader(false));
+          if (result.success) {
+            dispatch(enableModal(result.message));
+            props.route.params.onCustomerChosen(result.data);
+            navigationActions.goBack();
+          } else {
+            dispatch(enableModal(result.message, true));
+          }
+        });
+      } else {
+        props.route.params.onCustomerChosen(dataToSave);
+        navigationActions.goBack();
+      }
     },
     [userData, props.route.params],
   );

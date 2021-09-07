@@ -8,6 +8,8 @@ import Header from './Header';
 import WorkingIndicator from './WorkingIndicator';
 import FormHeader from './FormHeader';
 import Divider from './Divider';
+import DropdownButton from './DropdownButton';
+import ModalHeader from './ModalHeader';
 
 export {
   Button,
@@ -20,4 +22,6 @@ export {
   WorkingIndicator,
   FormHeader,
   Divider,
+  DropdownButton,
+  ModalHeader,
 };

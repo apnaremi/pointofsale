@@ -1,6 +1,7 @@
 import {StyleSheet} from 'react-native';
 import AppColors from './appColors';
 import {moderateScale} from 'react-native-size-matters';
+import APPMetrics from "../utils/metrics";
 const APPStyles = StyleSheet.create({
   formContainer: {
     width: '80%',
@@ -27,8 +28,16 @@ const APPStyles = StyleSheet.create({
     width: '100%',
   },
 
+
   modalContainer: {
     width: '30%',
+    backgroundColor: AppColors.clear,
+    alignItems: 'center',
+    paddingVertical: 20,
+    borderRadius: 6,
+  },
+  largeModalContainer: {
+    width: '60%',
     backgroundColor: AppColors.clear,
     alignItems: 'center',
     paddingVertical: 20,
@@ -40,6 +49,11 @@ const APPStyles = StyleSheet.create({
   viewContainerComplete: {
     width: '100%',
     padding: 20,
+  },
+  newTitleBlack: {
+    color: AppColors.dark,
+    fontSize: APPMetrics.newTitleFontSize,
+    fontWeight: 'bold',
   },
 });
 

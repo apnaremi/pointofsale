@@ -37,6 +37,7 @@ import PinScreen from '../views/settings/PIN/index';
 import {useDispatch} from 'react-redux';
 import {logOut} from '../redux/user/actions';
 import SelectedItemView from '../views/home/components/selectedItemForm';
+import ArrangementForm from '../views/home/components/arrangementForm';
 
 const MainStack = createStackNavigator();
 const RootStack = createStackNavigator();
@@ -258,6 +259,15 @@ function ApplicationNavigator() {
           <RootStack.Screen
               name="SelectedItemScreen"
               component={SelectedItemView}
+              options={{
+                  cardStyle: {backgroundColor: AppColors.transparent},
+                  cardStyleInterpolator:
+                  CardStyleInterpolators.forModalPresentationIOS,
+              }}
+          />
+          <RootStack.Screen
+              name="ArrangementScreen"
+              component={ArrangementForm}
               options={{
                   cardStyle: {backgroundColor: AppColors.transparent},
                   cardStyleInterpolator:
